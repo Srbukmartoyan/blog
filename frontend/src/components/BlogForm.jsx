@@ -152,6 +152,10 @@ const BlogForm = ({ blogPost }) => {
         isMulti
         getOptionLabel={option => option.name}
         getOptionValue={option => option.id}
+        onChange={(selectedOptions) => {
+          const selectedCategories = selectedOptions.map(option => option.name);
+          setFormData({ ...formData, selectedCategory: selectedCategories });
+        }}
         // defaultValue={Array.isArray(formData.selectedCategory) ? 
         //   formData.selectedCategory.map(category => ({ name: category.name, id: category.id })) : 
         //   null}       
@@ -160,7 +164,7 @@ const BlogForm = ({ blogPost }) => {
       //   [{ name: formData.selectedCategory[0].name, id: 1 }] : 
       //   null
       // }
-      defaultValue={sth}
+      // defaultValue={sth}
         />
       <label htmlFor="file-input">
         {prevImg ? (

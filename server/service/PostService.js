@@ -16,10 +16,7 @@ const PostService = {
         include : [
           { model : Author },
           { model: Image },
-          { model: Hashtag,
-            as: 'Hashtag',
-            attributes: ['id', 'name'],
-            through:  {model: PostHashtag, attributes : []}},
+          { model: Hashtag,},
         ] 
       });
       if (!post) {
@@ -42,12 +39,12 @@ const PostService = {
         const newImage = await Image.create({ url: image, postId: post.id });
         await post.setImage(newImage);
       }
-  
+      
       for (const category of selectedCategories) {
-        const hashtag = await Hashtag.findOne({ where: { name: category } });      
+        const hashtag = await Hashtag.findOne({ where: { name: category } });    
         await post.addHashtags(hashtag);
       }
-
+      // await post.addHashtags(hashtags);
       return post;
     } catch (err) {
       handleServiceError(err);

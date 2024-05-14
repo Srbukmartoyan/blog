@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsToMany(Hashtag, { 
         through: 'PostHashtag',
         foreignKey: 'postId',
-        otherKey: 'hashtagId', as: 'Hashtag'});
+        otherKey: 'hashtagId'
+      });
     }
   }
   Post.init({
