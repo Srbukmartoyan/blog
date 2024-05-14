@@ -16,7 +16,7 @@ const PostService = {
         include : [
           { model : Author },
           { model: Image },
-          { model: Hashtag,},
+          { model: Hashtag, attributes : ['id', 'name']},
         ] 
       });
       if (!post) {

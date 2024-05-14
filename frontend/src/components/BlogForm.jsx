@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import useSWR from 'swr';
 import { useNavigate } from 'react-router-dom';
-import Select from 'react-select'
+import AsyncSelect from 'react-select/async';
 import InputField from './InputField';
 import { Button } from './Button';
 import upload_area from '../assets/upload_area.svg';
 
-const BlogForm = ({ blogPost }) => {
+const BlogForm = ({ blogId }) => {
+
+
   const navigate = useNavigate();
   const [image, setImage] = useState(false);
   const [prevImg, setPrevImg] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [blogPost, setBlogPost] = useState({});
+
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -18,41 +23,41 @@ const BlogForm = ({ blogPost }) => {
     image: '',
   });
 
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch('/hashtags');
-      if (!response.ok) {
-        throw new Error('Failed to fetch categories');
-      }
-      const data = await response.json();
-      setCategories(data);
-      formData.selectedCategory = data[0].name;
-    } catch (error) {
-      console.error(error);
+  const { data: categoriesData, error: categoriesError } = useSWR('/hashtags', fetchCategories);
+
+  const { data: blogPostData, error: blogPostError } = useSWR(blogId ? `/posts/${blogId}` : null);
+
+  useEffect(() => {
+    if (categoriesData) {
+      setCategories(categoriesData);
     }
-  };
+  }, [categoriesData]);
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
-
-  useEffect(() => {
-    if (blogPost) {
-      const defaultSelectedCategories = blogPost.Hashtags;
-      // console.log('formdata.selectedCategories.length', defaultSelectedCategories?.length);
-      const firstImage = blogPost.Image
-      if (firstImage) {
-        setPrevImg(firstImage.url);
-      }
+    if (blogPostData) {
+      setBlogPost(blogPostData);
       setFormData({
-        title: blogPost.title,
-        author: blogPost.Author?.name,
-        content: blogPost.content,
-        selectedCategory: defaultSelectedCategories,
-        image: blogPost.image,
+        title: blogPostData.title,
+        author: blogPostData.Author?.name,
+        content: blogPostData.content,
+        selectedCategory: blogPostData.Hashtags,
+        image: blogPostData.image,
       });
+      if (blogPostData.Image) {
+        setPrevImg(blogPostData.Image.url);
+      }
     }
-  }, [blogPost]);
+  }, [blogPostData]);
+
+  const getOptions = () => {
+    const { data, error } = useSWR('/hashtags', getOptions);
+  
+    return {
+      options: data,
+      isLoading: !error && !data,
+      isError: error,
+    };
+  };
 
   const imageHandler = (e) => {
     setImage(e.target.files[0]);
@@ -93,28 +98,20 @@ const BlogForm = ({ blogPost }) => {
 
     if (responseData.success) {
       form.image = responseData?.image_url;
-      if (blogPost) {
-        await fetch(`/posts/${blogPost.id}`, {
-          method: 'PUT',
+      try {
+        const url = blogPost ? `/posts/${blogPost.id}` : '/posts';
+        const resp = await fetch(url, {
+          method: blogPost ? 'PUT' : 'POST',
           headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(form),
-        }).then((resp) => resp.json()).then((data) => {
-          handlePostResponse(data, 'Post Updated', 'Failed to update post');
         });
-      } else {
-        await fetch('/posts', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(form),
-        }).then((resp) => resp.json()).then((data) => {
-          handlePostResponse(data, 'Post Added', 'Failed to add post');
-        })
+        const data = await resp.json();
+        handlePostResponse(data, blogPost ? 'Post Updated' : 'Post Added', blogPost ? 'Failed to update post' : 'Failed to add post');
+      } catch (error) {
+        console.error('Error submitting form:', error);
       }
     }
   };
@@ -143,10 +140,10 @@ const BlogForm = ({ blogPost }) => {
         onChange={handleChange}
         placeholder="Content"
       />
-      <Select
+      <AsyncSelect
         className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none"
         name="selectedCategory"
-        options={categories}
+        loadOptions={getOptions}
         isMulti
         getOptionLabel={option => option.name}
         getOptionValue={option => option.id}
@@ -155,10 +152,10 @@ const BlogForm = ({ blogPost }) => {
           setFormData({ ...formData, selectedCategory: selectedCategories });
         }}
 
-        defaultValue={Array.isArray(formData.selectedCategory) ? 
+        defaultOptions={Array.isArray(formData.selectedCategory) ?
           formData.selectedCategory.map(category => ({ name: category.name, id: category.id })) :
           null
-        }   
+        }
       />
       <label htmlFor="file-input">
         {prevImg ? (
