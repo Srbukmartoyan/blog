@@ -44,7 +44,6 @@ const PostService = {
         const hashtag = await Hashtag.findOne({ where: { name: category } });    
         await post.addHashtags(hashtag);
       }
-      // await post.addHashtags(hashtags);
       return post;
     } catch (err) {
       handleServiceError(err);

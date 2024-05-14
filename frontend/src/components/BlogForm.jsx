@@ -10,7 +10,6 @@ const BlogForm = ({ blogPost }) => {
   const [image, setImage] = useState(false);
   const [prevImg, setPrevImg] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [sth, setSth] = useState();
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -39,13 +38,11 @@ const BlogForm = ({ blogPost }) => {
 
   useEffect(() => {
     if (blogPost) {
-      const defaultSelectedCategories = blogPost.Hashtag;
-      if (defaultSelectedCategories) {
-        setSth(defaultSelectedCategories);
-      }
+      const defaultSelectedCategories = blogPost.Hashtags;
+      // console.log('formdata.selectedCategories.length', defaultSelectedCategories?.length);
       const firstImage = blogPost.Image
       if (firstImage) {
-       setPrevImg(firstImage.url);
+        setPrevImg(firstImage.url);
       }
       setFormData({
         title: blogPost.title,
@@ -122,6 +119,7 @@ const BlogForm = ({ blogPost }) => {
     }
   };
 
+
   return (
     <form onSubmit={handleSubmit} className="mt-8 w-2/5 mx-auto border-2 p-3 rounded bg-zinc-50">
       <InputField
@@ -145,9 +143,9 @@ const BlogForm = ({ blogPost }) => {
         onChange={handleChange}
         placeholder="Content"
       />
-      <Select 
+      <Select
         className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none"
-        name="selectedCategory"         
+        name="selectedCategory"
         options={categories}
         isMulti
         getOptionLabel={option => option.name}
@@ -156,16 +154,12 @@ const BlogForm = ({ blogPost }) => {
           const selectedCategories = selectedOptions.map(option => option.name);
           setFormData({ ...formData, selectedCategory: selectedCategories });
         }}
-        // defaultValue={Array.isArray(formData.selectedCategory) ? 
-        //   formData.selectedCategory.map(category => ({ name: category.name, id: category.id })) : 
-        //   null}       
-      // defaultValue={categories.filter(category => formData.selectedCategory?.includes(category.name))}
-      // defaultValue={formData.selectedCategory ? 
-      //   [{ name: formData.selectedCategory[0].name, id: 1 }] : 
-      //   null
-      // }
-      // defaultValue={sth}
-        />
+
+        defaultValue={Array.isArray(formData.selectedCategory) ? 
+          formData.selectedCategory.map(category => ({ name: category.name, id: category.id })) :
+          null
+        }   
+      />
       <label htmlFor="file-input">
         {prevImg ? (
           <img src={prevImg} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />

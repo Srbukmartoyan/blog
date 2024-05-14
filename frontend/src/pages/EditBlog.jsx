@@ -10,7 +10,6 @@ const EditBlog = () => {
     const fetchBlogPost = async () => {
       try {
         const response = await fetch(`/posts/${blogId}`);
-        console.log(response, 'res');
         if (!response.ok) {
           throw new Error('Failed to fetch blog post');
         }
