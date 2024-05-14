@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "Introduction to React Hooks",
+    "author": "John Doe",
+    "date": "April 20, 2024",
+    "excerpt": "In this post, we will explore the basics of React Hooks and how they can be used to manage state and side effects in functional components.",
+    "content": "1Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac tellus posuere, ultricies purus quis, malesuada felis. Integer sollicitudin nunc in est accumsan fringilla. Suspendisse potenti. Nulla facilisi. Vivamus et semper augue. Vestibulum nec mauris quis lacus mattis condimentum. Ut at mauris vel mi tempor consectetur eu non arcu. Morbi ac arcu sed arcu placerat feugiat. Fusce tincidunt, sem a fringilla accumsan, ex arcu egestas felis, at tincidunt odio eros eu libero."
+  },
+  {
+    "id": 2,
+    "title": "Getting Started with Tailwind CSS",
+    "author": "Jane Smith",
+    "date": "April 15, 2024",
+    "excerpt": "Learn how to quickly set up and start using Tailwind CSS to streamline your web development workflow and create beautiful, responsive designs.",
+    "content": "2Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac tellus posuere, ultricies purus quis, malesuada felis. Integer sollicitudin nunc in est accumsan fringilla. Suspendisse potenti. Nulla facilisi. Vivamus et semper augue. Vestibulum nec mauris quis lacus mattis condimentum. Ut at mauris vel mi tempor consectetur eu non arcu. Morbi ac arcu sed arcu placerat feugiat. Fusce tincidunt, sem a fringilla accumsan, ex arcu egestas felis, at tincidunt odio eros eu libero."
+  },
+  {
+    "id": 3,
+    "title": "Introduction to React Router",
+    "author": "John Doe",
+    "date": "April 20, 2024",
+    "excerpt": "In this post, we will explore the basics of React Hooks and how they can be used to manage state and side effects in functional components.",
+    "content": "3Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac tellus posuere, ultricies purus quis, malesuada felis. Integer sollicitudin nunc in est accumsan fringilla. Suspendisse potenti. Nulla facilisi. Vivamus et semper augue. Vestibulum nec mauris quis lacus mattis condimentum. Ut at mauris vel mi tempor consectetur eu non arcu. Morbi ac arcu sed arcu placerat feugiat. Fusce tincidunt, sem a fringilla accumsan, ex arcu egestas felis, at tincidunt odio eros eu libero."
+  },
+  {
+    "id": 4,
+    "title": "Getting Started with THML",
+    "author": "Jane Smith",
+    "date": "April 15, 2024",
+    "excerpt": "Learn how to quickly set up and start using Tailwind CSS to streamline your web development workflow and create beautiful, responsive designs.",
+    "content": "4Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac tellus posuere, ultricies purus quis, malesuada felis. Integer sollicitudin nunc in est accumsan fringilla. Suspendisse potenti. Nulla facilisi. Vivamus et semper augue. Vestibulum nec mauris quis lacus mattis condimentum. Ut at mauris vel mi tempor consectetur eu non arcu. Morbi ac arcu sed arcu placerat feugiat. Fusce tincidunt, sem a fringilla accumsan, ex arcu egestas felis, at tincidunt odio eros eu libero."
+  },
+  {
+    "id": 5,
+    "title": "Introduction to JS",
+    "author": "John Doe",
+    "date": "April 20, 2024",
+    "excerpt": "In this post, we will explore the basics of React Hooks and how they can be used to manage state and side effects in functional components.",
+    "content": "5Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac tellus posuere, ultricies purus quis, malesuada felis. Integer sollicitudin nunc in est accumsan fringilla. Suspendisse potenti. Nulla facilisi. Vivamus et semper augue. Vestibulum nec mauris quis lacus mattis condimentum. Ut at mauris vel mi tempor consectetur eu non arcu. Morbi ac arcu sed arcu placerat feugiat. Fusce tincidunt, sem a fringilla accumsan, ex arcu egestas felis, at tincidunt odio eros eu libero."
+  },
+  {
+    "id": 6,
+    "title": "Getting Started with C++",
+    "author": "Jane Smith",
+    "date": "April 15, 2024",
+    "excerpt": "Learn how to quickly set up and start using Tailwind CSS to streamline your web development workflow and create beautiful, responsive designs.",
+    "content": "6Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac tellus posuere, ultricies purus quis, malesuada felis. Integer sollicitudin nunc in est accumsan fringilla. Suspendisse potenti. Nulla facilisi. Vivamus et semper augue. Vestibulum nec mauris quis lacus mattis condimentum. Ut at mauris vel mi tempor consectetur eu non arcu. Morbi ac arcu sed arcu placerat feugiat. Fusce tincidunt, sem a fringilla accumsan, ex arcu egestas felis, at tincidunt odio eros eu libero."
+  }
+]
