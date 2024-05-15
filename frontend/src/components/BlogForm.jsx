@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AsyncSelect from 'react-select/async';
+import Select from 'react-select';
 import InputField from './InputField';
 import { Button } from './Button';
 import upload_area from '../assets/upload_area.svg';
@@ -10,7 +10,7 @@ const BlogForm = ({ blogPost }) => {
   const navigate = useNavigate();
   const [image, setImage] = useState(false);
   const [prevImg, setPrevImg] = useState(false);
-  // const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -19,41 +19,23 @@ const BlogForm = ({ blogPost }) => {
     image: '',
   });
 
-
-  const loadOptions = async (inputValue, callback) => {
+  const fetchCategories = async () => {
     try {
       const response = await fetch('/hashtags');
       if (!response.ok) {
         throw new Error('Failed to fetch categories');
       }
       const data = await response.json();
-      
-      const options = data.map(tag => ({ value: tag.id, label: tag.name }));
-      console.log(options, 'options');
-  
-      callback(options);
+      console.log(data,'hashtasg');
+      setCategories(data);
     } catch (error) {
       console.error(error);
-      callback([]);
     }
   };
-  
-  // const fetchCategories = async () => {
-  //   try {
-  //     const response = await fetch('/hashtags');
-  //     if (!response.ok) {
-  //       throw new Error('Failed to fetch categories');
-  //     }
-  //     const data = await response.json();
-  //     setCategories(data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
-  // useEffect(() => {
-  //   fetchCategories();
-  // }, []);
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     if (blogPost) {
@@ -127,7 +109,6 @@ const BlogForm = ({ blogPost }) => {
     }
   };
 
-
   return (
     <form onSubmit={handleSubmit} className="mt-8 w-2/5 mx-auto border-2 p-3 rounded bg-zinc-50">
       <InputField
@@ -151,11 +132,11 @@ const BlogForm = ({ blogPost }) => {
         onChange={handleChange}
         placeholder="Content"
       />
-      <AsyncSelect
+      <Select
         className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none"
         name="selectedCategory"
         cacheOptions
-        loadOptions={loadOptions}
+        options={categories}
         isMulti
         getOptionLabel={option => option.name}
         getOptionValue={option => option.id}
@@ -163,7 +144,7 @@ const BlogForm = ({ blogPost }) => {
           const selectedCategories = selectedOptions.map(option => option.name);
           setFormData({ ...formData, selectedCategory: selectedCategories });
         }}
-        value={formData.selectedCategory}
+        value={blogPost ? formData.selectedCategory : ''}
       />
       <label htmlFor="file-input">
         {prevImg ? (
