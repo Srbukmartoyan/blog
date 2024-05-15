@@ -6,6 +6,7 @@ import { Button } from './Button';
 import upload_area from '../assets/upload_area.svg';
 
 const BlogForm = ({ blogPost }) => {
+  console.log('blogForm', blogPost);
   const navigate = useNavigate();
   const [image, setImage] = useState(false);
   const [prevImg, setPrevImg] = useState(false);
@@ -38,9 +39,8 @@ const BlogForm = ({ blogPost }) => {
 
   useEffect(() => {
     if (blogPost) {
-      const defaultSelectedCategories = blogPost.Hashtags;
-      // console.log('formdata.selectedCategories.length', defaultSelectedCategories?.length);
-      const firstImage = blogPost.Image
+      const defaultSelectedCategories = blogPost.Hashtags.map(tag => ({ name: tag.name, id: tag.id }));
+      const firstImage = blogPost.Image;
       if (firstImage) {
         setPrevImg(firstImage.url);
       }
@@ -93,29 +93,19 @@ const BlogForm = ({ blogPost }) => {
 
     if (responseData.success) {
       form.image = responseData?.image_url;
-      if (blogPost) {
-        await fetch(`/posts/${blogPost.id}`, {
-          method: 'PUT',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(form),
-        }).then((resp) => resp.json()).then((data) => {
-          handlePostResponse(data, 'Post Updated', 'Failed to update post');
-        });
-      } else {
-        await fetch('/posts', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(form),
-        }).then((resp) => resp.json()).then((data) => {
-          handlePostResponse(data, 'Post Added', 'Failed to add post');
-        })
-      }
+
+      await fetch(blogPost ? `/posts/${blogPost.id}` : '/posts', {
+        method: blogPost ? 'PUT' : 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(form),
+      }).then((resp) => resp.json()).then((data) => {
+        const successMessage = blogPost ? 'Post Updated' : 'Post Added';
+        const failureMessage = blogPost ? 'Failed to update post' : 'Failed to add post';
+        handlePostResponse(data, successMessage, failureMessage);
+      });
     }
   };
 
@@ -154,11 +144,7 @@ const BlogForm = ({ blogPost }) => {
           const selectedCategories = selectedOptions.map(option => option.name);
           setFormData({ ...formData, selectedCategory: selectedCategories });
         }}
-
-        defaultValue={Array.isArray(formData.selectedCategory) ? 
-          formData.selectedCategory.map(category => ({ name: category.name, id: category.id })) :
-          null
-        }   
+        defaultValue={formData.selectedCategory}
       />
       <label htmlFor="file-input">
         {prevImg ? (

@@ -4,6 +4,7 @@ import { useGlobalContext } from '../context/useContext';
 import { BlogForm } from '../components';
 
 const EditBlog = () => {
+  console.log('editblog');
   const { blogId } = useParams();
   const [blogPost, setBlogPost] = useState({});
   useEffect(() => {
@@ -26,7 +27,7 @@ const EditBlog = () => {
     <div>
       <div>
         <h1 className='text-center'>Edit Blog</h1>
-        <BlogForm blogPost={blogPost} />
+        {Object.keys(blogPost).length > 0 && <BlogForm blogPost={blogPost} />}
       </div>
     </div>
   )
