@@ -57,6 +57,10 @@ const BlogForm = ({ blogPost }) => {
     setPrevImg(false);
   }
 
+  const deleteImage = () => {
+    setPrevImg(false);
+  }
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -119,18 +123,6 @@ const BlogForm = ({ blogPost }) => {
     if (responseData.success) {
       form.image = responseData?.image_url;
       savePost(form)
-      // await fetch(blogPost ? `/posts/${blogPost.id}` : '/posts', {
-      //   method: blogPost ? 'PUT' : 'POST',
-      //   headers: {
-      //     Accept: 'application/json',
-      //     'Content-Type': 'application/json'
-      //   },
-      //   body: JSON.stringify(form),
-      // }).then((resp) => resp.json()).then((data) => {
-      //   const successMessage = blogPost ? 'Post Updated' : 'Post Added';
-      //   const failureMessage = blogPost ? 'Failed to update post' : 'Failed to add post';
-      //   handlePostResponse(data, successMessage, failureMessage);
-      // });
     }
   };
 
@@ -167,7 +159,6 @@ const BlogForm = ({ blogPost }) => {
           getOptionLabel={option => option.name}
           getOptionValue={option => option.id}
           onChange={(selectedOptions) => {
-            console.log('changes');
             const selectedCategories = selectedOptions.map(option => option.name);
             !selectedCategories.length ? setEmpty(true) : setEmpty(false);
             setFormData({ ...formData, selectedCategory: selectedCategories });
@@ -181,6 +172,7 @@ const BlogForm = ({ blogPost }) => {
             <img src={image ? URL.createObjectURL(image) : upload_area} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
           )}
         </label>
+        <Button text={'Clear Image'} onClick={deleteImage} type='button' />
         <input onChange={imageHandler} type="file" name='image' id='file-input' hidden />
         <Button text={blogPost ? 'Save Changes' : 'Create Blog'} type='submit' />
       </form>

@@ -69,6 +69,8 @@ const PostService = {
       if (image) {
         const newImage = await Image.create({ url: image, postId: id });
         await post.setImage(newImage);
+      } else {
+        await post.Image.destroy();
       }
 
       const hashtags = await Promise.all(selectedCategory.map(category => Hashtag.findOne({ where: { name: category } })));
