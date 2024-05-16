@@ -23,6 +23,7 @@ const FullBlog = () => {
     fetchBlogPost();
   }, [blogId]);
 
+  console.log(blogPost);
   return (
     <div className='mb-10'>
       {blogPost ? (
@@ -32,9 +33,11 @@ const FullBlog = () => {
           <p className='text-gray-600 mb-2'>Publication Date: {blogPost.createdAt}</p>
           <p className='text-gray-800'>{blogPost.content}</p>
 
-          <div className="mt-4">
-            <img key={blogPost.Image?.id} src={blogPost.Image?.url} alt={`Image ${blogPost.Image?.id}`} className="w-60 h-60 my-2 object-contain mx-auto" />
-          </div>
+          {blogPost.Image && ( // Conditionally render the image if blogPost.Image exists
+            <div className="mt-4">
+              <img key={blogPost.Image.id} src={blogPost.Image.url} alt={`Image ${blogPost.Image.id}`} className="w-60 h-60 my-2 object-contain mx-auto" />
+            </div>
+          )}
 
           <div className="mt-5 flex justify-center">
             {blogPost.Hashtags && blogPost.Hashtags.map(hashtag => (
