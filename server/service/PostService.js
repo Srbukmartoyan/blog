@@ -1,4 +1,4 @@
-const { Post, Author, Hashtag, Image, PostHashtag } = require('../models');
+const { Post, Author, Hashtag, Image } = require('../models');
 const { handleServiceError } = require('../middleware/errorHandler.js');
 
 const PostService = {
@@ -70,7 +70,7 @@ const PostService = {
         const newImage = await Image.create({ url: image, postId: id });
         await post.setImage(newImage);
       } else {
-        await post.Image.destroy();
+        await post.Image?.destroy();
       }
 
       const hashtags = await Promise.all(selectedCategory.map(category => Hashtag.findOne({ where: { name: category } })));
@@ -82,10 +82,13 @@ const PostService = {
   },
   deletePost: async (id) => {
     try {
-      const post = await Post.findByPk(id);
+      const post = await Post.findByPk(id, { include : [Image, Hashtag] });
+      console.log(post);
       if (!post) {
         throw new Error('Post not found');
       }
+      await post.Image?.destroy();
+      await post.setHashtags([]);
       await post.destroy();
       return { message: 'post deleted!' };
     } catch (err) {
