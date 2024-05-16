@@ -1,23 +1,23 @@
 const { Post, Author, Hashtag, Image, PostHashtag } = require('../models');
 const { handleServiceError } = require('../middleware/errorHandler.js');
- 
+
 const PostService = {
   getAllPosts: async () => {
     try {
-      const posts = await Post.findAll({ include : [{ model : Author }] });
+      const posts = await Post.findAll({ include: [{ model: Author }] });
       return posts;
     } catch (err) {
-      handleServiceError(err); 
+      handleServiceError(err);
     }
   },
   getPost: async (id) => {
     try {
-      const post = await Post.findByPk(id, { 
-        include : [
-          { model : Author },
+      const post = await Post.findByPk(id, {
+        include: [
+          { model: Author },
           { model: Image },
-          { model: Hashtag,},
-        ] 
+          { model: Hashtag, },
+        ]
       });
       if (!post) {
         throw new Error('Post not found');
@@ -39,9 +39,9 @@ const PostService = {
         const newImage = await Image.create({ url: image, postId: post.id });
         await post.setImage(newImage);
       }
-      
+
       for (const category of selectedCategories) {
-        const hashtag = await Hashtag.findOne({ where: { name: category } });    
+        const hashtag = await Hashtag.findOne({ where: { name: category } });
         await post.addHashtags(hashtag);
       }
       return post;
@@ -51,7 +51,7 @@ const PostService = {
   },
   updatePost: async (title, content, excerpt, id, authorName, image, selectedCategory) => {
     try {
-      const post = await Post.findByPk(id, { include: [Author, Image, Hashtag] }); 
+      const post = await Post.findByPk(id, { include: [Author, Image, Hashtag] });
       if (!post) {
         throw new Error('Post not found');
       }
@@ -70,17 +70,14 @@ const PostService = {
         const newImage = await Image.create({ url: image, postId: id });
         await post.setImages([newImage]);
       }
-      if (selectedCategory) {
-        const hashtag = await Hashtag.findOne({ where: { name: selectedCategory } });
-        if (hashtag) {
-          await post.setHashtags([hashtag]);
-        }
-      }
+      const hashtags = await Promise.all(selectedCategory.map(category => Hashtag.findOne({ where: { name: category } })));
+
+      await post.setHashtags(hashtags);
       return post;
     } catch (err) {
       handleServiceError(err);
     }
-  }, 
+  },
   deletePost: async (id) => {
     try {
       const post = await Post.findByPk(id);
@@ -88,7 +85,7 @@ const PostService = {
         throw new Error('Post not found');
       }
       await post.destroy();
-      return { message : 'post deleted!' };
+      return { message: 'post deleted!' };
     } catch (err) {
       handleServiceError(err);
     }

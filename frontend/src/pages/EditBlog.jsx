@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useGlobalContext } from '../context/useContext';
 import { BlogForm } from '../components';
 
 const EditBlog = () => {
-  console.log('editblog');
   const { blogId } = useParams();
   const [blogPost, setBlogPost] = useState({});
   useEffect(() => {

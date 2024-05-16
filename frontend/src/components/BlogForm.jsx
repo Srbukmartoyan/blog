@@ -6,11 +6,11 @@ import { Button } from './Button';
 import upload_area from '../assets/upload_area.svg';
 
 const BlogForm = ({ blogPost }) => {
-  console.log('blogForm', blogPost);
   const navigate = useNavigate();
   const [image, setImage] = useState(false);
   const [prevImg, setPrevImg] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [empty, setEmpty] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     author: '',
@@ -18,8 +18,6 @@ const BlogForm = ({ blogPost }) => {
     selectedCategory: [],
     image: '',
   });
-
-  const minLength = 1;
   const fetchCategories = async () => {
     try {
       const response = await fetch('/hashtags');
@@ -27,7 +25,6 @@ const BlogForm = ({ blogPost }) => {
         throw new Error('Failed to fetch categories');
       }
       const data = await response.json();
-      console.log(data,'hashtasg');
       setCategories(data);
     } catch (error) {
       console.error(error);
@@ -78,6 +75,15 @@ const BlogForm = ({ blogPost }) => {
     e.preventDefault();
     let form = formData;
     form.excerpt = form.content.substring(0, 100);
+    if ((typeof(form.selectedCategory[0]) == 'object') && !empty) {
+      let newSelectedCategory = form.selectedCategory.map(el => el.name);
+      form.selectedCategory = newSelectedCategory;
+    } else if (empty){
+      form.selectedCategory = [];
+    } else {
+      console.log(form.selectedCategory, '3 else');
+
+    }
     let responseData = { success: true };
 
     if (image) {
@@ -94,7 +100,6 @@ const BlogForm = ({ blogPost }) => {
 
     if (responseData.success) {
       form.image = responseData?.image_url;
-
       await fetch(blogPost ? `/posts/${blogPost.id}` : '/posts', {
         method: blogPost ? 'PUT' : 'POST',
         headers: {
@@ -143,7 +148,9 @@ const BlogForm = ({ blogPost }) => {
           getOptionLabel={option => option.name}
           getOptionValue={option => option.id}
           onChange={(selectedOptions) => {
+            console.log('changes');
             const selectedCategories = selectedOptions.map(option => option.name);
+            !selectedCategories.length ? setEmpty(true): setEmpty(false);
             setFormData({ ...formData, selectedCategory: selectedCategories });
           }}
           defaultValue={formData.selectedCategory}
@@ -160,9 +167,10 @@ const BlogForm = ({ blogPost }) => {
       </form>
     );
   } else {
-    return (
-      <p>Please select at least {minLength} category</p>
-    )
+    const defaultCategory = categories.length > 0 ? categories[0] : null;
+    if (defaultCategory) {
+      setFormData({ ...formData, selectedCategory: [defaultCategory] });
+    }
   }
 }
 
