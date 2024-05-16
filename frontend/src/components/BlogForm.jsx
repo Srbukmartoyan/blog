@@ -80,10 +80,7 @@ const BlogForm = ({ blogPost }) => {
       form.selectedCategory = newSelectedCategory;
     } else if (empty){
       form.selectedCategory = [];
-    } else {
-      console.log(form.selectedCategory, '3 else');
-
-    }
+    } 
     let responseData = { success: true };
 
     if (image) {

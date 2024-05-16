@@ -68,10 +68,10 @@ const PostService = {
       await post.save(); // after post is added to database, associations are seted
       if (image) {
         const newImage = await Image.create({ url: image, postId: id });
-        await post.setImages([newImage]);
+        await post.setImage(newImage);
       }
-      const hashtags = await Promise.all(selectedCategory.map(category => Hashtag.findOne({ where: { name: category } })));
 
+      const hashtags = await Promise.all(selectedCategory.map(category => Hashtag.findOne({ where: { name: category } })));
       await post.setHashtags(hashtags);
       return post;
     } catch (err) {
