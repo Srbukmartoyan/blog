@@ -71,22 +71,12 @@ const BlogForm = ({ blogPost }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    let form = formData;
-    form.excerpt = form.content.substring(0, 100);
-    if ((typeof(form.selectedCategory[0]) == 'object') && !empty) {
-      let newSelectedCategory = form.selectedCategory.map(el => el.name);
-      form.selectedCategory = newSelectedCategory;
-    } else if (empty){
-      form.selectedCategory = [];
-    } 
+  const uploadImage = async (image) => {
     let responseData = { success: true };
-
     if (image) {
       let imgFormData = new FormData();
       imgFormData.append('post-img', image);
-      await fetch('/upload', { //saving here image with new path - geting from back
+      await fetch('/upload', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -94,21 +84,53 @@ const BlogForm = ({ blogPost }) => {
         body: imgFormData,
       }).then((resp) => resp.json()).then((data) => responseData = data);
     }
+    return responseData;
+  };
+
+  const savePost = async (form) => {
+    const response = await fetch(blogPost ? `/posts/${blogPost.id}` : '/posts', {
+      method: blogPost ? 'PUT' : 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form),
+    });
+    const data = await response.json();
+    const successMessage = blogPost ? 'Post Updated' : 'Post Added';
+    const failureMessage = blogPost ? 'Failed to update post' : 'Failed to add post';
+    handlePostResponse(data, successMessage, failureMessage);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let form = formData;
+    form.excerpt = form.content.substring(0, 100);
+
+    if ((typeof (form.selectedCategory[0]) == 'object') && !empty) {
+      let newSelectedCategory = form.selectedCategory.map(el => el.name);
+      form.selectedCategory = newSelectedCategory;
+    } else if (empty) {
+      form.selectedCategory = [];
+    }
+
+    const responseData = await uploadImage(image);
 
     if (responseData.success) {
       form.image = responseData?.image_url;
-      await fetch(blogPost ? `/posts/${blogPost.id}` : '/posts', {
-        method: blogPost ? 'PUT' : 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(form),
-      }).then((resp) => resp.json()).then((data) => {
-        const successMessage = blogPost ? 'Post Updated' : 'Post Added';
-        const failureMessage = blogPost ? 'Failed to update post' : 'Failed to add post';
-        handlePostResponse(data, successMessage, failureMessage);
-      });
+      savePost(form)
+      // await fetch(blogPost ? `/posts/${blogPost.id}` : '/posts', {
+      //   method: blogPost ? 'PUT' : 'POST',
+      //   headers: {
+      //     Accept: 'application/json',
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify(form),
+      // }).then((resp) => resp.json()).then((data) => {
+      //   const successMessage = blogPost ? 'Post Updated' : 'Post Added';
+      //   const failureMessage = blogPost ? 'Failed to update post' : 'Failed to add post';
+      //   handlePostResponse(data, successMessage, failureMessage);
+      // });
     }
   };
 
@@ -147,7 +169,7 @@ const BlogForm = ({ blogPost }) => {
           onChange={(selectedOptions) => {
             console.log('changes');
             const selectedCategories = selectedOptions.map(option => option.name);
-            !selectedCategories.length ? setEmpty(true): setEmpty(false);
+            !selectedCategories.length ? setEmpty(true) : setEmpty(false);
             setFormData({ ...formData, selectedCategory: selectedCategories });
           }}
           defaultValue={formData.selectedCategory}
