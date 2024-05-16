@@ -15,10 +15,11 @@ const BlogForm = ({ blogPost }) => {
     title: '',
     author: '',
     content: '',
-    selectedCategory: '',
+    selectedCategory: [],
     image: '',
   });
 
+  const minLength = 1;
   const fetchCategories = async () => {
     try {
       const response = await fetch('/hashtags');
@@ -109,54 +110,60 @@ const BlogForm = ({ blogPost }) => {
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit} className="mt-8 w-2/5 mx-auto border-2 p-3 rounded bg-zinc-50">
-      <InputField
-        type="text"
-        name="title"
-        value={formData.title}
-        onChange={handleChange}
-        placeholder="Title"
-      />
-      <InputField
-        type="text"
-        name="author"
-        value={formData.author}
-        onChange={handleChange}
-        placeholder="Author"
-      />
-      <InputField
-        type="textarea"
-        name="content"
-        value={formData.content}
-        onChange={handleChange}
-        placeholder="Content"
-      />
-      <Select
-        className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none"
-        name="selectedCategory"
-        cacheOptions
-        options={categories}
-        isMulti
-        getOptionLabel={option => option.name}
-        getOptionValue={option => option.id}
-        onChange={(selectedOptions) => {
-          const selectedCategories = selectedOptions.map(option => option.name);
-          setFormData({ ...formData, selectedCategory: selectedCategories });
-        }}
-        value={blogPost ? formData.selectedCategory : ''}
-      />
-      <label htmlFor="file-input">
-        {prevImg ? (
-          <img src={prevImg} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
-        ) : (
-          <img src={image ? URL.createObjectURL(image) : upload_area} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
-        )}
-      </label>
-      <input onChange={imageHandler} type="file" name='image' id='file-input' hidden />
-      <Button text={blogPost ? 'Save Changes' : 'Create Blog'} type='submit' />
-    </form>
-  );
+  if (formData.selectedCategory.length > 0) {
+    return (
+      <form onSubmit={handleSubmit} className="mt-8 w-2/5 mx-auto border-2 p-3 rounded bg-zinc-50">
+        <InputField
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          placeholder="Title"
+        />
+        <InputField
+          type="text"
+          name="author"
+          value={formData.author}
+          onChange={handleChange}
+          placeholder="Author"
+        />
+        <InputField
+          type="textarea"
+          name="content"
+          value={formData.content}
+          onChange={handleChange}
+          placeholder="Content"
+        />
+        <Select
+          className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none"
+          name="selectedCategory"
+          cacheOptions
+          options={categories}
+          isMulti
+          getOptionLabel={option => option.name}
+          getOptionValue={option => option.id}
+          onChange={(selectedOptions) => {
+            const selectedCategories = selectedOptions.map(option => option.name);
+            setFormData({ ...formData, selectedCategory: selectedCategories });
+          }}
+          defaultValue={formData.selectedCategory}
+        />
+        <label htmlFor="file-input">
+          {prevImg ? (
+            <img src={prevImg} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
+          ) : (
+            <img src={image ? URL.createObjectURL(image) : upload_area} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
+          )}
+        </label>
+        <input onChange={imageHandler} type="file" name='image' id='file-input' hidden />
+        <Button text={blogPost ? 'Save Changes' : 'Create Blog'} type='submit' />
+      </form>
+    );
+  } else {
+    return (
+      <p>Please select at least {minLength} category</p>
+    )
+  }
 }
 
 export default BlogForm;
