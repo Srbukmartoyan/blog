@@ -87,8 +87,6 @@ const PostService = {
       if (!post) {
         throw new Error('Post not found');
       }
-      await post.Image?.destroy();
-      await post.setHashtags([]);
       await post.destroy();
       return { message: 'post deleted!' };
     } catch (err) {

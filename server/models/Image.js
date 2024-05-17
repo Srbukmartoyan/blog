@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
     url : {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    postId : {
+      type: DataTypes.INTEGER,
     }
   }, {
     sequelize,
