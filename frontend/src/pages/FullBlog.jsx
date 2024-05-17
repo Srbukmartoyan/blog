@@ -24,7 +24,7 @@ const FullBlog = () => {
   }, [blogId]);
 
   return (
-    <div className='mb-10'>
+    <div className='mx-auto px-8 py-4 bg-blue-100 rounded-md w-full'>
       {blogPost ? (
         <div className='lg:w-1/3 bg-white shadow-md rounded-md mx-auto my-10 p-9 hover:scale-110 transition ease-linear duration-150'>
           <h2 className='text-xl font-semibold mb-4 text-center'>{blogPost.title}</h2>

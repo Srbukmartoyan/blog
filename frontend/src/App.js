@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Navbar } from "./components"
-import {Home, InfoPage, FullBlog, EditBlog, CreateBlog} from './pages'
+import {Home, InfoPage, FullBlog, EditBlog, CreateBlog, LoginSignUp} from './pages'
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
             <Route path="/blog/:blogId" element={<FullBlog />}/>
             <Route path="/blog/:blogId/edit" element={<EditBlog />} />
             <Route path="/blog/create" element={<CreateBlog />} />
+            <Route path="/login" element={<LoginSignUp />}/>
           </Routes>
         {/* <Footer /> */}
       </BrowserRouter>

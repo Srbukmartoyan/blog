@@ -128,7 +128,7 @@ const BlogForm = ({ blogPost }) => {
 
   if (formData.selectedCategory.length > 0) {
     return (
-      <form onSubmit={handleSubmit} className="mt-8 w-2/5 mx-auto border-2 p-3 rounded bg-zinc-50">
+      <form onSubmit={handleSubmit} className="w-3/4 sm:w-96 border-2 p-4 rounded bg-zinc-50">
         <InputField
           type="text"
           name="title"

@@ -22,11 +22,8 @@ const EditBlog = () => {
   }, [blogId]);
 
   return (
-    <div>
-      <div>
-        <h1 className='text-center'>Edit Blog</h1>
-        {Object.keys(blogPost).length > 0 && <BlogForm blogPost={blogPost} />}
-      </div>
+    <div className='w-full h-[92vh] bg-blue-100 flex justify-center items-center'>
+      {Object.keys(blogPost).length > 0 && <BlogForm blogPost={blogPost} />}
     </div>
   )
 }
