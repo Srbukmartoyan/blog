@@ -91,11 +91,12 @@ const BlogForm = ({ blogPost }) => {
     return responseData;
   };
 
-  const savePost = async (form) => {
+  const savePost = async (form, token) => {
     const response = await fetch(blogPost ? `/posts/${blogPost.id}` : '/posts', {
       method: blogPost ? 'PUT' : 'POST',
       headers: {
         Accept: 'application/json',
+        'auth-token': token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(form),
@@ -108,6 +109,11 @@ const BlogForm = ({ blogPost }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('auth-token');
+    if (!token) {
+      alert('You must be logged in to create or update a post.');
+      return;
+    }
     let form = formData;
     form.excerpt = form.content.substring(0, 100);
 
@@ -122,7 +128,7 @@ const BlogForm = ({ blogPost }) => {
 
     if (responseData.success) {
       form.image = responseData?.image_url;
-      savePost(form)
+      savePost(form, token)
     }
   };
 

@@ -20,7 +20,7 @@ const PostController = {
     }
   },
   createPost: async (req, res, next) => {
-    console.log(req.body);
+    console.log(req.body, 'req.user:', req.user);
     const { title, content, excerpt, author, image, selectedCategory } = req.body; //assume that author is authenticated
 
     const requiredFields = ['title', 'content', 'excerpt', 'author', 'selectedCategory'];

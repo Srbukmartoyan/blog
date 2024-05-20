@@ -1,5 +1,6 @@
 const express = require('express');
 const upload = require('../config/multerConfig.js');
+const fetchUser = require('../middleware/auth.js');
 
 const FileUploadController = require('../controller/FileUploadController.js');
 const PostController = require('../controller/PostController.js');
@@ -10,7 +11,7 @@ const router = express.Router();
 
 router.get('/posts', PostController.getAllPosts);
 router.get('/posts/:id', PostController.getPost);
-router.post('/posts', PostController.createPost);
+router.post('/posts', fetchUser, PostController.createPost);
 router.put('/posts/:id', PostController.updatePost);
 router.delete('/posts/:id', PostController.deletePost);
 router.get('/hashtags', HashtagController.getAllhashtags);
