@@ -17,7 +17,6 @@ module.exports = {
           model: 'posts',
           key: 'id',
         },
-        onDelete: 'CASCADE',
       },
       url: {
         type: DataTypes.STRING,

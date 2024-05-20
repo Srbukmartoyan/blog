@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, InputField } from "../components";
 
 const LoginSignUp = () => {
-    const [state, setState] = useState('Sign Up');
+    const [state, setState] = useState('Login');
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -13,13 +13,38 @@ const LoginSignUp = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
 
-    const signup = () => {
+    const handleAuth = async (url, formData) => {
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            const data = await response.json();
+            if (data.success) {
+                localStorage.setItem('auth-token', data.token);
+                window.location.replace('/');
+            } else {
+                alert(data.error);
+            }
+        } catch (error) {
+            console.error('Authentication error:', error);
+            alert('Failed to authenticate');
+        }
+    };
+    
+    const signup = async () => {
+        console.log('Signup function executed', formData);
+        await handleAuth('/signup', formData);
+    };
+    
+    const login = async () => {
         console.log('Login function executed', formData);
-    }
-
-    const login = () => {
-        console.log('signUp function executed', formData);
-    }
+        await handleAuth('/signin', formData);
+    };
+    
 
     return (
         <div className="w-full h-[92vh] bg-blue-100 flex justify-center items-center">
