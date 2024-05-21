@@ -47,9 +47,9 @@ const FullBlog = () => {
           </div>
         </div>
       ) : (
-        <p>Blog post not found!</p>
+        <p>Loading...</p>
       )}
-      <Group start={0} end={3} title="Most Interesting"/>
+      {/* <Group start={0} end={3} title="Most Interesting"/> */}
     </div>
   )
 }

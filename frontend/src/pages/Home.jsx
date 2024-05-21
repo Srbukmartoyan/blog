@@ -18,7 +18,7 @@ const Home = () => {
 
   return (
     <div className='my-8'>
-      <BlogList posts={blogPosts} title="Latest Blog Posts" showActions={false} />
+      <BlogList posts={blogPosts} title="All Blog Posts" showActions={false} />
     </div>
   );
 }
