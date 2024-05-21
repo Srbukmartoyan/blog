@@ -27,12 +27,8 @@ const PostService = {
       handleServiceError(err);
     }
   },
-  createPost: async (title, content, excerpt, authorName, image, selectedCategories) => {
+  createPost: async (title, content, excerpt, author, image, selectedCategories) => {
     try {
-      let author = await Author.findOne({ where: { name: authorName } });
-      if (!author) {
-        author = await Author.create({ name: authorName });
-      }
       const post = await Post.create({ title, content, excerpt, authorId: author.id });
 
       if (image) {

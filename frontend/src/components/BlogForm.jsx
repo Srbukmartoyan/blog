@@ -13,7 +13,6 @@ const BlogForm = ({ blogPost }) => {
   const [empty, setEmpty] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
-    author: '',
     content: '',
     selectedCategory: [],
     image: '',
@@ -44,7 +43,6 @@ const BlogForm = ({ blogPost }) => {
       }
       setFormData({
         title: blogPost.title,
-        author: blogPost.Author?.name,
         content: blogPost.content,
         selectedCategory: defaultSelectedCategories,
         image: blogPost.image,
@@ -128,7 +126,7 @@ const BlogForm = ({ blogPost }) => {
 
     if (responseData.success) {
       form.image = responseData?.image_url;
-      savePost(form, token)
+      savePost(form, token);
     }
   };
 
@@ -141,13 +139,6 @@ const BlogForm = ({ blogPost }) => {
           value={formData.title}
           onChange={handleChange}
           placeholder="Title"
-        />
-        <InputField
-          type="text"
-          name="author"
-          value={formData.author}
-          onChange={handleChange}
-          placeholder="Author"
         />
         <InputField
           type="textarea"

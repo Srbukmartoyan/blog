@@ -21,9 +21,9 @@ const PostController = {
   },
   createPost: async (req, res, next) => {
     console.log(req.body, 'req.user:', req.user);
-    const { title, content, excerpt, author, image, selectedCategory } = req.body; //assume that author is authenticated
+    const { title, content, excerpt, image, selectedCategory } = req.body; //assume that author is authenticated
 
-    const requiredFields = ['title', 'content', 'excerpt', 'author', 'selectedCategory'];
+    const requiredFields = ['title', 'content', 'excerpt', 'selectedCategory'];
     const missingFieldError = checkRequiredFields(req.body, requiredFields);
     if (missingFieldError) {
       const { statusCode, message } = missingFieldError;
@@ -31,6 +31,7 @@ const PostController = {
     }
 
     try {
+      const author = req.user;
       const post = await PostService.createPost(title, content, excerpt, author, image, selectedCategory);
       res.status(201).json({ success : true, post});
     } catch (err) {
