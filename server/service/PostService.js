@@ -45,18 +45,11 @@ const PostService = {
       handleServiceError(err);
     }
   },
-  updatePost: async (title, content, excerpt, id, authorName, image, selectedCategory) => {
+  updatePost: async (title, content, excerpt, id, image, selectedCategory) => {
     try {
       const post = await Post.findByPk(id, { include: [Author, Image, Hashtag] });
       if (!post) {
         throw new Error('Post not found');
-      }
-      if (post.Author.name !== authorName) {
-        let author = await Author.findOne({ where: { name: authorName } });
-        if (!author) {
-          author = await Author.create({ name: authorName });
-        }
-        await post.setAuthor(author);
       }
       post.title = title;
       post.content = content;

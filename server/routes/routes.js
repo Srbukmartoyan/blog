@@ -6,6 +6,7 @@ const FileUploadController = require('../controller/FileUploadController.js');
 const PostController = require('../controller/PostController.js');
 const HashtagController = require('../controller/HashtagController.js');
 const AuthController = require('../controller/AuthController.js');
+const UserController = require('../controller/UserController.js');
 
 const router = express.Router();
 
@@ -18,7 +19,6 @@ router.get('/hashtags', HashtagController.getAllhashtags);
 router.post('/upload', upload.single('post-img'), FileUploadController.uploadFile);
 router.post('/signup', AuthController.signup);
 router.post('/signin', AuthController.signin);
-
-
+router.get('/user/posts', fetchUser, UserController.getAllPosts);
 
 module.exports = router;

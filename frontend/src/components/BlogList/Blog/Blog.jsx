@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useGlobalContext } from '../../../context/useContext';
 import { Button } from '../../Button';
 
-const Blog = ({ title, author, date, excerpt, id }) => {
+const Blog = ({ title, author, date, excerpt, id, showActions }) => {
 
+  const navigate = useNavigate();
   const { blogPosts, setBlogPosts } = useGlobalContext();
 
   const handleDeletePost = async () => {
@@ -17,6 +19,7 @@ const Blog = ({ title, author, date, excerpt, id }) => {
     }
       const updatedPosts = blogPosts.filter(post => post.id !== id);
       setBlogPosts(updatedPosts);
+      navigate('/');
     } catch (error) {
       console.error('Error deleting post:', error);
     }
@@ -37,10 +40,14 @@ const Blog = ({ title, author, date, excerpt, id }) => {
       <p className="text-gray-600 mb-2">Publication Date: {date}</p>
       <p className="text-gray-800">{excerpt}</p>
       </Link>
-      <Link to={`/blog/${id}/edit`}>
-        <Button text='Edit Blog' type='button'/>
-      </Link>
-      <Button text='Delete Blog' type='button' onClick={handleDeletePost}/>
+      {showActions && (
+        <>
+          <Link to={`/blog/${id}/edit`}>
+            <Button text='Edit Blog' type='button'/>
+          </Link>
+          <Button text='Delete Blog' type='button' onClick={handleDeletePost}/>
+        </>
+      )}
     </div>
   );
 }

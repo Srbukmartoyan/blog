@@ -29,7 +29,7 @@ const Navbar = () => {
           </svg>
         </div>
         <div>
-        <ul className={`${isMenuOpen ? 'flex justify-around absolute w-full top-12 left-0 bg-zinc-50 border-b border-b-gray-300' : 'hidden'} md:flex md:space-x-8`}>
+          <ul className={`${isMenuOpen ? 'flex justify-around absolute w-full top-12 left-0 bg-zinc-50 border-b border-b-gray-300' : 'hidden'} md:flex md:space-x-8`}>
             <li className='my-2'>
               <NavLink
                 className='flex justify-between gap-4'
@@ -76,13 +76,24 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li className='my-2'>
-              {localStorage.getItem('auth-token') 
-              ? <button onClick={() => {localStorage.removeItem('auth-token'); window.location.replace('/')}}>Logout</button>
-              : <NavLink 
+              {localStorage.getItem('auth-token')
+                ? <button onClick={() => { localStorage.removeItem('auth-token'); window.location.replace('/') }}>Logout</button>
+                : <NavLink
                   end
                   style={({ isActive }) => ({ color: isActive ? 'blue' : 'black' })}
                   to='/login'><button>Login</button>
                 </NavLink>}
+            </li>
+            <li className='my-2'>
+              <NavLink 
+                end
+                style={({ isActive }) => ({ color: isActive ? 'blue' : 'black' })}
+                to="/user"
+              >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-7 h-7">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+              </svg>
+              </NavLink>
             </li>
           </ul>
         </div>

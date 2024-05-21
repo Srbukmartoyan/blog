@@ -13,12 +13,12 @@ const Home = () => {
   }
 
   useEffect(() => {
-    fetchInfo()
+    fetchInfo();
   }, []);
 
   return (
-    <div className='mt-8'>
-      <BlogList posts={blogPosts} title="Latest Blog Posts" />
+    <div className='my-8'>
+      <BlogList posts={blogPosts} title="Latest Blog Posts" showActions={false} />
     </div>
   );
 }

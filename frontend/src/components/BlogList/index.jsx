@@ -1,7 +1,7 @@
 import React from 'react'
 import Blog from './Blog/Blog';
 
-const BlogList = ({posts, title}) => {
+const BlogList = ({posts, title, showActions}) => {
   return (
     <div className="container mx-auto px-8 py-4 bg-blue-100 rounded-md">
       <h1 className="text-3xl font-bold my-8">{title}</h1>
@@ -9,10 +9,11 @@ const BlogList = ({posts, title}) => {
         <Blog
           key={index}
           title={post.title}
-          author={post.Author.name}
+          author={post.Author?.name}
           date={post.createdAt}
           excerpt={post.excerpt}
           id={post.id}
+          showActions={showActions}
         />
       ))}
     </div>

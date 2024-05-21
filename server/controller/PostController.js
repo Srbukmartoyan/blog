@@ -21,7 +21,7 @@ const PostController = {
   },
   createPost: async (req, res, next) => {
     console.log(req.body, 'req.user:', req.user);
-    const { title, content, excerpt, image, selectedCategory } = req.body; //assume that author is authenticated
+    const { title, content, excerpt, image, selectedCategory } = req.body; 
 
     const requiredFields = ['title', 'content', 'excerpt', 'selectedCategory'];
     const missingFieldError = checkRequiredFields(req.body, requiredFields);
@@ -40,7 +40,7 @@ const PostController = {
   },
   updatePost: async (req, res, next) => {
     const { id } = req.params;
-    const { title, content, excerpt, author, image, selectedCategory } = req.body;
+    const { title, content, excerpt, image, selectedCategory } = req.body;
 
     const requiredFields = ['title', 'content', 'excerpt', 'selectedCategory'];
     const missingFieldError = checkRequiredFields(req.body, requiredFields);
@@ -50,7 +50,7 @@ const PostController = {
     }
     
     try {
-      const post = await PostService.updatePost(title, content, excerpt, id, author, image, selectedCategory);
+      const post = await PostService.updatePost(title, content, excerpt, id, image, selectedCategory);
       res.status(200).json({ success : true, post});
     } catch (err) {
       next(err);
