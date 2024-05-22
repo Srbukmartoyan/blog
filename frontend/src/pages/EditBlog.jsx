@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import { useParams } from 'react-router-dom';
 import { BlogForm } from '../components';
