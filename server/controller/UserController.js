@@ -17,6 +17,15 @@ const UserController = {
         } catch (error) {
             res.status(500).json({ error: 'Failed to fetch user profile' });
         } 
+    },
+    getAuthorPosts: async (req, res) => {
+        const { authorId } = req.params;
+        try {
+          const posts = await UserService.getUserPosts(authorId);
+          res.status(200).json(posts);
+        } catch (error) {
+          res.status(500).json({ error: 'Failed to fetch author\'s posts' });
+        }
     }
 }
 

@@ -1,5 +1,5 @@
-import Group from '../components/Group'
-import { useGlobalContext } from '../context/useContext'
+import Group from '../components/Group';
+import { useGlobalContext } from '../context/useContext';
 
 const InfoPage = () => {
   const { blogPosts } = useGlobalContext();
@@ -15,7 +15,6 @@ const InfoPage = () => {
     acc[authorId].posts.push(post);
     return acc;
   }, {});
-
 
   const groupedPostsArray = Object.values(groupedPosts);
 

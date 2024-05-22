@@ -1,31 +1,27 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import Group from '../components/Group'
+import useSWR from 'swr';
+import { useParams } from 'react-router-dom';
+import { useGlobalContext } from '../context/useContext';
+import Group from '../components/Group';
+
+const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 const FullBlog = () => {
   const { blogId } = useParams();
-  const [blogPost, setBlogPost] = useState(null);
-  useEffect(() => {
-    const fetchBlogPost = async () => {
-      try {
-        const response = await fetch(`/posts/${blogId}`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch blog post');
-        }
-        const post = await response.json();
-        setBlogPost(post);
-      } catch (error) {
-        console.error('Error fetching blog post:', error);
-      }
-    };
 
-    fetchBlogPost();
-  }, [blogId]);
+  const { data: blogPost, error } = useSWR(`/posts/${blogId}`, fetcher);
+  const authorId = blogPost?.Author?.id;
+
+  const { data: authorPosts, error: authorPostsError } = useSWR(
+    authorId ? `/authors/${authorId}/posts` : null,
+    fetcher
+  );
+
+  if (error) return <div>Failed to load blog post</div>;
+  if (!blogPost) return <div>Loading...</div>;
+  if (authorPostsError) return <div>Failed to load author's posts</div>;
 
   return (
     <div className='mx-auto px-8 py-4 bg-blue-100 rounded-md w-full'>
-      {blogPost ? (
         <div className='lg:w-1/3 bg-white shadow-md rounded-md mx-auto my-10 p-9 hover:scale-110 transition ease-linear duration-150'>
           <h2 className='text-xl font-semibold mb-4 text-center'>{blogPost.title}</h2>
           <p className='text-gray-600 mb-2'>Author: {blogPost.Author?.name}</p>
@@ -46,10 +42,11 @@ const FullBlog = () => {
             ))}
           </div>
         </div>
+        {authorPosts ? (
+        <Group posts={authorPosts} title={`More posts by ${blogPost.Author?.name}`} />
       ) : (
-        <p>Loading...</p>
+        <p>Loading author's posts...</p>
       )}
-      {/* <Group start={0} end={3} title="Most Interesting"/> */}
     </div>
   )
 }

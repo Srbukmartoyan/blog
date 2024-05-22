@@ -15,11 +15,16 @@ router.get('/posts/:id', PostController.getPost);
 router.post('/posts', fetchUser, PostController.createPost);
 router.put('/posts/:id', PostController.updatePost);
 router.delete('/posts/:id', PostController.deletePost);
+
 router.get('/hashtags', HashtagController.getAllhashtags);
 router.post('/upload', upload.single('post-img'), FileUploadController.uploadFile);
+
 router.post('/signup', AuthController.signup);
 router.post('/signin', AuthController.signin);
+
 router.get('/user/posts', fetchUser, UserController.getAllPosts);
 router.get('/user/profile', fetchUser, UserController.getProfile);
+router.get('/authors/:authorId/posts', UserController.getAuthorPosts);
+
 
 module.exports = router;
