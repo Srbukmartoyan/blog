@@ -1,6 +1,5 @@
 import useSWR from 'swr';
 import { useParams } from 'react-router-dom';
-import { useGlobalContext } from '../context/useContext';
 import Group from '../components/Group';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());

@@ -1,10 +1,13 @@
 import Group from '../components/Group';
-import { useGlobalContext } from '../context/useContext';
+import { useAllPosts } from '../hooks/useAllPosts';
 
 const InfoPage = () => {
-  const { blogPosts } = useGlobalContext();
+  const { allPosts, isLoading, isError } = useAllPosts();
 
-  const groupedPosts = blogPosts.reduce((acc, post) => {
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching posts.</div>;
+
+  const groupedPosts = allPosts.reduce((acc, post) => {
     const authorId = post.Author.id;
     if (!acc[authorId]) {
       acc[authorId] = {

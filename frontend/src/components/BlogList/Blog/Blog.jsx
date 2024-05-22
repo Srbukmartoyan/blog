@@ -1,13 +1,12 @@
-import React from 'react';
+import { mutate } from 'swr'; 
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useGlobalContext } from '../../../context/useContext';
+import { useAllPosts } from '../../../hooks/useAllPosts';
 import { Button } from '../../Button';
 
 const Blog = ({ title, author, date, excerpt, id, showActions }) => {
-
+  const { allPosts } = useAllPosts();
   const navigate = useNavigate();
-  const { blogPosts, setBlogPosts } = useGlobalContext();
 
   const handleDeletePost = async () => {
     try {
@@ -17,8 +16,7 @@ const Blog = ({ title, author, date, excerpt, id, showActions }) => {
      if (!response.ok) {
       throw new Error('Failed to delete post');
     }
-      const updatedPosts = blogPosts.filter(post => post.id !== id);
-      setBlogPosts(updatedPosts);
+      mutate('/posts', allPosts.filter(post => post.id !== id), false);
       navigate('/');
     } catch (error) {
       console.error('Error deleting post:', error);

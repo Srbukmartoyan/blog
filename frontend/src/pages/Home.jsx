@@ -1,24 +1,15 @@
-import { useEffect } from 'react';
 import { BlogList } from '../components';
-import { useGlobalContext } from '../context/useContext';
-
+import { useAllPosts } from '../hooks/useAllPosts';
 
 const Home = () => {
-  const { blogPosts, setBlogPosts } = useGlobalContext();
+  const { allPosts, isLoading, isError } = useAllPosts(); 
 
-  const fetchInfo = async () => {
-    await fetch('/posts')
-    .then((res) => res.json())
-    .then((data) => setBlogPosts(data));
-  }
-
-  useEffect(() => {
-    fetchInfo();
-  }, []);
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching posts.</div>;
 
   return (
     <div className='my-8'>
-      <BlogList posts={blogPosts} title="All Blog Posts" showActions={false} />
+      <BlogList posts={allPosts} title="All Blog Posts" showActions={false} />
     </div>
   );
 }
