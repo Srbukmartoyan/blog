@@ -3,7 +3,7 @@ import Blog from './Blog/Blog';
 
 const BlogList = ({posts, title, showActions}) => {
   return (
-    <div className="container mx-auto px-8 py-4 bg-blue-100 rounded-md">
+    <div className="container mx-auto px-8 py-4 bg-slate-200 rounded-md">
       <h1 className="text-3xl font-bold my-8">{title}</h1>
       {posts.map((post, index) => (
         <Blog

@@ -47,8 +47,8 @@ const LoginSignUp = () => {
     
 
     return (
-        <div className="w-full h-[92vh] bg-blue-100 flex justify-center items-center">
-            <div className=" w-3/4 sm:w-96 border-2 p-4 rounded bg-zinc-50">
+        <div className="w-full h-[92vh] bg-slate-200 flex justify-center items-center">
+            <div className=" w-3/4 sm:w-96 border-2 border-slate-300 p-4 rounded bg-zinc-50">
                 <h1 className="mx-3.5 font-semibold">{state}</h1>
                 <div className="flex, flex-col gap-5 mt-7">
                     {state === 'Sign Up' ? <InputField name="username" value={formData.username} onChange={changeHandler} type="text" placeholder="your name" /> : <></>}

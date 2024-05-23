@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink } from "react-router-dom";
 
 
@@ -10,9 +10,22 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) { 
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className='bg-zinc-50 sticky w-full top-0 z-10 border-b border-b-gray-300'>
-      <nav className='container mx-auto flex justify-between items-center py-4'>
+      <nav className='container mx-auto flex justify-center gap-2 md:justify-between items-center py-4'>
         <NavLink to='/' end>
           <div className='flex gap-2'>
             <div>
@@ -24,17 +37,17 @@ const Navbar = () => {
           </div>
         </NavLink>
         <div>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className={`w-6 h-6 md:hidden absolute right-0 top-4`} onClick={toggleMenu}>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className={`w-6 h-6 md:hidden`} onClick={toggleMenu}>
             <path fillRule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25a.75.75 0 0 0-1.5 0v4.69L6.03 8.22a.75.75 0 0 0-1.06 1.06l2.5 2.5a.75.75 0 0 0 1.06 0l2.5-2.5a.75.75 0 1 0-1.06-1.06L8.75 9.44V4.75Z" clipRule="evenodd" />
           </svg>
         </div>
         <div>
-          <ul className={`${isMenuOpen ? 'flex justify-around absolute w-full top-12 left-0 bg-zinc-50 border-b border-b-gray-300' : 'hidden'} md:flex md:space-x-8`}>
+          <ul className={`${isMenuOpen ? 'flex justify-around flex-wrap gap-2 absolute w-full top-12 left-0 bg-zinc-50 border-b border-b-gray-300' : 'hidden'} md:flex md:space-x-8`}>
             <li className='my-2'>
               <NavLink
-                className='flex justify-between gap-4'
+                className='flex justify-between gap-2'
                 end
-                style={({ isActive }) => ({ color: isActive ? 'blue' : 'black' })}
+                style={({ isActive }) => ({ color: isActive ? '#6A5ACD' : 'black' })}
                 to="/"
               >
                 <div>Home</div>
@@ -47,9 +60,9 @@ const Navbar = () => {
             </li>
             <li className='my-2'>
               <NavLink
-                className='flex justify-between gap-4'
+                className='flex justify-between gap-2'
                 end
-                style={({ isActive }) => ({ color: isActive ? 'blue' : 'black' })}
+                style={({ isActive }) => ({ color: isActive ? '#6A5ACD' : 'black' })}
                 to="/blog"
               >
                 <div>Blogs</div>
@@ -62,9 +75,9 @@ const Navbar = () => {
             </li>
             <li className='my-2'>
               <NavLink
-                className='flex justify-between gap-4'
+                className='flex justify-between gap-2'
                 end
-                style={({ isActive }) => ({ color: isActive ? 'blue' : 'black' })}
+                style={({ isActive }) => ({ color: isActive ? '#6A5ACD' : 'black' })}
                 to="/blog/create"
               >
                 <div>Create Blog</div>
@@ -80,14 +93,14 @@ const Navbar = () => {
                 ? <button onClick={() => { localStorage.removeItem('auth-token'); window.location.replace('/') }}>Logout</button>
                 : <NavLink
                   end
-                  style={({ isActive }) => ({ color: isActive ? 'blue' : 'black' })}
+                  style={({ isActive }) => ({ color: isActive ? '#6A5ACD' : 'black' })}
                   to='/auth'><button>Login</button>
                 </NavLink>}
             </li>
             <li className='my-2'>
               <NavLink 
                 end
-                style={({ isActive }) => ({ color: isActive ? 'blue' : 'black' })}
+                style={({ isActive }) => ({ color: isActive ? '#6A5ACD' : 'black' })}
                 to="/user"
               >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-7 h-7">

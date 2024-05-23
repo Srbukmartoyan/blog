@@ -12,7 +12,7 @@ const EditBlog = () => {
   if (!blogPost) return <div>Loading...</div>;
 
   return (
-    <div className='w-full h-[92vh] bg-blue-100 flex justify-center items-center'>
+    <div className='w-full h-[92vh] bg-slate-200 flex justify-center items-center'>
       <BlogForm blogPost={blogPost} />
     </div>
   )
