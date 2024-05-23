@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import useSWR from 'swr';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import InputField from './InputField';
@@ -7,8 +6,6 @@ import { Button } from './Button';
 import upload_area from '../assets/upload_area.svg';
 
 const BlogForm = ({ blogPost }) => {
-
-
   const navigate = useNavigate();
   const [image, setImage] = useState(false);
   const [prevImg, setPrevImg] = useState(false);
@@ -50,21 +47,8 @@ const BlogForm = ({ blogPost }) => {
         selectedCategory: defaultSelectedCategories,
         image: blogPost.image,
       });
-      if (blogPostData.Image) {
-        setPrevImg(blogPostData.Image.url);
-      }
     }
-  }, [blogPostData]);
-
-  const getOptions = () => {
-    const { data, error } = useSWR('/hashtags', getOptions);
-  
-    return {
-      options: data,
-      isLoading: !error && !data,
-      isError: error,
-    };
-  };
+  }, [blogPost]);
 
   const imageHandler = (e) => {
     setImage(e.target.files[0]);
