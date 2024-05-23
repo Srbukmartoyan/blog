@@ -5,13 +5,16 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Image extends Model {
     static associate({ Post }) {
-      this.belongsTo(Post, { foreignKey : 'postId' });
+      this.belongsTo(Post, { foreignKey : 'postId', onDelete : 'CASCADE' });
     }
   }
   Image.init({
     url : {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    postId : {
+      type: DataTypes.INTEGER,
     }
   }, {
     sequelize,

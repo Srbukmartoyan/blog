@@ -9,9 +9,13 @@ module.exports = {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      authorId : {
+      authorId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'authors',
+          key : 'id',
+        },
       },
       title: {
         type: DataTypes.STRING,

@@ -3,7 +3,7 @@ import { BlogForm } from '../components'
 
 const CreateBlog = () => {
   return (
-    <div>
+    <div className='w-full h-[92vh] bg-slate-200 flex justify-center items-center'>
       <BlogForm />
     </div>
   )

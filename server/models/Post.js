@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Author, Image, Hashtag }) {
       this.belongsTo(Author, { foreignKey : 'authorId' });
-      this.hasOne(Image, { foreignKey: 'postId'});
+      this.hasOne(Image, { foreignKey: 'postId',  onDelete : 'CASCADE' });
       this.belongsToMany(Hashtag, { 
         through: 'PostHashtag',
         foreignKey: 'postId',

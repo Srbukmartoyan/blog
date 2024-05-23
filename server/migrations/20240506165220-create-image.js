@@ -11,7 +11,12 @@ module.exports = {
       },
       postId: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'posts',
+          key: 'id',
+        },
       },
       url: {
         type: DataTypes.STRING,
