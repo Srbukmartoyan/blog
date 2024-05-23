@@ -14,7 +14,7 @@ function App() {
             <Route path="/blog/:blogId" element={<FullBlog />}/>
             <Route path="/blog/:blogId/edit" element={<EditBlog />} />
             <Route path="/blog/create" element={<CreateBlog />} />
-            <Route path="/login" element={<LoginSignUp />}/>
+            <Route path="/auth" element={<LoginSignUp />}/>
             <Route path="/user" element={<User />}/>
           </Routes>
         {/* <Footer /> */}

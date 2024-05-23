@@ -7,7 +7,7 @@ const AuthController = {
             res.status(201).json({ success: true, token });
         } catch (error) {
             console.error('Error signing up:', error);
-            res.status(500).json({ success: false, error: 'Failed to sign up' });
+            res.status(409).json({ success: false, error: error.message });
         }
     },
     signin : async (req, res) => {

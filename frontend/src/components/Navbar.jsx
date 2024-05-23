@@ -81,7 +81,7 @@ const Navbar = () => {
                 : <NavLink
                   end
                   style={({ isActive }) => ({ color: isActive ? 'blue' : 'black' })}
-                  to='/login'><button>Login</button>
+                  to='/auth'><button>Login</button>
                 </NavLink>}
             </li>
             <li className='my-2'>
