@@ -31,7 +31,7 @@ const BlogForm = ({ blogId }) => {
     } catch (error) {
       console.error(error);
     }
-  }, [categoriesData]);
+  };
 
   useEffect(() => {
     fetchCategories();
