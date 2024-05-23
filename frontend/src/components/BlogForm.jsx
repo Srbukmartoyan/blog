@@ -6,7 +6,7 @@ import InputField from './InputField';
 import { Button } from './Button';
 import upload_area from '../assets/upload_area.svg';
 
-const BlogForm = ({ blogId }) => {
+const BlogForm = ({ blogPost }) => {
 
 
   const navigate = useNavigate();
