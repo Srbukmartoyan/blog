@@ -1,4 +1,5 @@
-const AuthService = require('../service/AuthService.js')
+const AuthService = require('../service/AuthService.js');
+const { ValidationError } = require('sequelize');
 
 const AuthController = {
     signup : async (req, res) => {
@@ -7,6 +8,10 @@ const AuthController = {
             res.status(201).json({ success: true, token });
         } catch (error) {
             console.error('Error signing up:', error);
+            if (error instanceof ValidationError) {
+                const errors = error.errors.map(err => ({ field: err.path, message: err.message }));
+                return res.status(400).json({ success: false, errors });
+            }
             res.status(409).json({ success: false, error: error.message });
         }
     },
@@ -16,11 +21,11 @@ const AuthController = {
             res.status(200).json({ success: true, token });
         } catch (error) {
             console.error('Error signing in:', error);
-            let errorMessage = 'Failed to sign in';
-            if (error.message === 'User not found' || error.message === 'Incorrect password') {
-                errorMessage = error.message;
+            let statusCode = 401;
+            if (error.message === 'email must not be empty' || error.message === 'password must not be empty') {
+                statusCode = 400
             }
-            res.status(401).json({ success: false, error: errorMessage });
+            res.status(statusCode).json({ success: false, error: error.message });
         }
     }
 }

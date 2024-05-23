@@ -28,11 +28,16 @@ const AuthService = {
         return token;
     },
     signin: async ({ email, password }) => {
+        if (!email) {
+            throw new Error('email must not be empty');
+        }
+        if (!password) {
+            throw new Error ('password must not be empty');
+        }
         const user = await Author.findOne({ where: { email } });
         if (!user) {
             throw new Error('User not found');
         }
-
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
             throw new Error('Incorrect password');
