@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const { Author } = require('../models');
 
 const fetchUser = async (req, res, next) => {
+    console.log('here');
     const token = req.header('auth-token');
     if (!token) {
         return res.status(401).send({ errors: 'Please authenticate using a valid token' });
