@@ -2,7 +2,7 @@ const { Post, Author, Hashtag, Image } = require('../models');
 const { handleServiceError } = require('../middleware/errorHandler.js');
 
 
-const getAllPosts = async () => {
+const fetchAll = async () => {
   try {
     const posts = await Post.findAll({ include: [{ model: Author }] });
     return posts;
@@ -11,7 +11,7 @@ const getAllPosts = async () => {
   }
 };
 
-const getPost = async (id) => {
+const findById = async (id) => {
   try {
     const post = await Post.findByPk(id, {
       include: [
@@ -29,7 +29,7 @@ const getPost = async (id) => {
   }
 };
 
-const createPost = async (title, content, excerpt, author, image, selectedCategories) => {
+const create = async (title, content, excerpt, author, image, selectedCategories) => {
   try {
     const post = await Post.create({ title, content, excerpt, authorId: author.id });
 
@@ -48,7 +48,7 @@ const createPost = async (title, content, excerpt, author, image, selectedCatego
   }
 };
 
-const updatePost = async (title, content, excerpt, id, image, selectedCategory) => {
+const  updateById = async (title, content, excerpt, id, image, selectedCategory) => {
   try {
     const post = await Post.findByPk(id, { include: [Author, Image, Hashtag] });
     if (!post) {
@@ -73,7 +73,7 @@ const updatePost = async (title, content, excerpt, id, image, selectedCategory) 
   }
 };
 
-const deletePost = async (id) => {
+const removeById = async (id) => {
   try {
     const post = await Post.findByPk(id, { include: [Image, Hashtag] });
     console.log(post);
@@ -88,4 +88,4 @@ const deletePost = async (id) => {
 };
 
 
-module.exports = { getAllPosts, getPost, createPost, updatePost, deletePost };
+module.exports = { fetchAll, findById, create,  updateById, removeById };

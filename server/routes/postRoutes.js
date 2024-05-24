@@ -4,10 +4,10 @@ const PostController = require('../controller/PostController.js');
 
 const router = express.Router();
 
-router.get('/', PostController.getAllPosts);
-router.get('/:id', PostController.getPost);
-router.post('/', fetchUser, PostController.createPost);
-router.put('/:id', PostController.updatePost);
-router.delete('/:id', PostController.deletePost);
+router.get('/', PostController.fetchAll);
+router.get('/:id', PostController.findById);
+router.post('/', fetchUser, PostController.create);
+router.put('/:id', PostController.updateById);
+router.delete('/:id', PostController.removeById);
 
 module.exports = router;

@@ -1,26 +1,26 @@
-const { getAllPosts: getAllPostsService, getPost: getPostService, createPost: createPostService, updatePost: updatePostService, deletePost: deletePostService } = require('../service/PostService.js');
+const { fetchAll: fetchAllService, findById: findByIdService, create: createService, updateById: updateByIdService, removeById: removeByIdService } = require('../service/PostService.js');
 const { checkRequiredFields } = require('../middleware/errorHandler.js');
 
-const getAllPosts = async (req, res, next) => {
+const fetchAll = async (req, res, next) => {
   try {
-    const posts = await getAllPostsService();
+    const posts = await fetchAllService();
     res.status(200).json(posts);
   } catch (err) {
     next(err);
   }
 };
 
-const getPost = async (req, res, next) => {
+const findById = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const post = await getPostService(id);
+    const post = await findByIdService(id);
     res.status(200).json(post);
   } catch (err) {
     next(err);
   }
 };
 
-const createPost = async (req, res, next) => {
+const create = async (req, res, next) => {
   console.log(req.body, 'req.user:', req.user);
   const { title, content, excerpt, image, selectedCategory } = req.body;
 
@@ -33,14 +33,14 @@ const createPost = async (req, res, next) => {
 
   try {
     const author = req.user;
-    const post = await createPostService(title, content, excerpt, author, image, selectedCategory);
+    const post = await createService(title, content, excerpt, author, image, selectedCategory);
     res.status(201).json({ success: true, post });
   } catch (err) {
     next(err);
   }
 };
 
-const updatePost = async (req, res, next) => {
+const updateById = async (req, res, next) => {
   const { id } = req.params;
   const { title, content, excerpt, image, selectedCategory } = req.body;
 
@@ -52,17 +52,17 @@ const updatePost = async (req, res, next) => {
   }
 
   try {
-    const post = await updatePostService(title, content, excerpt, id, image, selectedCategory);
+    const post = await updateByIdService(title, content, excerpt, id, image, selectedCategory);
     res.status(200).json({ success: true, post });
   } catch (err) {
     next(err);
   }
 };
 
-const deletePost = async (req, res, next) => {
+const removeById = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const result = await deletePostService(id);
+    const result = await removeByIdService(id);
     res.status(200).json(result);
   } catch (err) {
     next(err);
@@ -70,4 +70,4 @@ const deletePost = async (req, res, next) => {
 };
 
 
-module.exports = { getAllPosts, getPost, createPost, updatePost, deletePost };
+module.exports = { fetchAll, findById, create, updateById, removeById };
