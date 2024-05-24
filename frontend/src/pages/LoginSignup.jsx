@@ -55,6 +55,9 @@ const LoginSignUp = () => {
     
     const signup = async () => {
         console.log('Signup function executed', formData);
+        if (!formData.email || !formData.password || !formData.username) {
+            alert('Please fill in all fields');
+        }
         validate(formData.password);
         if (errorMessage) {
             alert('Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one symbol.');
@@ -64,6 +67,9 @@ const LoginSignUp = () => {
     };
     
     const login = async () => {
+        if (!formData.email || !formData.password) {
+            alert('Please fill in all fields');
+        }
         console.log('Login function executed', formData);
         await handleAuth('/signin', formData);
     };
