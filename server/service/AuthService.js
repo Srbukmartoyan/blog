@@ -13,8 +13,8 @@ const generateToken = (userId) => {
 };
 
 const signup = async ({ username, email, password }) => {
-    const existingUser = await Author.findOne({ where: { email } });
-    if (existingUser) {
+    const existingUserCount = await Author.count({ where: { email } });
+    if (existingUserCount > 0) {
         throw new Error('An existing user is found with this email');
     }
 
@@ -32,12 +32,6 @@ const signup = async ({ username, email, password }) => {
 };
 
 const signin = async ({ email, password }) => {
-    if (!email) {
-        throw new Error('email must not be empty');
-    }
-    if (!password) {
-        throw new Error('password must not be empty');
-    }
     const user = await Author.findOne({ where: { email } });
     if (!user) {
         throw new Error('User not found');

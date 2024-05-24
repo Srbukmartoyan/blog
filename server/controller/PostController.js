@@ -21,7 +21,6 @@ const findById = async (req, res, next) => {
 };
 
 const create = async (req, res, next) => {
-  console.log(req.body, 'req.user:', req.user);
   const { title, content, excerpt, image, selectedCategory } = req.body;
 
   const requiredFields = ['title', 'content', 'excerpt', 'selectedCategory'];

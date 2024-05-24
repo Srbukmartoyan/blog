@@ -57,6 +57,7 @@ const LoginSignUp = () => {
         console.log('Signup function executed', formData);
         if (!formData.email || !formData.password || !formData.username) {
             alert('Please fill in all fields');
+            return;
         }
         validate(formData.password);
         if (errorMessage) {
