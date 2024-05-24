@@ -1,6 +1,6 @@
 const { Post, Author } = require('../models');
 
-const getUserPosts = async (userId) => {
+const fetchPosts = async (userId) => {
     try {
         const posts = await Post.findAll({ where: { authorId: userId }, include: [{ model: Author }] });
         return posts;
@@ -9,4 +9,4 @@ const getUserPosts = async (userId) => {
     }
 }
 
-module.exports = { getUserPosts };
+module.exports = { fetchPosts };
