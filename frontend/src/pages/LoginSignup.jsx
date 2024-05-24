@@ -69,6 +69,7 @@ const LoginSignUp = () => {
     const login = async () => {
         if (!formData.email || !formData.password) {
             alert('Please fill in all fields');
+            return;
         }
         console.log('Login function executed', formData);
         await handleAuth('/signin', formData);
