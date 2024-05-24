@@ -11,7 +11,7 @@ const FullBlog = () => {
   const authorId = blogPost?.Author?.id;
 
   const { data: authorPosts, error: authorPostsError } = useSWR(
-    authorId ? `/authors/${authorId}/posts` : null,
+    authorId ? `/user/${authorId}/posts` : null,
     fetcher
   );
 
