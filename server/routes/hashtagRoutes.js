@@ -3,6 +3,6 @@ const HashtagController = require('../controller/HashtagController.js');
 
 const router = express.Router();
 
-router.get('/', HashtagController.getAllhashtags);
+router.get('/', HashtagController.fetchAll);
 
 module.exports = router;

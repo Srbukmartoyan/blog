@@ -1,13 +1,13 @@
-const { getAllhashtags: getAllhashtagsService } = require('../service/HashtagService.js');
+const { fetchAll: fetchAllService } = require('../service/HashtagService.js');
 
 
-const getAllhashtags = async (req, res, next) => {
+const fetchAll = async (req, res, next) => {
   try {
-    const hashtags = await getAllhashtagsService();
+    const hashtags = await fetchAllService();
     res.status(200).json(hashtags);
   } catch (err) {
     next(err);
   }
 }
 
-module.exports = { getAllhashtags };
+module.exports = { fetchAll };

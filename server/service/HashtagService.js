@@ -1,7 +1,7 @@
 const { Hashtag } = require('../models');
 const { handleServiceError } = require('../middleware/errorHandler.js');
 
-const getAllhashtags = async () => {
+const fetchAll = async () => {
   try {
     const hashtags = await Hashtag.findAll({ attributes: ['name', 'id'] });
     return hashtags;
@@ -11,4 +11,4 @@ const getAllhashtags = async () => {
 };
 
 
-module.exports = { getAllhashtags };
+module.exports = { fetchAll };
