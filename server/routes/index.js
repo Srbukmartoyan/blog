@@ -12,7 +12,7 @@ app.use(authRoutes);
 app.use('/posts', postRoutes);
 app.use('/hashtags', hashtagRoutes);
 app.use('/upload', fileUploadRoutes);
-app.use('/user', userRoutes);
+app.use('/users', userRoutes);
 app.use('/friendRequest', friendRequestRoutes);
 
 module.exports = app; 

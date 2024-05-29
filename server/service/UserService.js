@@ -9,4 +9,12 @@ const fetchPosts = async (userId) => {
     }
 }
 
-module.exports = { fetchPosts };
+const fetchAllUsers = async () => {
+    try {
+        const users = await Author.findAll();
+        return users;
+    } catch (error) {
+        throw new Error('Failed to fetch users');
+    }  
+}
+module.exports = { fetchPosts, fetchAllUsers };

@@ -1,4 +1,4 @@
-const {fetchPosts: fetchPostsService } = require('../service/UserService.js');
+const {fetchPosts: fetchPostsService, fetchAllUsers: fetchAllUsersService } = require('../service/UserService.js');
 
 const fetchPostsByUserId = async (req, res) => {
     try {
@@ -29,4 +29,13 @@ const fetchPostsByAuthorId = async (req, res) => {
     }
 }
 
-module.exports = { fetchPostsByUserId, fetchUserProfile, fetchPostsByAuthorId };
+const fetchAllUsers = async (req, res) => {
+    try {
+        const users = await fetchAllUsersService();
+        res.status(200).json(users);
+    } catch(error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
+module.exports = { fetchPostsByUserId, fetchUserProfile, fetchPostsByAuthorId, fetchAllUsers };
