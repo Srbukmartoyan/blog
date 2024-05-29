@@ -19,7 +19,7 @@ const signup = async (req, res) => {
 const signin = async (req, res) => {
     const requiredFields = ['email', 'password'];
     const missingFieldError = checkRequiredFields(req.body, requiredFields);
-
+ 
     if (missingFieldError) {
         const { statusCode, message } = missingFieldError;
         return res.status(statusCode).json({ error: message });
