@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Navbar } from "./components"
-import {Home, InfoPage, FullBlog, EditBlog, CreateBlog, LoginSignUp, User} from './pages'
+import { Home, InfoPage, FullBlog, EditBlog, CreateBlog, LoginSignUp, User, AllUsers } from './pages'
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
             <Route path="/blog/create" element={<CreateBlog />} />
             <Route path="/auth" element={<LoginSignUp />}/>
             <Route path="/user" element={<User />}/>
+            <Route path="/users" element={<AllUsers />} />
           </Routes>
         {/* <Footer /> */}
       </BrowserRouter>

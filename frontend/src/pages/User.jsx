@@ -19,12 +19,12 @@ const User = () => {
 
             try {
                 const [userResponse, postsResponse] = await Promise.all([
-                    fetch('/user/profile', {
+                    fetch('/users/profile', {
                         headers: {
                             'auth-token': token,
                         },
                     }),
-                    fetch('/user/posts', {
+                    fetch('/users/posts', {
                         headers: {
                             'auth-token': token,
                         },
