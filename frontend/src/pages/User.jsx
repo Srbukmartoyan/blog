@@ -60,7 +60,7 @@ const User = () => {
 
     return (
         <div className='my-8'>
-            {user && <ProfileCard user={user} />}
+            {user && <div className='mx-auto w-80 md:w-1/2 lg:w-1/4'><ProfileCard user={user} /></div>}
             <BlogList posts={posts} title="My Posts" showActions={true} />
         </div>
     );
