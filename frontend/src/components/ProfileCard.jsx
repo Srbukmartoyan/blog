@@ -19,15 +19,15 @@ const ProfileCard = ({ user, showAction }) => {
     if (error) return <div>error</div>
     if (!status && !error) return <div>Loading ...</div>
 
-    const handleFollow = async () => {
+    const handleFriendRequest = async (requestType, method) => {
         const token = localStorage.getItem('auth-token');
         if (!token) {
             alert('You must be logged in to make a friend request');
             return;
         }
         try {
-            const response = await fetch('/friendRequest/send', {
-                method: 'POST',
+            const response = await fetch(`/friendRequest/${requestType}`, {
+                method,
                 headers: {
                     'auth-token': token,
                     'Content-Type': 'application/json'
@@ -35,45 +35,24 @@ const ProfileCard = ({ user, showAction }) => {
                 body: JSON.stringify({ recipientId: user.id }),
             });
 
-            if(!response.ok) {
-                throw new Error('failed to send friend request');
+            if (!response.ok) {
+                throw new Error(`Failed to ${requestType === 'send' ? 'send' : 'unsend'} friend request`);
             }
 
-            const data = await response.json();
-            console.log('friend request sent:', data);
+            if (requestType === 'send') {
+                const data = await response.json();
+                console.log('Friend request sent:', data);
+            } else {
+                console.log('Friend request deleted');
+            }
+
             mutate(`/friendRequest/status/${user.id}`);
         } catch (error) {
             console.error('Error:', error.message);
         }
-    }
-    
-    const handleUnfollow = async () => {
-        const token = localStorage.getItem('auth-token');
-        if (!token) {
-            alert('You must be logged in to make a friend request');
-            return;
-        }
-        try {
-            const response = await fetch('/friendRequest/unsend', {
-                method: 'DELETE',
-                headers: {
-                    'auth-token': token,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ recipientId: user.id }),
-            });
+    };
 
-            if(!response.ok) {
-                throw new Error('failed to unfollow');
-            }
-
-            console.log('friend request deleted');
-            mutate(`/friendRequest/status/${user.id}`);
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    }
-
+   
    const setButtonText = () => {
     if (status.status) {
         if (status.status === 'none' || status.status === 'rejected') {
@@ -99,9 +78,9 @@ const ProfileCard = ({ user, showAction }) => {
             </div>
             {showAction && (
                 <>
-                    <Button text={setButtonText()} type='button' onClick={handleFollow}/>
-                    {status.status == 'pending' ? <Button text='Delete Request' type='button' onClick={handleUnfollow} /> : <></>}
-                    {status.status == 'accepted' ? <Button text='Unfollow' type='button' onClick={handleUnfollow} /> : <></>}
+                    <Button text={setButtonText()} type='button' onClick={() => handleFriendRequest('send', 'POST')}/>
+                    {status.status == 'pending' ? <Button text='Delete Request' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
+                    {status.status == 'accepted' ? <Button text='Unfollow' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
                 </>
             )}
         </div>
