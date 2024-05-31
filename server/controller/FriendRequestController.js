@@ -19,7 +19,7 @@ const remove = async (req, res) => {
         if (!recipientId) {
             return res.status(400).json({ error: 'Recipient ID is required' });
         }
-        
+
         const friendRequest = await removeService(requesterId, recipientId);
         res.status(200).json(friendRequest);
     } catch(err) {
@@ -43,7 +43,7 @@ const respond = async (req, res) => {
 
 const fetchAll = async (req, res) => {
     try {
-        const { userId } = req.params;
+        const userId  = req.user.id;
         const friendRequests = await fetchAllService(userId);
         res.status(200).json(friendRequests);
     } catch(err) {

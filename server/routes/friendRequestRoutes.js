@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.post('/send', fetchUser, FriendRequestController.create);
 router.put('/respond', FriendRequestController.respond);
-router.get('/pending/:userId', FriendRequestController.fetchAll);
+router.get('/pending', fetchUser, FriendRequestController.fetchAll);
 router.get('/status/:userId', fetchUser, FriendRequestController.fetchStatus);
 router.delete('/unsend', fetchUser, FriendRequestController.remove);
 
