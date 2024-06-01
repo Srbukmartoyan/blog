@@ -11,7 +11,7 @@ const create = async (req, res) => {
     }
 };
 
-const remove = async (req, res) => {
+const unsend = async (req, res) => {
     try {
         const requesterId = req.user.id;
         const { recipientId } = req.body;
@@ -23,6 +23,26 @@ const remove = async (req, res) => {
         const friendRequest = await removeService(requesterId, recipientId);
         res.status(200).json(friendRequest);
     } catch(err) {
+        let status = 400;
+        if (err.message == 'friend request not found') {
+            status = 404;
+        }
+        res.status(status).json({ error: err.message });
+    }
+}
+
+const remove = async (req, res) => {
+    try {
+       const recipientId = req.user.id;
+       const { requesterId } = req.body;
+
+       if (!requesterId) {
+        return res.status(400).json({ error : 'Requester ID is required' });
+       }
+
+       const friendRequest = await removeService(requesterId, recipientId);
+       res.status(200).json(friendRequest);
+    } catch (err) {
         let status = 400;
         if (err.message == 'friend request not found') {
             status = 404;
@@ -62,5 +82,5 @@ const fetchStatus = async (req, res) => {
     }
 }
 
-module.exports = { create, remove, respond, fetchAll, fetchStatus };
+module.exports = { create, unsend, remove, respond, fetchAll, fetchStatus };
 
