@@ -5,7 +5,7 @@ const fetchUser = require('../middleware/auth.js');
 const router = express.Router();
 
 router.post('/send', fetchUser, FriendRequestController.create);
-router.put('/respond', fetchUser, FriendRequestController.respond);
+router.put('/respond',  FriendRequestController.respond);
 router.get('/pending', fetchUser, FriendRequestController.fetchAll);
 router.get('/status/:userId', fetchUser, FriendRequestController.fetchStatus);
 router.delete('/unsend', fetchUser, FriendRequestController.unsend);

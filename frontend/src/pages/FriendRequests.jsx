@@ -41,7 +41,7 @@ const FriendRequests = () => {
             if (isDelete) {
                 await handleRequest('/friendRequest/remove', 'DELETE', { requesterId: requestId });
             } else {
-                await handleRequest('/friendRequest/respond', 'PUT', { requestId, status })
+                await handleRequest('/friendRequest/respond', 'PUT', { requestId, status });
             }
             mutate('/friendRequest/pending');
         } catch (err) {

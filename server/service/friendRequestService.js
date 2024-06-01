@@ -35,6 +35,29 @@ const remove = async (requesterId, recipientId) => {
     return { message: 'Friend request deleted' };
 }
 
+const findAndHandleReverseFriendRequest = async (requesterId, recipientId, status) => {
+    let reverseFriendRequest = await FriendRequest.findOne({
+        where: { requesterId: recipientId, recipientId: requesterId }
+    });
+
+    if (status === 'rejected' && reverseFriendRequest) {
+        await reverseFriendRequest.destroy();
+    } else if (status === 'accepted') {
+        if (!reverseFriendRequest) {
+            reverseFriendRequest = await FriendRequest.create({
+                requesterId: recipientId,
+                recipientId: requesterId,
+                status: status
+            });
+        } else {
+            reverseFriendRequest.status = status;
+            await reverseFriendRequest.save();
+        }
+    }
+
+    return reverseFriendRequest;
+};
+
 const respond = async (requestId, status) => {
     const validStatuses = ['accepted', 'rejected'];
     if (!validStatuses.includes(status)) {
@@ -46,14 +69,24 @@ const respond = async (requestId, status) => {
         throw new Error('Friend request not found');
     }
 
+    const { requesterId, recipientId } = friendRequest;
+
     if (status === 'rejected') {
         await friendRequest.destroy();
+
+        await findAndHandleReverseFriendRequest(requesterId, recipientId, status);
+
         return { message: 'Friend request rejected and deleted' };
     }
+
     friendRequest.status = status;
     await friendRequest.save();
+
+    await findAndHandleReverseFriendRequest(requesterId, recipientId, status);
+
     return friendRequest;
 };
+
 
 const fetchAll = async (userId) => {
     const friendRequests = await FriendRequest.findAll({ 
