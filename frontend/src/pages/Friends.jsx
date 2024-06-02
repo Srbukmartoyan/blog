@@ -34,12 +34,20 @@ const Friends = () => {
         }
     }
 
+    const followerButtons = (friend) => (
+        <Button text='remove' type='button' onClick={() => handleDelete('remove', { requesterId: friend.requester.id })} />
+    );
+
+    const followingButtons = (friend) => (
+        <Button text='unfollow' type='button' onClick={() => handleDelete('unsend', { recipientId: friend.recipient.id })} />
+    );
+
     return (
         <div className='w-full h-[92vh] friends-bg-image'>
             <h1 className='text-4xl font-bold text-center text-gray-400 p-8'>Friends</h1>
             <div className='flex justify-center gap-4'>
-                <FriendList title="Followers" data={followers} handleDelete={handleDelete} />
-                <FriendList title="Following" data={followings} handleDelete={handleDelete} />
+                <FriendList title="Followers" data={followers} renderButtons={followerButtons} />
+                <FriendList title="Following" data={followings} renderButtons={followingButtons} />
             </div>
         </div>
     );
