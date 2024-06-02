@@ -1,4 +1,4 @@
-const { create: createService, remove: removeService, respond: respondService, fetchAll: fetchAllService, fetchStatus: fetchStatusService } = require('../service/friendRequestService.js');
+const { create: createService, remove: removeService, respond: respondService, fetchAll: fetchAllService, fetchAllFollowers: fetchAllFollowersService, fetchAllFollowings: fetchAllFollowingsService, fetchStatus: fetchStatusService } = require('../service/friendRequestService.js');
 
 const create = async (req, res) => {
     try {
@@ -71,6 +71,26 @@ const fetchAll = async (req, res) => {
     }
 };
 
+const fetchAllFollowers = async (req, res) => {
+    try {
+        const userId  = req.user.id;
+        const friendRequests = await fetchAllFollowersService(userId);
+        res.status(200).json(friendRequests);
+    } catch(err) {
+        res.status(400).json({ error: err.message });
+    }
+};
+
+const fetchAllFollowings = async (req, res) => {
+    try {
+        const userId  = req.user.id;
+        const friendRequests = await fetchAllFollowingsService(userId);
+        res.status(200).json(friendRequests);
+    } catch(err) {
+        res.status(400).json({ error: err.message });
+    }
+};
+
 const fetchStatus = async (req, res) => {
     try {
         const { userId } = req.params;
@@ -82,5 +102,5 @@ const fetchStatus = async (req, res) => {
     }
 }
 
-module.exports = { create, unsend, remove, respond, fetchAll, fetchStatus };
+module.exports = { create, unsend, remove, respond, fetchAll, fetchAllFollowers, fetchAllFollowings, fetchStatus };
 

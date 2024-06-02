@@ -67,6 +67,28 @@ const fetchAll = async (userId) => {
     return friendRequests;
 };
 
+const fetchAllFollowers = async (userId) => {
+    const friendRequests = await FriendRequest.findAll({
+        where: {
+            recipientId: userId,
+            status: 'accepted', 
+        },
+        include: [{ model : Author, as: 'requester' }], // as: "..." does not associate author objects it is olny a name/label of associated author objects
+    });
+    return friendRequests;
+}
+
+const fetchAllFollowings = async (userId) => {
+    const friendRequests = await FriendRequest.findAll({
+        where: {
+            requesterId: userId,
+            status: 'accepted', 
+        },
+        include: [{ model : Author, as: 'recipient' }], // as: "..." does not associate author objects it is olny a name/label of associated author objects
+    });
+    return friendRequests;
+}
+
 const fetchStatus = async (requesterId, recipientId) => {
     const existingRequest = await FriendRequest.findOne({
         where : { requesterId, recipientId },
@@ -80,4 +102,4 @@ const fetchStatus = async (requesterId, recipientId) => {
     return status;
 }
 
-module.exports = { create, remove, respond, fetchAll, fetchStatus };
+module.exports = { create, remove, respond, fetchAll, fetchAllFollowers, fetchAllFollowings, fetchStatus };

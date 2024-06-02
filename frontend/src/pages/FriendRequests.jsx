@@ -35,6 +35,7 @@ const handleRequest = async (url, method, body) => {
 const FriendRequests = () => {
 
     const { data: requests, error } = useSWR('/friendRequest/pending', fetcher);
+    console.log(requests);
 
     const handleAction = async (requestId, status, isDelete = false) => {
         try {
