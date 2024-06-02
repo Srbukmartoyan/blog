@@ -1,16 +1,6 @@
-import { useState } from "react";
-import { Button } from "./Button";
 import useSWR, { mutate } from "swr";
-
-const fetcher = (url) => {
-    const token = localStorage.getItem('auth-token');
-    return fetch(url, {
-        headers: {
-            'auth-token': token,
-            'Content-Type': 'application/json'
-        }
-    }).then(response => response.json());
-};
+import { fetcher } from "../utils/fetcher";
+import { Button } from "./Button";
 
 const ProfileCard = ({ user, showAction }) => {
     const { data: status, error } = useSWR(`/friendRequest/status/${user.id}`, fetcher);

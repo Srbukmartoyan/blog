@@ -5,5 +5,6 @@ import BlogForm from "./BlogForm";
 import { Button } from "./Button";
 import InputField from "./InputField";
 import ProfileCard from "./ProfileCard";
+import FriendList from "./FriendList";
 
-export { Navbar, Footer, BlogList, BlogForm, Button, InputField, ProfileCard };
+export { Navbar, Footer, BlogList, BlogForm, Button, InputField, ProfileCard, FriendList };

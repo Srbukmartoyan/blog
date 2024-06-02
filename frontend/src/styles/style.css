@@ -1,8 +1,8 @@
 .requests-bg-image {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.385), rgba(0, 0, 0, 0.5)), url('https://turntable.kagiso.io/images/Facebook_friend_request_iStock.width-800.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
+  background-image: linear-gradient(rgba(0, 0, 0, 0.385), rgba(0, 0, 0, 0.5)), url('https://turntable.kagiso.io/images/Facebook_friend_request_iStock.width-800.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
   
 .friends-bg-image {
   background-image: linear-gradient(rgba(0, 0, 0, 0.385), rgba(0, 0, 0, 0.5)), url('https://images.pexels.com/photos/853168/pexels-photo-853168.jpeg');

@@ -1,20 +1,7 @@
 import useSWR, { mutate } from "swr";
 import { Button } from "../components";
-import '../components/styles/style.css';
-
-const fetcher = (url) => {
-    const token = localStorage.getItem('auth-token');
-    if (!token) {
-        alert('You must be logged in to make a friend request');
-        return;
-    }
-    return fetch(url, {
-        headers: {
-            'auth-token': token,
-            'Content-Type': 'application/json'
-        }
-    }).then(response => response.json());
-};
+import { fetcher } from "../utils/fetcher";
+import '../styles/style.css';
 
 const handleRequest = async (url, method, body) => {
     const token = localStorage.getItem('auth-token');
