@@ -1,8 +1,7 @@
 export const fetcher = (url) => {
   const token = localStorage.getItem('auth-token');
   if (!token) {
-      alert('You must be logged in to make a request');
-      return;
+    throw new Error('You must be logged in.');
   }
   return fetch(url, {
       headers: {

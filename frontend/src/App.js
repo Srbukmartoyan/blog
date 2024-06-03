@@ -16,6 +16,7 @@ function App() {
             <Route path="/blog/create" element={<CreateBlog />} />
             <Route path="/auth" element={<LoginSignUp />}/>
             <Route path="/user" element={<User />}/>
+            <Route path="/user/:userId" element={<User />} />
             <Route path="/users" element={<AllUsers />} />
             <Route path="/requests" element={<FriendRequests />}/>
             <Route path="/friends" element={<Friends />}/>

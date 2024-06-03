@@ -1,6 +1,6 @@
-const {fetchPosts: fetchPostsService, fetchAllUsers: fetchAllUsersService } = require('../service/UserService.js');
+const {fetchPosts: fetchPostsService, fetchAllUsers: fetchAllUsersService, fetchProfileByAuthorId: fetchProfileByAuthorIdService } = require('../service/UserService.js');
 
-const fetchPostsByUserId = async (req, res) => {
+const fetchMyPosts = async (req, res) => {
     try {
         const userId = req.user.id;
         const posts = await fetchPostsService(userId);
@@ -10,7 +10,7 @@ const fetchPostsByUserId = async (req, res) => {
     }
 };
 
-const fetchUserProfile = async (req, res) => {
+const fetchMyProfile = async (req, res) => {
     try {
         const user = req.user;
         res.status(200).json(user);
@@ -27,15 +27,25 @@ const fetchPostsByAuthorId = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch author\'s posts' });
     }
-}
+};
+
+const fetchProfileByAuthorId = async(req, res) => {
+    const { authorId } = req.params;
+    try {
+        const user = await fetchProfileByAuthorIdService(authorId);
+        res.status(200).json(user);
+    } catch(error) {
+        res.status(404).json({ error : error.message })
+    }
+};
 
 const fetchAllUsers = async (req, res) => {
     try {
         const users = await fetchAllUsersService();
         res.status(200).json(users);
     } catch(error) {
-        res.status(500).json({ error: error.message })
+        res.status(500).json({ error: error.message });
     }
-}
+};
 
-module.exports = { fetchPostsByUserId, fetchUserProfile, fetchPostsByAuthorId, fetchAllUsers };
+module.exports = { fetchMyPosts, fetchMyProfile, fetchPostsByAuthorId, fetchProfileByAuthorId, fetchAllUsers };

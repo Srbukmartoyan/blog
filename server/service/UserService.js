@@ -9,6 +9,15 @@ const fetchPosts = async (userId) => {
     }
 }
 
+const fetchProfileByAuthorId = async (userId) => {
+    
+    const user = await Author.findByPk(userId);
+    if (!user) {
+        throw new Error('User not found');
+    }
+    return user;
+}
+
 const fetchAllUsers = async () => {
     try {
         const users = await Author.findAll();
@@ -17,4 +26,4 @@ const fetchAllUsers = async () => {
         throw new Error('Failed to fetch users');
     }  
 }
-module.exports = { fetchPosts, fetchAllUsers };
+module.exports = { fetchPosts, fetchAllUsers, fetchProfileByAuthorId };

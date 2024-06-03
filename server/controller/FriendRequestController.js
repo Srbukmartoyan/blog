@@ -29,7 +29,7 @@ const unsend = async (req, res) => {
         }
         res.status(status).json({ error: err.message });
     }
-}
+};
 
 const remove = async (req, res) => {
     try {
@@ -49,7 +49,7 @@ const remove = async (req, res) => {
         }
         res.status(status).json({ error: err.message });
     }
-}
+};
 
 const respond = async (req, res) => {
     try {
@@ -70,7 +70,7 @@ const fetchFriends = async(req, res) =>  {
     } catch(err) {
         res.status(404).json({ error : err.message });
     }
-}
+};
 
 const fetchStatus = async (req, res) => {
     try {
@@ -81,7 +81,7 @@ const fetchStatus = async (req, res) => {
     } catch(err) {
         res.status(500).json({error : err.message});
     }
-}
+};
 
 module.exports = { create, unsend, remove, respond, fetchFriends, fetchStatus };
 
