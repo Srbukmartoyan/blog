@@ -45,10 +45,10 @@ const ProfileCard = ({ user, showAction }) => {
 
    
    const setButtonText = () => {
-    if (status.status) {
-        if (status.status === 'none' || status.status === 'rejected') {
+    if (status) {
+        if (status === 'none' || status === 'rejected') {
             return 'Follow';
-        } else if (status.status === 'accepted'){
+        } else if (status === 'accepted'){
             return 'Following';
         } else {
             return 'Requested';
@@ -72,8 +72,8 @@ const ProfileCard = ({ user, showAction }) => {
             {showAction && (
                 <>
                     <Button text={setButtonText()} type='button' onClick={() => handleFriendRequest('send', 'POST')}/>
-                    {status.status == 'pending' ? <Button text='Delete Request' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
-                    {status.status == 'accepted' ? <Button text='Unfollow' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
+                    {status == 'pending' ? <Button text='Delete Request' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
+                    {status == 'accepted' ? <Button text='Unfollow' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
                 </>
             )}
         </div>

@@ -77,7 +77,7 @@ const fetchStatus = async (req, res) => {
         const { userId } = req.params;
         const requesterId = req.user.id;
         const status = await fetchStatusService(requesterId, userId);
-        res.status(200).json({ status });
+        res.status(200).json(status);
     } catch(err) {
         res.status(500).json({error : err.message});
     }

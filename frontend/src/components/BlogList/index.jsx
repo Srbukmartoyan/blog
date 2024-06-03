@@ -4,6 +4,7 @@ const BlogList = ({posts, title, showActions}) => {
   return (
     <div className="container mx-auto px-8 py-4 bg-slate-200 rounded-md">
       <h1 className="text-3xl font-bold my-8">{title}</h1>
+      {posts.length == 0 ? <div className='text-xl font-bold text-red-700'>No posts</div> : <></>}
       {posts.map((post, index) => (
         <Blog
           key={index}
