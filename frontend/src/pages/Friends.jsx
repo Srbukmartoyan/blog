@@ -4,8 +4,8 @@ import { fetcher } from "../utils/fetcher";
 import '../styles/style.css';
 
 const Friends = () => {
-    const { data: followers, error: followersError } = useSWR('/friendRequest/accepted/followers', fetcher);
-    const { data: followings, error: followingsError } = useSWR('/friendRequest/accepted/followings', fetcher);
+    const { data: followers, error: followersError } = useSWR('/friendRequest/friends?type=followers', fetcher);
+    const { data: followings, error: followingsError } = useSWR('/friendRequest/friends?type=followings', fetcher);
 
     if (followersError || followingsError) return <div>Error loading data</div>;
     if (!followers || !followings) return <div>Loading...</div>;
@@ -28,7 +28,7 @@ const Friends = () => {
             if (!response.ok) {
                 throw new Error('Failed to delete');
             }
-            url == 'remove' ? mutate('/friendRequest/accepted/followers') : mutate('/friendRequest/accepted/followings');
+            url == 'remove' ? mutate('/friendRequest/friends?type=followers') : mutate('/friendRequest/friends?type=followings');
         } catch (error) {
             console.error('Error:', error.message);
         }

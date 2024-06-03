@@ -21,7 +21,7 @@ const handleRequest = async (url, method, body) => {
 
 const FriendRequests = () => {
 
-    const { data: requests, error } = useSWR('/friendRequest/pending', fetcher);
+    const { data: requests, error } = useSWR('/friendRequest/friends?type=pending', fetcher);
     console.log(requests);
 
     const handleAction = async (requestId, status, isDelete = false) => {
@@ -31,7 +31,7 @@ const FriendRequests = () => {
             } else {
                 await handleRequest('/friendRequest/respond', 'PUT', { requestId, status })
             }
-            mutate('/friendRequest/pending');
+            mutate('/friendRequest/friends?type=pending');
         } catch (err) {
             console.error(err);
         }

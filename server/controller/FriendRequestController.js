@@ -1,4 +1,4 @@
-const { create: createService, remove: removeService, respond: respondService, fetchAll: fetchAllService, fetchAllFollowers: fetchAllFollowersService, fetchAllFollowings: fetchAllFollowingsService, fetchStatus: fetchStatusService } = require('../service/friendRequestService.js');
+const { create: createService, remove: removeService, respond: respondService, fetchFriends: fetchFriendsService, fetchStatus: fetchStatusService } = require('../service/friendRequestService.js');
 
 const create = async (req, res) => {
     try {
@@ -61,35 +61,16 @@ const respond = async (req, res) => {
     }
 };
 
-const fetchAll = async (req, res) => {
+const fetchFriends = async(req, res) =>  {
     try {
-        const userId  = req.user.id;
-        const friendRequests = await fetchAllService(userId);
+        const userId = req.user.id;
+        const { type } = req.query; 
+        const friendRequests = await fetchFriendsService(userId, type);
         res.status(200).json(friendRequests);
     } catch(err) {
-        res.status(400).json({ error: err.message });
+        res.status(404).json({ error : err.message });
     }
-};
-
-const fetchAllFollowers = async (req, res) => {
-    try {
-        const userId  = req.user.id;
-        const friendRequests = await fetchAllFollowersService(userId);
-        res.status(200).json(friendRequests);
-    } catch(err) {
-        res.status(400).json({ error: err.message });
-    }
-};
-
-const fetchAllFollowings = async (req, res) => {
-    try {
-        const userId  = req.user.id;
-        const friendRequests = await fetchAllFollowingsService(userId);
-        res.status(200).json(friendRequests);
-    } catch(err) {
-        res.status(400).json({ error: err.message });
-    }
-};
+}
 
 const fetchStatus = async (req, res) => {
     try {
@@ -102,5 +83,5 @@ const fetchStatus = async (req, res) => {
     }
 }
 
-module.exports = { create, unsend, remove, respond, fetchAll, fetchAllFollowers, fetchAllFollowings, fetchStatus };
+module.exports = { create, unsend, remove, respond, fetchFriends, fetchStatus };
 

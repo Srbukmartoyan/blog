@@ -55,39 +55,35 @@ const respond = async (requestId, status) => {
     return friendRequest;
 };
 
-const fetchAll = async (userId) => {
-    const friendRequests = await FriendRequest.findAll({ 
-        where: { 
-            recipientId: userId,
-            status: 'pending', 
-        },
-        include: [{ model : Author, as: 'requester' }], // as: "..." does not associate author objects it is olny a name/label of associated author objects
+const fetchFriends = async (userId, type) => {
+    let whereClause = {};
+    let includeClause = [];
+
+    switch (type) {
+        case 'pending':
+            whereClause = { recipientId: userId, status: 'pending' };
+            includeClause = [{ model: Author, as: 'requester' }];
+            break;
+        case 'followers':
+            whereClause = { recipientId: userId, status: 'accepted' };
+            includeClause = [{ model: Author, as: 'requester' }];
+            break;
+        case 'followings':
+            whereClause = { requesterId: userId, status: 'accepted' };
+            includeClause = [{ model: Author, as: 'recipient' }];
+            break;
+        default:
+            throw new Error('Invalid type');
+    }
+
+    const friends = await FriendRequest.findAll({
+        where: whereClause,
+        include: includeClause,
     });
 
-    return friendRequests;
+    return friends;
 };
 
-const fetchAllFollowers = async (userId) => {
-    const friendRequests = await FriendRequest.findAll({
-        where: {
-            recipientId: userId,
-            status: 'accepted', 
-        },
-        include: [{ model : Author, as: 'requester' }], // as: "..." does not associate author objects it is olny a name/label of associated author objects
-    });
-    return friendRequests;
-}
-
-const fetchAllFollowings = async (userId) => {
-    const friendRequests = await FriendRequest.findAll({
-        where: {
-            requesterId: userId,
-            status: 'accepted', 
-        },
-        include: [{ model : Author, as: 'recipient' }], // as: "..." does not associate author objects it is olny a name/label of associated author objects
-    });
-    return friendRequests;
-}
 
 const fetchStatus = async (requesterId, recipientId) => {
     const existingRequest = await FriendRequest.findOne({
@@ -102,4 +98,4 @@ const fetchStatus = async (requesterId, recipientId) => {
     return status;
 }
 
-module.exports = { create, remove, respond, fetchAll, fetchAllFollowers, fetchAllFollowings, fetchStatus };
+module.exports = { create, remove, respond, fetchFriends, fetchStatus };
