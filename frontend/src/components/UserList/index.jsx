@@ -2,12 +2,13 @@ import ProfileCard from "../ProfileCard";
 import { authFetcher } from "../../utils/fetcher";
 import useSWR from "swr";
 
-const UserList = ({users, title, showAction}) => {
+const UserList = ({users, title}) => {
     const { data, error } = useSWR('/users/profile', authFetcher);
-    let filteredUsers;
 
     if (!data && !error) return <div>loading...</div>
-    error ? filteredUsers = users :  filteredUsers = users.filter((user) => user.id !== data.id);
+    if (error) return <div className='mt-4 text-center text-red-700 font-bold'>{error.message}</div>;
+   
+    const filteredUsers = users.filter((user) => user.id !== data.id);
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -17,7 +18,6 @@ const UserList = ({users, title, showAction}) => {
                return <ProfileCard 
                         key={index}
                         user={user}
-                        showAction={showAction}
                     />
             })}
             </div>

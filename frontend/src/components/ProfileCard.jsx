@@ -3,19 +3,15 @@ import { Link } from "react-router-dom";
 import { authFetcher } from "../utils/fetcher";
 import { Button } from "./Button";
 
-const ProfileCard = ({ user, showAction }) => {
+const ProfileCard = ({ user }) => {
     const { data: status, error } = useSWR(`/friendRequest/status/${user.id}`, authFetcher);
 
-    if (error) showAction = false;
+    if (error) return <div className='mt-4 text-center text-red-700 font-bold'>{error.message}</div>;
     if (!status && !error) return <div>Loading ...</div>
 
     const handleFriendRequest = async (requestType, method) => {
-        const token = localStorage.getItem('auth-token');
-        if (!token) {
-            alert('You must be logged in to make a friend request');
-            return;
-        }
         try {
+            const token = localStorage.getItem('auth-token');
             const response = await fetch(`/friendRequest/${requestType}`, {
                 method,
                 headers: {
@@ -68,13 +64,9 @@ const ProfileCard = ({ user, showAction }) => {
                     </div>
                 </div>
             </Link>
-            {showAction && (
-                <>
-                    <Button text={setButtonText()} type='button' onClick={() => handleFriendRequest('send', 'POST')}/>
-                    {status == 'pending' ? <Button text='Delete Request' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
-                    {status == 'accepted' ? <Button text='Unfollow' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
-                </>
-            )}
+            <Button text={setButtonText()} type='button' onClick={() => handleFriendRequest('send', 'POST')}/>
+            {status == 'pending' ? <Button text='Delete Request' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
+            {status == 'accepted' ? <Button text='Unfollow' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
         </div>
     );
 };

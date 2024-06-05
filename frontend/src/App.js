@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Navbar } from "./components"
-import { Home, InfoPage, FullBlog, EditBlog, CreateBlog, LoginSignUp, User, AllUsers, FriendRequests, Friends } from './pages'
+import { Home, InfoPage, FullBlog, EditBlog, CreateBlog, LoginSignUp, User, AllUsers, FriendRequests, Friends, NotFound } from './pages'
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
             <Route path="/users" element={<AllUsers />} />
             <Route path="/requests" element={<FriendRequests />}/>
             <Route path="/friends" element={<Friends />}/>
+            <Route path="*" element={<NotFound />}/>
           </Routes>
         {/* <Footer /> */}
       </BrowserRouter>

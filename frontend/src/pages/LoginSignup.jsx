@@ -4,12 +4,12 @@ import { Button, InputField } from "../components";
 
 const LoginSignUp = () => {
     const [state, setState] = useState('Login');
-    const [errorMessage, setErrorMessage] = useState('') 
+    const [errorMessage, setErrorMessage] = useState('');
     const [formData, setFormData] = useState({
         email: "",
         password: "",
         username: "",
-    })
+    });
 
     const changeHandler = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +23,7 @@ const LoginSignUp = () => {
             minLength: 8, minLowercase: 1, 
             minUppercase: 1, minNumbers: 1, minSymbols: 1 
         })) { 
-            setErrorMessage('') 
+            setErrorMessage('');
         } else { 
             console.log(errorMessage);
             setErrorMessage('Is Not Strong Password: Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one symbol.') 

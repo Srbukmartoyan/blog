@@ -8,5 +8,6 @@ import User from "./User";
 import AllUsers from "./AllUsers";
 import FriendRequests from "./FriendRequests";
 import Friends from "./Friends";
+import NotFound from "./NotFound";
 
-export { FullBlog, Home, InfoPage, EditBlog, CreateBlog, LoginSignUp, User, AllUsers, FriendRequests, Friends };
+export { FullBlog, Home, InfoPage, EditBlog, CreateBlog, LoginSignUp, User, AllUsers, FriendRequests, Friends, NotFound };
