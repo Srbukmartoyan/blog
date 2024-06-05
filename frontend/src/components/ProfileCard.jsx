@@ -6,7 +6,6 @@ import { Button } from "./Button";
 const ProfileCard = ({ user, showAction }) => {
     const { data: status, error } = useSWR(`/friendRequest/status/${user.id}`, fetcher);
 
-    console.log(status);
     if (error) showAction = false;
     if (!status && !error) return <div>Loading ...</div>
 

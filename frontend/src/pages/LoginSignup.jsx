@@ -44,7 +44,6 @@ const LoginSignUp = () => {
                 localStorage.setItem('auth-token', data.token);
                 window.location.replace('/');
             } else {
-                console.log(data);
                 'errors' in data ? alert(data.errors[0].message) : alert(data.error)
             }
         } catch (error) {

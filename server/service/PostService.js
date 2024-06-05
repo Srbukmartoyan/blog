@@ -76,7 +76,6 @@ const  updateById = async (title, content, excerpt, id, image, selectedCategory)
 const removeById = async (id) => {
   try {
     const post = await Post.findByPk(id, { include: [Image, Hashtag] });
-    console.log(post);
     if (!post) {
       throw new Error('Post not found');
     }
