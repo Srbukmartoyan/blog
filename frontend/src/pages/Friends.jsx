@@ -1,11 +1,11 @@
 import useSWR, { mutate } from "swr";
 import { FriendList, Button } from "../components";
-import { fetcher } from "../utils/fetcher";
+import { authFetcher } from "../utils/fetcher";
 import '../styles/style.css';
 
 const Friends = () => {
-    const { data: followers, error: followersError } = useSWR('/friendRequest/friends?type=followers', fetcher);
-    const { data: followings, error: followingsError } = useSWR('/friendRequest/friends?type=followings', fetcher);
+    const { data: followers, error: followersError } = useSWR('/friendRequest/friends?type=followers', authFetcher);
+    const { data: followings, error: followingsError } = useSWR('/friendRequest/friends?type=followings', authFetcher);
 
     if (followersError || followingsError) return <div>Error loading data</div>;
     if (!followers || !followings) return <div>Loading...</div>;

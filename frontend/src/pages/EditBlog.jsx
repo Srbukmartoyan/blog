@@ -1,13 +1,12 @@
 import useSWR from 'swr';
 import { useParams } from 'react-router-dom';
+import { simpleFetcher } from '../utils/fetcher';
 import { BlogForm } from '../components';
-
-const fetcher = (...args) => fetch(...args).then(res => res.json());
 
 const EditBlog = () => {
   const { blogId } = useParams();
 
-  const { data: blogPost, error } = useSWR(`/posts/${blogId}`, fetcher);
+  const { data: blogPost, error } = useSWR(`/posts/${blogId}`, simpleFetcher);
   if (error) return <div>Failed to load blog post</div>;
   if (!blogPost) return <div>Loading...</div>;
 

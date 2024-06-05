@@ -1,9 +1,8 @@
 import useSWR from 'swr';
-
-const fetcher = (...args) => fetch(...args).then(res => res.json());
+import { simpleFetcher } from '../utils/fetcher';
 
 export const useAllPosts = () => {
-  const { data: allPosts, error } = useSWR('/posts', fetcher);
+  const { data: allPosts, error } = useSWR('/posts', simpleFetcher);
 
   return {
     allPosts,

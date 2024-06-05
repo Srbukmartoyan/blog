@@ -1,16 +1,17 @@
 import useSWR from 'swr';
 import { Link, useParams } from 'react-router-dom';
-import { fetcher } from '../utils/fetcher';
+import { authFetcher } from '../utils/fetcher';
 import { BlogList } from '../components';
 import { ProfileCard } from '../components';
 import { Button } from '../components';
 
 const User = () => {
     const { userId } = useParams();
-    const { data: user, error: userError } = useSWR(userId ? `/users/${userId}/profile` : `/users/profile`, fetcher);
-    const { data: posts, error: postsError } = useSWR(userId ? `/users/${userId}/posts` : '/users/posts', fetcher);
-    const { data: status, error } = useSWR(`/friendRequest/status/${userId}`, fetcher);
+    const { data: user, error: userError } = useSWR(userId ? `/users/${userId}/profile` : `/users/profile`, authFetcher);
+    const { data: posts, error: postsError } = useSWR(userId ? `/users/${userId}/posts` : '/users/posts', authFetcher);
+    const { data: status, error } = useSWR(`/friendRequest/status/${userId}`, authFetcher);
 
+    console.log(userError);
     if (userError || postsError) return <div className='mt-4 text-center text-red-700 font-bold'> Error: {userError ? userError.message : postsError.message} </div>
     if (!user || !posts) return <div className='mt-4 text-center text-red-700 font-bold'> Loading...</div>
 

@@ -1,9 +1,9 @@
 import ProfileCard from "../ProfileCard";
-import { fetcher } from "../../utils/fetcher";
+import { authFetcher } from "../../utils/fetcher";
 import useSWR from "swr";
 
 const UserList = ({users, title, showAction}) => {
-    const { data, error } = useSWR('/users/profile', fetcher);
+    const { data, error } = useSWR('/users/profile', authFetcher);
     let filteredUsers;
 
     if (!data && !error) return <div>loading...</div>

@@ -1,10 +1,10 @@
 import useSWR, { mutate } from "swr";
 import { Link } from "react-router-dom";
-import { fetcher } from "../utils/fetcher";
+import { authFetcher } from "../utils/fetcher";
 import { Button } from "./Button";
 
 const ProfileCard = ({ user, showAction }) => {
-    const { data: status, error } = useSWR(`/friendRequest/status/${user.id}`, fetcher);
+    const { data: status, error } = useSWR(`/friendRequest/status/${user.id}`, authFetcher);
 
     if (error) showAction = false;
     if (!status && !error) return <div>Loading ...</div>

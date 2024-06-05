@@ -1,6 +1,6 @@
 import useSWR, { mutate } from "swr";
 import { FriendList, Button } from "../components";
-import { fetcher } from "../utils/fetcher";
+import { authFetcher } from "../utils/fetcher";
 import '../styles/style.css';
 
 const handleRequest = async (url, method, body) => {
@@ -21,7 +21,7 @@ const handleRequest = async (url, method, body) => {
 
 const FriendRequests = () => {
 
-    const { data: requests, error } = useSWR('/friendRequest/friends?type=pending', fetcher);
+    const { data: requests, error } = useSWR('/friendRequest/friends?type=pending', authFetcher);
 
     const handleAction = async (requestId, status, isDelete = false) => {
         try {

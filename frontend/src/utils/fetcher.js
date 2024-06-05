@@ -1,4 +1,4 @@
-export const fetcher = (url) => {
+export const authFetcher = (url) => {
   const token = localStorage.getItem('auth-token');
   if (!token) {
     throw new Error('You must be logged in.');
@@ -10,3 +10,5 @@ export const fetcher = (url) => {
       }
   }).then(response => response.json());
 };
+
+export const simpleFetcher = (...args) => fetch(...args).then(res => res.json());

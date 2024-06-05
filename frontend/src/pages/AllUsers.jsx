@@ -1,10 +1,9 @@
 import useSWR from "swr";
+import { simpleFetcher } from "../utils/fetcher";
 import UserList from "../components/UserList";
 
-const fetcher = (...args) => fetch(...args).then(res => res.json());
-
 const AllUsers = () => {
-    const { data, error } = useSWR('/users', fetcher);
+    const { data, error } = useSWR('/users', simpleFetcher);
 
     if (error) return <div className="mt-4 text-center text-red-700 font-bold">Error fetching users</div>
     if (!data && !error) return <div className="mt-4 text-center text-red-700 font-bold">Loading...</div>
