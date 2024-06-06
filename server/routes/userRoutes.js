@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.get('/', UserController.fetchAllUsers);
 router.get('/posts', fetchUser, UserController.fetchMyPosts);
-router.get('/profile', fetchUser, UserController.fetchMyProfile);
 router.get('/:authorId/posts', UserController.fetchPostsByAuthorId);
 router.get('/:authorId/profile', UserController.fetchProfileByAuthorId);
 
