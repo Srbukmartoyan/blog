@@ -108,10 +108,6 @@ const BlogForm = ({ blogPost }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('auth-token');
-    if (!token) {
-      alert('You must be logged in to create or update a post.');
-      return;
-    }
     let form = formData;
     form.excerpt = form.content.substring(0, 100);
 

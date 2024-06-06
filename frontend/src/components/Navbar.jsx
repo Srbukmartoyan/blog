@@ -98,7 +98,7 @@ const Navbar = () => {
             </> : <></>}
             <li className='my-2'>
               {localStorage.getItem('auth-token')
-                ? <button onClick={() => { localStorage.removeItem('auth-token'); window.location.replace('/') }}>Logout</button>
+                ? <button onClick={() => { localStorage.removeItem('auth-token');localStorage.removeItem('authUser'); window.location.replace('/') }}>Logout</button>
                 : <NavLink
                   end
                   style={({ isActive }) => ({ color: isActive ? '#6A5ACD' : 'black' })}

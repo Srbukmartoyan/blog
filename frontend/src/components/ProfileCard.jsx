@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { authFetcher } from "../utils/fetcher";
 import { Button } from "./Button";
 
-const ProfileCard = ({ user }) => {
+const ProfileCard = ({ user, showAction }) => {
     const { data: status, error } = useSWR(`/friendRequest/status/${user.id}`, authFetcher);
 
     if (error) return <div className='mt-4 text-center text-red-700 font-bold'>{error.message}</div>;
@@ -64,9 +64,13 @@ const ProfileCard = ({ user }) => {
                     </div>
                 </div>
             </Link>
-            <Button text={setButtonText()} type='button' onClick={() => handleFriendRequest('send', 'POST')}/>
-            {status == 'pending' ? <Button text='Delete Request' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
-            {status == 'accepted' ? <Button text='Unfollow' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
+            {showAction && (
+                <>
+                    <Button text={setButtonText()} type='button' onClick={() => handleFriendRequest('send', 'POST')}/>
+                    {status == 'pending' ? <Button text='Delete Request' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
+                    {status == 'accepted' ? <Button text='Unfollow' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
+                </>
+            )}
         </div>
     );
 };

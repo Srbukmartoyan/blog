@@ -9,7 +9,17 @@ import useAuth from '../hooks/useAuth';
 const User = () => {
     const token = useAuth();
     const { userId } = useParams();
-    const { data: user, error: userError } = useSWR(userId ? `/users/${userId}/profile` : `/users/profile`, authFetcher);
+
+    const fetchUserData = (url) => {
+        if (userId) {
+            return authFetcher(url);
+        } else {
+            const localStorageUser = localStorage.getItem('authUser');
+            return localStorageUser ? JSON.parse(localStorageUser) : null;
+        }
+    };
+
+    const { data: user, error: userError } = useSWR(userId ? `/users/${userId}/profile` : '/', fetchUserData);
     const { data: posts, error: postsError } = useSWR(userId ? `/users/${userId}/posts` : '/users/posts', authFetcher);
     const { data: status, error } = useSWR(`/friendRequest/status/${userId}`, authFetcher);
 
