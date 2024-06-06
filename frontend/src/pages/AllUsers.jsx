@@ -1,11 +1,11 @@
 import useSWR from "swr";
 import useAuth from "../hooks/useAuth";
-import { simpleFetcher } from "../utils/fetcher";
+import { authFetcher } from "../utils/fetcher";
 import UserList from "../components/UserList";
 
 const AllUsers = () => {
     const token = useAuth();
-    const { data, error } = useSWR('/users', simpleFetcher);
+    const { data, error } = useSWR('/users', authFetcher);
 
     const loggedInUser = JSON.parse(localStorage.getItem('authUser'));
 

@@ -1,4 +1,5 @@
-const { Post, Author } = require('../models');
+const { where } = require('sequelize');
+const { Post, Author, FriendRequest } = require('../models');
 
 const fetchPosts = async (userId) => {
     try {
@@ -10,7 +11,7 @@ const fetchPosts = async (userId) => {
 }
 
 const fetchProfileByAuthorId = async (userId) => {
-    
+
     const user = await Author.findByPk(userId);
     if (!user) {
         throw new Error('User not found');
@@ -18,12 +19,21 @@ const fetchProfileByAuthorId = async (userId) => {
     return user;
 }
 
-const fetchAllUsers = async () => {
+const fetchAllUsers = async (requesterId) => {
     try {
-        const users = await Author.findAll();
+        const users = await Author.findAll({
+            include: [
+                {
+                    model: FriendRequest,
+                    as: 'receivedRequests',
+                    where: { requesterId : requesterId },
+                    required: false,
+                }
+            ]
+        });
         return users;
     } catch (error) {
         throw new Error('Failed to fetch users');
-    }  
+    }
 }
 module.exports = { fetchPosts, fetchAllUsers, fetchProfileByAuthorId };

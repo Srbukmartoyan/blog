@@ -32,7 +32,8 @@ const fetchProfileByAuthorId = async(req, res) => {
 
 const fetchAllUsers = async (req, res) => {
     try {
-        const users = await fetchAllUsersService();
+        const requesterId = req.user.id;
+        const users = await fetchAllUsersService(requesterId);
         res.status(200).json(users);
     } catch(error) {
         res.status(500).json({ error: error.message });
