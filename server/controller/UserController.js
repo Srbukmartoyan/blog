@@ -10,15 +10,6 @@ const fetchMyPosts = async (req, res) => {
     }
 };
 
-const fetchMyProfile = async (req, res) => {
-    try {
-        const user = req.user;
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch user profile' });
-    }
-};
-
 const fetchPostsByAuthorId = async (req, res) => {
     const { authorId } = req.params;
     try {

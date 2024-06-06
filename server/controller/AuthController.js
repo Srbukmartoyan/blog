@@ -4,8 +4,8 @@ const { ValidationError } = require('sequelize');
 
 const signup = async (req, res) => {
     try {
-        const token = await signupService(req.body);
-        res.status(201).json({ success: true, token });
+        const { token, user } = await signupService(req.body);
+        res.status(201).json({ success: true, token, user });
     } catch (error) {
         console.error('Error signing up:', error);
         if (error instanceof ValidationError) {
@@ -26,8 +26,8 @@ const signin = async (req, res) => {
     }
 
     try {
-        const token = await signinService(req.body);
-        res.status(200).json({ success: true, token });
+        const { token, user } = await signinService(req.body);
+        res.status(200).json({ success: true, token, user });
     } catch (error) {
         console.error('Error signing in:', error);
         const statusCode = 401;

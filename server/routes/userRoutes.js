@@ -5,10 +5,8 @@ const UserController = require('../controller/UserController.js');
 const router = express.Router();
 
 router.get('/', UserController.fetchAllUsers);
-router.get('/posts', fetchUser, UserController.fetchMyPosts);
-router.get('/profile', fetchUser, UserController.fetchMyProfile);
+router.get('/my/posts', fetchUser, UserController.fetchMyPosts);
 router.get('/:authorId/posts', UserController.fetchPostsByAuthorId);
 router.get('/:authorId/profile', UserController.fetchProfileByAuthorId);
-
 
 module.exports = router;

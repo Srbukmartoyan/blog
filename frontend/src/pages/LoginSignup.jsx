@@ -42,7 +42,8 @@ const LoginSignUp = () => {
             const data = await response.json();
             if (data.success) {
                 localStorage.setItem('auth-token', data.token);
-                window.location.replace('/');
+                localStorage.setItem('authUser', JSON.stringify(data.user));
+                window.location.replace('/user');
             } else {
                 'errors' in data ? alert(data.errors[0].message) : alert(data.error)
             }

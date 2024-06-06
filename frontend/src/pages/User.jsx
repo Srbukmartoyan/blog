@@ -1,16 +1,26 @@
 import useSWR from 'swr';
+import useAuth from '../hooks/useAuth';
 import { Link, useParams } from 'react-router-dom';
 import { authFetcher } from '../utils/fetcher';
 import { BlogList } from '../components';
 import { ProfileCard } from '../components';
 import { Button } from '../components';
-import useAuth from '../hooks/useAuth';
 
 const User = () => {
     const token = useAuth();
     const { userId } = useParams();
-    const { data: user, error: userError } = useSWR(userId ? `/users/${userId}/profile` : `/users/profile`, authFetcher);
-    const { data: posts, error: postsError } = useSWR(userId ? `/users/${userId}/posts` : '/users/posts', authFetcher);
+
+    const fetchUserData = (url) => {
+        if (userId) {
+            return authFetcher(url);
+        } else {
+            const localStorageUser = localStorage.getItem('authUser');
+            return localStorageUser ? JSON.parse(localStorageUser) : null;
+        }
+    };
+
+    const { data: user, error: userError } = useSWR(userId ? `/users/${userId}/profile` : '/', fetchUserData);
+    const { data: posts, error: postsError } = useSWR(userId ? `/users/${userId}/posts` : '/users/my/posts', authFetcher);
     const { data: status, error } = useSWR(`/friendRequest/status/${userId}`, authFetcher);
 
     if (userError || postsError) return <div className='mt-4 text-center text-red-700 font-bold'> Error: {userError ? userError.message : postsError.message} </div>
