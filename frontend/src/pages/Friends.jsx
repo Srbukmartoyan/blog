@@ -1,13 +1,15 @@
 import useSWR, { mutate } from "swr";
+import useAuth from "../hooks/useAuth";
 import { FriendList, Button } from "../components";
 import { authFetcher } from "../utils/fetcher";
 import '../styles/style.css';
 
 const Friends = () => {
+    const token = useAuth();
     const { data: followers, error: followersError } = useSWR('/friendRequest/friends?type=followers', authFetcher);
     const { data: followings, error: followingsError } = useSWR('/friendRequest/friends?type=followings', authFetcher);
 
-    if (followersError || followingsError) return <div>Error loading data</div>;
+    if (followersError || followingsError) return <div className='mt-4 text-center text-red-700 font-bold'>Error loading data</div>;
     if (!followers || !followings) return <div>Loading...</div>;
 
     const handleDelete = async (url, body) => {

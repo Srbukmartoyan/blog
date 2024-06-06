@@ -1,4 +1,5 @@
 import useSWR, { mutate } from "swr";
+import useAuth from "../hooks/useAuth";
 import { FriendList, Button } from "../components";
 import { authFetcher } from "../utils/fetcher";
 import '../styles/style.css';
@@ -20,7 +21,7 @@ const handleRequest = async (url, method, body) => {
 };
 
 const FriendRequests = () => {
-
+    const token = useAuth();
     const { data: requests, error } = useSWR('/friendRequest/friends?type=pending', authFetcher);
 
     const handleAction = async (requestId, status, isDelete = false) => {
@@ -36,7 +37,7 @@ const FriendRequests = () => {
         }
     };
 
-    if (error) return <div>error</div>
+    if (error) return <div className='mt-4 text-center text-red-700 font-bold'>error</div>
     if (!requests && !error) return <div>Loading ...</div>
 
     const buttons = (friend) => (
