@@ -15,7 +15,12 @@ const User = () => {
             return authFetcher(url);
         } else {
             const localStorageUser = localStorage.getItem('authUser');
-            return localStorageUser ? JSON.parse(localStorageUser) : null;
+            if (localStorageUser) {
+                const user = JSON.parse(localStorageUser);
+                user.receivedRequests = [];
+                return user;
+            }
+            return null;
         }
     };
 

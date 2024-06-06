@@ -30,6 +30,7 @@ const ProfileCard = ({ user, showAction }) => {
             }
 
             mutate(`/users`);
+            mutate(`/users/${user.id}/profile`);
         } catch (error) {
             console.error('Error:', error.message);
         }
