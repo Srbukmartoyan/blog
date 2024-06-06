@@ -84,18 +84,4 @@ const fetchFriends = async (userId, type) => {
     return friends;
 };
 
-
-const fetchStatus = async (requesterId, recipientId) => {
-    const existingRequest = await FriendRequest.findOne({
-        where : { requesterId, recipientId },
-    });
-
-    let status = 'none';
-    if (existingRequest) {
-        status = existingRequest.status;
-    }
-
-    return status;
-}
-
-module.exports = { create, remove, respond, fetchFriends, fetchStatus };
+module.exports = { create, remove, respond, fetchFriends };
