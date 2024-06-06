@@ -10,9 +10,18 @@ const fetchPosts = async (userId) => {
     }
 }
 
-const fetchProfileByAuthorId = async (userId) => {
+const fetchProfileByAuthorId = async (userId, requesterId) => {
 
-    const user = await Author.findByPk(userId);
+    const user = await Author.findByPk(userId, {
+        include : [
+            {
+                model: FriendRequest,
+                as: "receivedRequests",
+                where: { requesterId : requesterId },
+                required: false,
+            }
+        ]
+    });
     if (!user) {
         throw new Error('User not found');
     }

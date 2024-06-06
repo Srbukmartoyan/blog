@@ -21,9 +21,10 @@ const fetchPostsByAuthorId = async (req, res) => {
 };
 
 const fetchProfileByAuthorId = async(req, res) => {
-    const { authorId } = req.params;
     try {
-        const user = await fetchProfileByAuthorIdService(authorId);
+        const { authorId } = req.params;
+        const requesterId = req.user.id;
+        const user = await fetchProfileByAuthorIdService(authorId, requesterId);
         res.status(200).json(user);
     } catch(error) {
         res.status(404).json({ error : error.message })

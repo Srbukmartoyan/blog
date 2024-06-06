@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', fetchUser, UserController.fetchAllUsers);
 router.get('/my/posts', fetchUser, UserController.fetchMyPosts);
 router.get('/:authorId/posts', UserController.fetchPostsByAuthorId);
-router.get('/:authorId/profile', UserController.fetchProfileByAuthorId);
+router.get('/:authorId/profile', fetchUser, UserController.fetchProfileByAuthorId);
 
 
 module.exports = router;
