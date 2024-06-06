@@ -4,10 +4,7 @@ import { authFetcher } from "../utils/fetcher";
 import { Button } from "./Button";
 
 const ProfileCard = ({ user, showAction }) => {
-    const { data: status, error } = useSWR(`/friendRequest/status/${user.id}`, authFetcher);
-
-    if (error) return <div className='mt-4 text-center text-red-700 font-bold'>{error.message}</div>;
-    if (!status && !error) return <div>Loading ...</div>
+    const status = user.receivedRequests[0]?.status;
 
     const handleFriendRequest = async (requestType, method) => {
         try {
@@ -32,25 +29,22 @@ const ProfileCard = ({ user, showAction }) => {
                 console.log('Friend request deleted');
             }
 
-            mutate(`/friendRequest/status/${user.id}`);
+            mutate(`/users`);
         } catch (error) {
             console.error('Error:', error.message);
         }
     };
 
-   
-   const setButtonText = () => {
-    if (status) {
-        if (status === 'none' || status === 'rejected') {
+
+    const setButtonText = () => {
+        if ((!status) || status === 'rejected') {
             return 'Follow';
-        } else if (status === 'accepted'){
+        } else if (status === 'accepted') {
             return 'Following';
         } else {
             return 'Requested';
         }
-    } 
-    return 'Follow';
-   }
+    }
 
     return (
         <div className="shadow-md rounded-md p-6 my-4 bg-slate-100 hover:shadow-lg transition ease-linear delay-150 mx-auto">
@@ -66,7 +60,7 @@ const ProfileCard = ({ user, showAction }) => {
             </Link>
             {showAction && (
                 <>
-                    <Button text={setButtonText()} type='button' onClick={() => handleFriendRequest('send', 'POST')}/>
+                    <Button text={setButtonText()} type='button' onClick={() => handleFriendRequest('send', 'POST')} />
                     {status == 'pending' ? <Button text='Delete Request' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
                     {status == 'accepted' ? <Button text='Unfollow' type='button' onClick={() => handleFriendRequest('unsend', 'DELETE')} /> : <></>}
                 </>

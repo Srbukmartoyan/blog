@@ -3,7 +3,6 @@ import { authFetcher } from "../../utils/fetcher";
 import useSWR from "swr";
 
 const UserList = ({users, title}) => {
-    console.log(users);
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">{title}</h1>

@@ -25,7 +25,7 @@ const fetchAllUsers = async (requesterId) => {
             include: [
                 {
                     model: FriendRequest,
-                    as: 'receivedRequests',
+                    as: 'receivedRequests', // join user through foreignKey (here foreign key is recipientId => recipientid-nerin join kani)
                     where: { requesterId : requesterId },
                     required: false,
                 }
