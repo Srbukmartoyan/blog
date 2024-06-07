@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { BlogList } from '../components';
 import { useAllPosts } from '../hooks/useAllPosts';
+import { ITEMS_PER_PAGE } from '../constants';
 import useAuth from '../hooks/useAuth';
 
 const Home = () => {
   const token = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
-  const { allPosts, isLoading, isError } = useAllPosts(currentPage, itemsPerPage);
+  const { allPosts, isLoading, isError } = useAllPosts(currentPage, ITEMS_PER_PAGE);
 
   console.log(allPosts);
   const nextPage = () => {
