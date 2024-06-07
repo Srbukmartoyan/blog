@@ -1,18 +1,19 @@
 import useSWR from 'swr';
 import { useParams } from 'react-router-dom';
-import { simpleFetcher } from '../utils/fetcher';
+import { authFetcher } from '../utils/fetcher';
 import Group from '../components/Group';
 import useAuth from '../hooks/useAuth';
 
 const FullBlog = () => {
   const token = useAuth();
   const { blogId } = useParams();
-  const { data: blogPost, error } = useSWR(`/posts/${blogId}`, simpleFetcher);
+  console.log(blogId);
+  const { data: blogPost, error } = useSWR(`/posts/${blogId}`, authFetcher);
   const authorId = blogPost?.Author?.id;
 
   const { data: authorPosts, error: authorPostsError } = useSWR(
     authorId ? `/users/${authorId}/posts` : null,
-    simpleFetcher
+    authFetcher
   );
 
   if (error) return <div className='mt-4 text-center text-red-700 font-bold'>Failed to load blog post</div>;

@@ -1,8 +1,8 @@
 import useSWR from 'swr';
-import { simpleFetcher } from '../utils/fetcher';
+import { authFetcher } from '../utils/fetcher';
 
 export const useAllPosts = (page, limit) => {
-  const { data: allPosts, error } = useSWR((page && limit) ? `/posts?page=${page}&limit=${limit}` : '/posts', simpleFetcher);
+  const { data: allPosts, error } = useSWR((page && limit) ? `/posts?page=${page}&limit=${limit}` : '/posts', authFetcher);
 
   return {
     allPosts,

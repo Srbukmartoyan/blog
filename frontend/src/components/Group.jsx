@@ -13,7 +13,7 @@ const Group = ({ posts, title }) => {
               author={post.Author.name}
               date={post.date}
               excerpt={post.excerpt}
-              id={post.id}
+              postId={post.id}
             />
           ))}
         </div>
