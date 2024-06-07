@@ -31,7 +31,7 @@ const Blog = ({ title, author, date, excerpt, postId, showActions }) => {
 
   return (
     <div className="bg-white shadow-md rounded-md p-6 mb-4 hover:shadow-lg transitions ease-linear delay-150">
-      <Link to={`/blog/${postId}`} onClick={window.scroll({top: 0, left: 0, behavior:"smooth"})}>
+      <Link to={`/blogs/${postId}`} onClick={window.scroll({top: 0, left: 0, behavior:"smooth"})}>
       <h2 className="text-xl font-semibold mb-2">{title}</h2>
       <div className='flex items-center gap-1'>
         <p className="text-gray-600 mb-2">Author: {author}</p>
@@ -46,7 +46,7 @@ const Blog = ({ title, author, date, excerpt, postId, showActions }) => {
       </Link>
       {showActions && (
         <>
-          <Link to={`/blog/${postId}/edit`}>
+          <Link to={`/blogs/${postId}/edit`}>
             <Button text='Edit Blog' type='button'/>
           </Link>
           <Button text='Delete Blog' type='button' onClick={handleDeletePost}/>

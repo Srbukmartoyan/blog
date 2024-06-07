@@ -44,7 +44,7 @@ const LoginSignUp = () => {
             if (data.success) {
                 localStorage.setItem('auth-token', data.token);
                 localStorage.setItem('authUser', JSON.stringify(data.user));
-                window.location.replace('/user');
+                window.location.replace('/user/me');
             } else {
                 'errors' in data ? setErrorMessage(data.errors[0].message) : setErrorMessage(data.error);
             }
