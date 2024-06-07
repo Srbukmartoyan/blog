@@ -18,7 +18,7 @@ const BlogList = ({ posts, title, showActions }) => {
             author={post.Author?.name}
             date={post.createdAt}
             excerpt={post.excerpt}
-            id={post.id}
+            postId={post.id}
             showActions={showActions}
           />
         ))

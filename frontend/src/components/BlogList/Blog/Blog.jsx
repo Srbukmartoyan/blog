@@ -4,20 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import { useAllPosts } from '../../../hooks/useAllPosts';
 import { Button } from '../../Button';
 
-const Blog = ({ title, author, date, excerpt, id, showActions }) => {
+const Blog = ({ title, author, date, excerpt, postId, showActions }) => {
   const { allPosts } = useAllPosts();
   const navigate = useNavigate();
 
   const handleDeletePost = async () => {
     try {
-     const response =  await fetch(`/posts/${id}`, {
+     const response =  await fetch(`/posts/${postId}`, {
       method: 'DELETE'
      });
      if (!response.ok) {
       throw new Error('Failed to delete post');
     }
-      mutate('/posts', allPosts.filter(post => post.id !== id), false);
-      navigate('/');
+      mutate('/posts', allPosts.filter(post => post.id !== postId), false);
+      mutate('/users/my/posts');
     } catch (error) {
       console.error('Error deleting post:', error);
     }
@@ -25,7 +25,7 @@ const Blog = ({ title, author, date, excerpt, id, showActions }) => {
 
   return (
     <div className="bg-white shadow-md rounded-md p-6 mb-4 hover:shadow-lg transitions ease-linear delay-150">
-      <Link to={`/blog/${id}`} onClick={window.scroll({top: 0, left: 0, behavior:"smooth"})}>
+      <Link to={`/blog/${postId}`} onClick={window.scroll({top: 0, left: 0, behavior:"smooth"})}>
       <h2 className="text-xl font-semibold mb-2">{title}</h2>
       <div className='flex items-center gap-1'>
         <p className="text-gray-600 mb-2">Author: {author}</p>
@@ -40,7 +40,7 @@ const Blog = ({ title, author, date, excerpt, id, showActions }) => {
       </Link>
       {showActions && (
         <>
-          <Link to={`/blog/${id}/edit`}>
+          <Link to={`/blog/${postId}/edit`}>
             <Button text='Edit Blog' type='button'/>
           </Link>
           <Button text='Delete Blog' type='button' onClick={handleDeletePost}/>
