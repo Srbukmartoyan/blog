@@ -83,21 +83,31 @@ const LoginSignUp = () => {
             username: ""
         });
         setErrorMessage('');
-    }
+    };
 
     const handleStateChange = (newState) => {
         clearFormData();
         setState(newState);
-    }
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            if (state === 'Login') {
+                login();
+            } else {
+                signup();
+            }
+        }
+    };
 
     return (
         <div className="w-full h-[92vh] bg-slate-200 flex justify-center items-center">
             <div className=" w-3/4 sm:w-96 border-2 border-slate-300 p-4 rounded bg-zinc-50">
                 <h1 className="mx-3.5 font-semibold">{state}</h1>
                 <div className="flex, flex-col gap-5 mt-7">
-                    {state === 'Sign Up' ? <InputField name="username" value={formData.username} onChange={changeHandler} type="text" placeholder="your name" /> : <></>}
-                    <InputField name="email" value={formData.email} onChange={changeHandler} type="email" placeholder="email" />
-                    <InputField name="password" value={formData.password} onChange={changeHandler} type="password" placeholder="password" />
+                    {state === 'Sign Up' ? <InputField name="username" value={formData.username} onChange={changeHandler} type="text" placeholder="your name" onKeyDown={handleKeyDown}  /> : <></>}
+                    <InputField name="email" value={formData.email} onChange={changeHandler} type="email" placeholder="email" onKeyDown={handleKeyDown}  />
+                    <InputField name="password" value={formData.password} onChange={changeHandler} type="password" placeholder="password" onKeyDown={handleKeyDown}  />
                     {errorMessage && (
                         <span className="text-xs text-red-500 text-center bg-red-100 border border-red-400 rounded p-2 my-2 block">{errorMessage}</span>
                     )}

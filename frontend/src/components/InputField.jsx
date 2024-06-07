@@ -1,4 +1,4 @@
-const InputField = ({ name, value, onChange, placeholder, type = 'text', required = true }) => {
+const InputField = ({ name, value, onChange, placeholder, type = 'text', onKeyDown, required = true }) => {
 
   if (type === 'textarea') {
     return (
@@ -23,6 +23,7 @@ const InputField = ({ name, value, onChange, placeholder, type = 'text', require
       placeholder={placeholder}
       className="block w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
       required={required}
+      onKeyDown={onKeyDown}
     />
   );
 }
