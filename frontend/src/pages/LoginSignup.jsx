@@ -14,20 +14,22 @@ const LoginSignUp = () => {
     const changeHandler = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         if (e.target.name === 'password') {
-            validate(e.target.value); 
+            validate(e.target.value);
         }
-    }
+    };
 
-    const validate = (value) => { 
-        if (validator.isStrongPassword(value, { 
-            minLength: 8, minLowercase: 1, 
-            minUppercase: 1, minNumbers: 1, minSymbols: 1 
-        })) { 
+    const validate = (value) => {
+        if (validator.isStrongPassword(value, {
+            minLength: 8, minLowercase: 1,
+            minUppercase: 1, minNumbers: 1, minSymbols: 1
+        })) {
             setErrorMessage('');
-        } else { 
-            setErrorMessage('Is Not Strong Password: Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one symbol.') 
-        } 
-    } 
+            return true;
+        } else {
+            setErrorMessage('Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one symbol.');
+            return false;
+        }
+    };
 
     const handleAuth = async (url, formData) => {
         try {
@@ -44,38 +46,37 @@ const LoginSignUp = () => {
                 localStorage.setItem('authUser', JSON.stringify(data.user));
                 window.location.replace('/user');
             } else {
-                'errors' in data ? alert(data.errors[0].message) : alert(data.error)
+                'errors' in data ? setErrorMessage(data.errors[0].message) : setErrorMessage(data.error);
             }
         } catch (error) {
             console.error('Authentication error:', error);
-            alert('Failed to authenticate');
+            setErrorMessage('Failed to authenticate');
         }
     };
-    
+
     const signup = async () => {
         console.log('Signup function executed', formData);
         if (!formData.email || !formData.password || !formData.username) {
-            alert('Please fill in all fields');
+            setErrorMessage('Please fill in all fields');
             return;
         }
-        validate(formData.password);
-        if (errorMessage) {
-            alert('Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one symbol.');
-            return;
-        }
-        await handleAuth('/signup', formData);
+        if (validate(formData.password)){
+            await handleAuth('/signup', formData);
+        } 
     };
-    
+
     const login = async () => {
+        console.log('Login function executed', formData);
         if (!formData.email || !formData.password) {
-            alert('Please fill in all fields');
+            setErrorMessage('Please fill in all fields');
             return;
         }
-        console.log('Login function executed', formData);
-        await handleAuth('/signin', formData);
+        if (validate(formData.password)){
+            await handleAuth('/signin', formData);
+        } 
     };
-    
-    const clearFormData =() => {
+
+    const clearFormData = () => {
         setFormData({
             email: "",
             password: "",
@@ -94,10 +95,12 @@ const LoginSignUp = () => {
             <div className=" w-3/4 sm:w-96 border-2 border-slate-300 p-4 rounded bg-zinc-50">
                 <h1 className="mx-3.5 font-semibold">{state}</h1>
                 <div className="flex, flex-col gap-5 mt-7">
-                    {state === 'Sign Up' ? <InputField name="username" value={formData.username} onChange={changeHandler} type="text" placeholder="your name"/> : <></>}
-                    <InputField name="email" value={formData.email} onChange={changeHandler} type="email" placeholder="email"/>
-                    <InputField name="password" value={formData.password} onChange={changeHandler} type="password" placeholder="password"/>
-                    {state === 'Sign Up' ? <span style={{ fontWeight: 'bold', color: 'red', fontSize: '12px', lineHeight: '1'}}>{errorMessage}</span> : <></>}
+                    {state === 'Sign Up' ? <InputField name="username" value={formData.username} onChange={changeHandler} type="text" placeholder="your name" /> : <></>}
+                    <InputField name="email" value={formData.email} onChange={changeHandler} type="email" placeholder="email" />
+                    <InputField name="password" value={formData.password} onChange={changeHandler} type="password" placeholder="password" />
+                    {errorMessage && (
+                        <span className="text-xs text-red-500 text-center bg-red-100 border border-red-400 rounded p-2 my-2 block">{errorMessage}</span>
+                    )}
                 </div>
                 <Button text="Continue" onClick={state === 'Login' ? login : signup} />
                 {state === 'Sign Up'
