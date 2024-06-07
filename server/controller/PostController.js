@@ -4,8 +4,8 @@ const { checkRequiredFields } = require('../middleware/errorHandler.js');
 const fetchAll = async (req, res, next) => {
   try {
     const {page, limit} = req.query;
-    const parsedPage = parseInt(page) || 1;
-    const parsedlimit = parseInt(limit) || 10;
+    const parsedPage = page ? parseInt(page) : null;
+    const parsedlimit = limit ? parseInt(limit) : null;
 
     const posts = await fetchAllService(parsedPage, parsedlimit);
     res.status(200).json(posts);

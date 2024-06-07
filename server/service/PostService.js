@@ -2,15 +2,19 @@ const { Post, Author, Hashtag, Image } = require('../models');
 const { handleServiceError } = require('../middleware/errorHandler.js');
 
 
-const fetchAll = async (page = 1, limit = 10) => {
+const fetchAll = async (page, limit) => {
   try {
-    const offset = (page - 1) * limit;
+    let options = {
+      include: [{ model: Author }]
+    };
 
-    const posts = await Post.findAll({ 
-      include: [{ model: Author }] ,
-      limit: limit,
-      offset: offset,
-    });
+    if (page && limit) {
+      const offset = (page - 1) * limit;
+      options.limit = limit;
+      options.offset = offset;
+    }
+
+    const posts = await Post.findAll(options);
     return posts;
   } catch (err) {
     handleServiceError(err);
