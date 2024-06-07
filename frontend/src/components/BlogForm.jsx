@@ -74,6 +74,7 @@ const BlogForm = ({ blogPost }) => {
   };
 
   const uploadImage = async (image) => {
+    const token = localStorage.getItem('auth-token');
     let responseData = { success: true };
     if (image) {
       let imgFormData = new FormData();
@@ -82,6 +83,7 @@ const BlogForm = ({ blogPost }) => {
         method: 'POST',
         headers: {
           Accept: 'application/json',
+          'auth-token': token,
         },
         body: imgFormData,
       }).then((resp) => resp.json()).then((data) => responseData = data);
