@@ -25,7 +25,6 @@ const LoginSignUp = () => {
         })) { 
             setErrorMessage('');
         } else { 
-            console.log(errorMessage);
             setErrorMessage('Is Not Strong Password: Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one symbol.') 
         } 
     } 
@@ -76,6 +75,19 @@ const LoginSignUp = () => {
         await handleAuth('/signin', formData);
     };
     
+    const clearFormData =() => {
+        setFormData({
+            email: "",
+            password: "",
+            username: ""
+        });
+        setErrorMessage('');
+    }
+
+    const handleStateChange = (newState) => {
+        clearFormData();
+        setState(newState);
+    }
 
     return (
         <div className="w-full h-[92vh] bg-slate-200 flex justify-center items-center">
@@ -89,8 +101,8 @@ const LoginSignUp = () => {
                 </div>
                 <Button text="Continue" onClick={state === 'Login' ? login : signup} />
                 {state === 'Sign Up'
-                    ? <p className="mt-5 text-slate-600 font-medium">Already have an account?<span className='font-semibold text-red-500 cursor-pointer' onClick={() => { setState('Login') }}> Login here</span></p>
-                    : <p className="mt-5 text-slate-600 font-medium">Create an account?<span className='font-semibold text-red-500 cursor-pointer' onClick={() => { setState('Sign Up') }}> Click here</span></p>
+                    ? <p className="mt-5 text-slate-600 font-medium">Already have an account?<span className='font-semibold text-red-500 cursor-pointer' onClick={() => { handleStateChange('Login') }}> Login here</span></p>
+                    : <p className="mt-5 text-slate-600 font-medium">Create an account?<span className='font-semibold text-red-500 cursor-pointer' onClick={() => { handleStateChange('Sign Up') }}> Click here</span></p>
                 }
             </div>
         </div>
