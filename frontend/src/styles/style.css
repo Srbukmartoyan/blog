@@ -9,3 +9,14 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.highlighted-hr {
+  width: 80%;
+  margin-bottom: 18px;
+  margin-top: 12px;
+  background: linear-gradient(to right, #6ea2dd, #6f888a);
+  border: 0;
+  height: 4px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
