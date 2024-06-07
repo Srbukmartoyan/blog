@@ -18,8 +18,15 @@ const BlogForm = ({ blogPost }) => {
     image: '',
   });
   const fetchCategories = async () => {
+    const token = localStorage.getItem('auth-token');
     try {
-      const response = await fetch('/hashtags');
+      const response = await fetch('/hashtags', {
+        headers: {
+          Accept: 'application/json',
+          'auth-token': token,
+          'Content-Type': 'application/json'
+        },
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch categories');
       }
