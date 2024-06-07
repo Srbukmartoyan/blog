@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', fetchUser, PostController.fetchAll);
 router.get('/:id', fetchUser, PostController.findById);
 router.post('/', fetchUser, PostController.create);
-router.put('/:id', PostController.updateById);
-router.delete('/:id', PostController.removeById);
+router.put('/:id', fetchUser, PostController.updateById);
+router.delete('/:id', fetchUser, PostController.removeById);
 
 module.exports = router;

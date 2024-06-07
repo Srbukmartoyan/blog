@@ -7,7 +7,6 @@ import useAuth from '../hooks/useAuth';
 const FullBlog = () => {
   const token = useAuth();
   const { blogId } = useParams();
-  console.log(blogId);
   const { data: blogPost, error } = useSWR(`/posts/${blogId}`, authFetcher);
   const authorId = blogPost?.Author?.id;
 
