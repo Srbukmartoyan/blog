@@ -29,7 +29,7 @@ const Home = () => {
     const endPage = totalPages;
     const maxButtons = 5; // Maximum number of buttons to show before the last page
 
-    if (totalPages <= maxButtons) {
+    if (totalPages <= maxButtons + 1) { // maxbuttons == 5 totalpages ==6 => ... do not need
       for (let i = startPage; i <= endPage; i++) {
         buttons.push(
           <button
