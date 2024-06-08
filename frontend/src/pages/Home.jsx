@@ -7,15 +7,67 @@ import useAuth from '../hooks/useAuth';
 const Home = () => {
   const token = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
-  const { allPosts, isLoading, isError } = useAllPosts(currentPage, ITEMS_PER_PAGE);
+  const { allPosts, totalPosts, isLoading, isError } = useAllPosts(currentPage, ITEMS_PER_PAGE);
 
-  console.log(allPosts);
+  const totalPages = Math.ceil(totalPosts / ITEMS_PER_PAGE);
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+  };
+
   const nextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
+    setCurrentPage((prevPage) => Math.min(prevPage + 1, totalPages));
   };
 
   const prevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const renderPaginationButtons = () => {
+    const buttons = [];
+    const startPage = 1;
+    const endPage = totalPages;
+    const maxButtons = 5; // Maximum number of buttons to show before the last page
+
+    if (totalPages <= maxButtons) {
+      for (let i = startPage; i <= endPage; i++) {
+        buttons.push(
+          <button
+            key={i}
+            onClick={() => handlePageClick(i)}
+            className={`mx-1 px-3 py-1 rounded-md ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-slate-200 text-black'}`}
+          >
+            {i}
+          </button>
+        );
+      }
+    } else {
+      for (let i = startPage; i <= maxButtons; i++) {
+        buttons.push(
+          <button
+            key={i}
+            onClick={() => handlePageClick(i)}
+            className={`mx-1 px-3 py-1 rounded-md ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-slate-200 text-black'}`}
+          >
+            {i}
+          </button>
+        );
+      }
+
+      buttons.push(<span key="ellipsis" className="mx-1">...</span>);
+
+      buttons.push(
+        <button
+          key={totalPages}
+          onClick={() => handlePageClick(totalPages)}
+          className={`mx-1 px-3 py-1 rounded-md ${currentPage === totalPages ? 'bg-blue-500 text-white' : 'bg-slate-200 text-black'}`}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    return buttons;
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -24,18 +76,42 @@ const Home = () => {
   return (
     <div className='my-8'>
       <BlogList posts={allPosts} title="All Blog Posts" showActions={false} />
-      <div className="flex justify-center mt-4">
-        <button onClick={prevPage} disabled={currentPage === 1} className="mr-2 px-4 py-2 bg-slate-200 text-white rounded-md">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-zinc-700	">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+      <div className="flex justify-center items-center mt-4">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className="mr-2 px-4 py-2"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-zinc-700">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <button onClick={nextPage} disabled={allPosts.length < 4} className="ml-2 px-4 py-2 bg-slate-200 text-white rounded-md">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-zinc-700	">
-            <path strokeLinecap="round" strokeLinejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
+        {renderPaginationButtons()}
+        <button
+          onClick={nextPage}
+          disabled={currentPage === totalPages}
+          className="ml-2 px-4 py-2"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-zinc-700">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </button>
+        <span className="ml-4 text-xl font-semibold">
+          Page {currentPage} of {totalPages}
+        </span>
       </div>
+      {/* <div className="flex justify-center mt-4">
+        {[...Array(totalPages).keys()].map((page) => (
+          <button
+            key={page}
+            onClick={() => handlePageClick(page + 1)}
+            disabled={currentPage === page + 1}
+            className={`mx-1 px-3 py-1 rounded-md ${currentPage === page + 1 ? 'bg-blue-500 text-white' : 'bg-slate-200 text-black'}`}
+          >
+            {page + 1}
+          </button>
+        ))}
+      </div> */}
     </div>
   );
 }

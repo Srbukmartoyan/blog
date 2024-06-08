@@ -14,8 +14,8 @@ const fetchAll = async (page, limit) => {
       options.offset = offset;
     }
 
-    const posts = await Post.findAll(options);
-    return posts;
+    const { count, rows: posts } = await Post.findAndCountAll(options);
+    return { count, posts };
   } catch (err) {
     handleServiceError(err);
   }

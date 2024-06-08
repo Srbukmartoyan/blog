@@ -7,8 +7,8 @@ const fetchAll = async (req, res, next) => {
     const parsedPage = page ? parseInt(page) : null;
     const parsedlimit = limit ? parseInt(limit) : null;
 
-    const posts = await fetchAllService(parsedPage, parsedlimit);
-    res.status(200).json(posts);
+    const { count, posts } = await fetchAllService(parsedPage, parsedlimit);
+    res.status(200).json({ count, posts });
   } catch (err) {
     next(err);
   }
