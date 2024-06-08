@@ -1,12 +1,10 @@
 import { mutate } from 'swr'; 
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { useAllPosts } from '../../../hooks/useAllPosts';
 import { Button } from '../../Button';
 
 const Blog = ({ title, author, date, excerpt, postId, showActions }) => {
   const { allPosts } = useAllPosts();
-  const navigate = useNavigate();
 
   const handleDeletePost = async () => {
     const token = localStorage.getItem('auth-token');

@@ -35,7 +35,7 @@ const Home = () => {
           <button
             key={i}
             onClick={() => handlePageClick(i)}
-            className={`mx-1 px-3 py-1 rounded-md ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-slate-200 text-black'}`}
+            className={`mx-1 px-3 py-1 rounded-md ${currentPage === i ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'}`}
           >
             {i}
           </button>

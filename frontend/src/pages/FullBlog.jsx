@@ -42,7 +42,7 @@ const FullBlog = () => {
           </div>
         </div>
         {authorPosts ? (
-        <Group posts={authorPosts} title={`More posts by ${blogPost.Author?.name}`} />
+        <Group posts={authorPosts.posts} title={`More posts by ${blogPost.Author?.name}`} />
       ) : (
         <p>Loading author's posts...</p>
       )}

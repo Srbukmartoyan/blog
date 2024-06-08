@@ -2,6 +2,7 @@ import Blog from './Blog/Blog';
 import '../../styles/style.css'
 
 const BlogList = ({ posts, title, showActions }) => {
+  console.log(posts);
   return (
     <div className="container mx-auto px-8 py-1 bg-slate-200 rounded-md">
       <div className='flex'>
