@@ -22,7 +22,7 @@ const Blog = ({ title, author, date, excerpt, postId, showActions }) => {
      if (!response.ok) {
       throw new Error('Failed to delete post');
     }
-      mutate('/posts', allPosts.filter(post => post.id !== postId), false);
+      mutate('/posts');
       mutate('/users/my/posts');
     } catch (error) {
       console.error('Error deleting post:', error);

@@ -47,7 +47,7 @@ const Home = () => {
           <button
             key={i}
             onClick={() => handlePageClick(i)}
-            className={`mx-1 px-3 py-1 rounded-md ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-slate-200 text-black'}`}
+            className={`mx-1 px-3 py-1 rounded-md ${currentPage === i ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'}`}
           >
             {i}
           </button>
@@ -60,7 +60,7 @@ const Home = () => {
         <button
           key={totalPages}
           onClick={() => handlePageClick(totalPages)}
-          className={`mx-1 px-3 py-1 rounded-md ${currentPage === totalPages ? 'bg-blue-500 text-white' : 'bg-slate-200 text-black'}`}
+          className={`mx-1 px-3 py-1 rounded-md ${currentPage === totalPages ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'}`}
         >
           {totalPages}
         </button>
@@ -100,18 +100,6 @@ const Home = () => {
           Page {currentPage} of {totalPages}
         </span>
       </div>
-      {/* <div className="flex justify-center mt-4">
-        {[...Array(totalPages).keys()].map((page) => (
-          <button
-            key={page}
-            onClick={() => handlePageClick(page + 1)}
-            disabled={currentPage === page + 1}
-            className={`mx-1 px-3 py-1 rounded-md ${currentPage === page + 1 ? 'bg-blue-500 text-white' : 'bg-slate-200 text-black'}`}
-          >
-            {page + 1}
-          </button>
-        ))}
-      </div> */}
     </div>
   );
 }
