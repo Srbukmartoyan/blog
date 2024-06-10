@@ -4,7 +4,7 @@ const PostController = require('../controller/PostController.js');
 
 const router = express.Router();
 
-router.get('/', fetchUser, PostController.fetchAll);
+router.get('/', PostController.fetchAll);
 router.get('/:id', fetchUser, PostController.findById);
 router.post('/', fetchUser, PostController.create);
 router.put('/:id', fetchUser, PostController.updateById);

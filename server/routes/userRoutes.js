@@ -9,5 +9,4 @@ router.get('/my/posts', fetchUser, UserController.fetchMyPosts);
 router.get('/:authorId/posts', fetchUser, UserController.fetchPostsByAuthorId);
 router.get('/:authorId/profile', fetchUser, UserController.fetchProfileByAuthorId);
 
-
 module.exports = router;

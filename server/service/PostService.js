@@ -1,12 +1,21 @@
+const { Op } = require('sequelize');
 const { Post, Author, Hashtag, Image } = require('../models');
 const { handleServiceError } = require('../middleware/errorHandler.js');
 
-
-const fetchAll = async (page, limit) => {
+const fetchAll = async (page, limit, searchTerm) => {
   try {
     let options = {
       include: [{ model: Author }]
     };
+
+    if (searchTerm) {
+      options.where = {
+        [Op.or]: [
+          { title: { [Op.like]: `%${searchTerm}%` } },
+          { '$Author.name$': { [Op.like]: `%${searchTerm}%` } },
+        ],
+      }
+    }
 
     if (page && limit) {
       const offset = (page - 1) * limit;
