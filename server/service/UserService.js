@@ -1,4 +1,4 @@
-const { where } = require('sequelize');
+const { where, Op } = require('sequelize');
 const { Post, Author, FriendRequest } = require('../models');
 
 const fetchPosts = async (userId, page, limit) => {
@@ -38,9 +38,9 @@ const fetchProfileByAuthorId = async (userId, requesterId) => {
     return user;
 }
 
-const fetchAllUsers = async (requesterId) => {
+const fetchAllUsers = async (requesterId, searchTerm) => {
     try {
-        const users = await Author.findAll({
+        const options = {
             include: [
                 {
                     model: FriendRequest,
@@ -49,7 +49,16 @@ const fetchAllUsers = async (requesterId) => {
                     required: false,
                 }
             ]
-        });
+        }
+        if (searchTerm) {
+            options.where = {
+              [Op.or]: [
+                { name: { [Op.like]: `%${searchTerm}%` } },
+                { email: { [Op.like]: `%${searchTerm}%` } },
+              ],
+            }
+          }
+        const users = await Author.findAll(options);
         return users;
     } catch (error) {
         throw new Error('Failed to fetch users');

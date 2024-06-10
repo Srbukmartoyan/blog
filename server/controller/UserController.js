@@ -42,7 +42,9 @@ const fetchProfileByAuthorId = async (req, res) => {
 const fetchAllUsers = async (req, res) => {
     try {
         const requesterId = req.user.id;
-        const users = await fetchAllUsersService(requesterId);
+        const  { search } = req.query;
+        const searchTerm = (search != 'undefined') ? search : "";
+        const users = await fetchAllUsersService(requesterId, searchTerm);
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({ error: error.message });

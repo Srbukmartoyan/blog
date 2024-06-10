@@ -11,7 +11,7 @@ const PaginationButtons = ({ currentPage, totalPages, handlePageClick, nextPage,
           <button
             key={i}
             onClick={() => handlePageClick(i)}
-            className={`mx-1 px-3 py-1 rounded-md ${currentPage === i ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'}`}
+            className={`mx-0.5 px-1.5 py-0.5 sm:mx-1 sm:px-3 sm:py-1 rounded-md ${currentPage === i ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'}`}
           >
             {i}
           </button>
@@ -23,7 +23,7 @@ const PaginationButtons = ({ currentPage, totalPages, handlePageClick, nextPage,
           <button
             key={i}
             onClick={() => handlePageClick(i)}
-            className={`mx-1 px-3 py-1 rounded-md ${currentPage === i ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'}`}
+            className={`mx-0.5 px-1.5 py-0.5 sm:mx-1 sm:px-3 sm:py-1 rounded-md ${currentPage === i ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'}`}
           >
             {i}
           </button>
@@ -36,7 +36,7 @@ const PaginationButtons = ({ currentPage, totalPages, handlePageClick, nextPage,
         <button
           key={totalPages}
           onClick={() => handlePageClick(totalPages)}
-          className={`mx-1 px-3 py-1 rounded-md ${currentPage === totalPages ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'}`}
+          className={`mx-0.5 px-1.5 py-0.5 sm:mx-1 sm:px-3 sm:py-1 rounded-md ${currentPage === totalPages ? 'bg-slate-500 text-white' : 'bg-slate-200 text-black'}`}
         >
           {totalPages}
         </button>
@@ -47,11 +47,11 @@ const PaginationButtons = ({ currentPage, totalPages, handlePageClick, nextPage,
   };
 
   return (
-    <div className="flex justify-center items-center mt-4">
+    <div className="flex justify-center items-center mt-4 flex-wrap">
       <button
         onClick={prevPage}
         disabled={currentPage === 1}
-        className="mr-2 px-4 py-2"
+        className="mr-0.5 px-0.5 py-0.5 md:mr-2 md:px-4 md:py-2"
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-zinc-700">
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -61,7 +61,7 @@ const PaginationButtons = ({ currentPage, totalPages, handlePageClick, nextPage,
       <button
         onClick={nextPage}
         disabled={currentPage === totalPages}
-        className="ml-2 px-4 py-2"
+        className="ml-0.5 px-0.5 py-0.5 md:ml-2 md:px-4 md:py-2"
       >
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-zinc-700">
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
