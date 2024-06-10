@@ -1,6 +1,8 @@
 import useSWR from 'swr';
 import { useParams } from 'react-router-dom';
 import { authFetcher } from '../utils/fetcher';
+import { INITIAL_CURRENT_PAGE } from '../constants';
+import { ITEMS_PER_PAGE } from '../constants';
 import Group from '../components/Group';
 import useAuth from '../hooks/useAuth';
 
@@ -11,7 +13,7 @@ const FullBlog = () => {
   const authorId = blogPost?.Author?.id;
 
   const { data: authorPosts, error: authorPostsError } = useSWR(
-    authorId ? `/users/${authorId}/posts` : null,
+    authorId ? `/users/${authorId}/posts?page=${INITIAL_CURRENT_PAGE}&limit=${ITEMS_PER_PAGE}` : null,
     authFetcher
   );
 

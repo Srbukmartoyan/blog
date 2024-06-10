@@ -1,10 +1,11 @@
+import { MAX_BUTTONS } from "../constants";
+
 const PaginationButtons = ({ currentPage, totalPages, handlePageClick, nextPage, prevPage }) => {
   const renderButtons = () => {
     const buttons = [];
     const startPage = 1;
-    const maxButtons = 5;
 
-    if (totalPages <= maxButtons + 1) {
+    if (totalPages <= MAX_BUTTONS + 1) {
       for (let i = startPage; i <= totalPages; i++) {
         buttons.push(
           <button
@@ -17,7 +18,7 @@ const PaginationButtons = ({ currentPage, totalPages, handlePageClick, nextPage,
         );
       }
     } else {
-      for (let i = startPage; i <= maxButtons; i++) {
+      for (let i = startPage; i <= MAX_BUTTONS; i++) {
         buttons.push(
           <button
             key={i}

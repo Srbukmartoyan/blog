@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { BlogList } from '../components';
 import { useAllPosts } from '../hooks/useAllPosts';
 import { ITEMS_PER_PAGE } from '../constants';
+import { INITIAL_CURRENT_PAGE } from '../constants';
 import useAuth from '../hooks/useAuth';
 import usePagination from '../hooks/usePagination';
 import PaginationButtons from '../components/PaginationButtons';
 
 const Home = () => {
   const token = useAuth();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(INITIAL_CURRENT_PAGE);
   const { allPosts, totalPosts, isLoading, isError } = useAllPosts(currentPage, ITEMS_PER_PAGE);
   const { totalPages, nextPage, prevPage, handlePageClick } = usePagination(totalPosts, ITEMS_PER_PAGE, currentPage, setCurrentPage);
 
