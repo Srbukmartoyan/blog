@@ -22,7 +22,6 @@ const fetchAll = async (page, limit, searchTerm) => {
       options.limit = limit;
       options.offset = offset;
     }
-
     const { count, rows: posts } = await Post.findAndCountAll(options);
     return { count, posts };
   } catch (err) {
