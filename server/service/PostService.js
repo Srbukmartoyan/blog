@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const { Post, Author, Hashtag, Image } = require('../models');
 const { handleServiceError } = require('../middleware/errorHandler.js');
 
-const fetchAll = async (page, limit, searchTerm) => {
+const fetchAll = async (page, limit, searchTerm, selectedHashtags) => {
   try {
     let options = {
       include: [{ model: Author }]
@@ -16,6 +16,15 @@ const fetchAll = async (page, limit, searchTerm) => {
         ],
       }
     }
+
+    if (selectedHashtags && selectedHashtags.length > 0) {
+      options.include.push({
+        model: Hashtag,
+        where: { id: { [Op.in]: selectedHashtags } },
+        through: { attributes: [] } 
+      });
+    }
+
 
     if (page && limit) {
       const offset = (page - 1) * limit;

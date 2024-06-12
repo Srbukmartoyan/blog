@@ -3,12 +3,13 @@ const { checkRequiredFields } = require('../middleware/errorHandler.js');
 
 const fetchAll = async (req, res, next) => {
   try {
-    const {page, limit, search} = req.query;
+    const {page, limit, search, hashtags} = req.query;
     const parsedPage = (page != 'undefined') ? parseInt(page) : null;
     const parsedlimit = (limit != 'undefined') ? parseInt(limit) : null;
     const searchTerm = (search != 'undefined') ? search : "";
+    const selectedHashtags = hashtags.trim().length > 0 ? hashtags.split(',').map(id => parseInt(id)) : [];
 
-    const { count, posts } = await fetchAllService(parsedPage, parsedlimit, searchTerm);
+    const { count, posts } = await fetchAllService(parsedPage, parsedlimit, searchTerm, selectedHashtags);
     res.status(200).json({ count, posts });
   } catch (err) {
     next(err);
