@@ -1,6 +1,7 @@
-import Group from '../components/Group';
 import { useAllPosts } from '../hooks/useAllPosts';
 import useAuth from '../hooks/useAuth';
+
+import Group from '../components/Group';
 
 const InfoPage = () => {
   const token = useAuth();

@@ -1,14 +1,14 @@
 import useSWR from 'swr';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { authFetcher } from '../utils/fetcher';
-import { BlogList } from '../components';
-import { ProfileCard } from '../components';
-import { Button } from '../components';
+
 import useAuth from '../hooks/useAuth';
-import { ITEMS_PER_PAGE } from '../constants';
 import usePagination from '../hooks/usePagination';
-import PaginationButtons from '../components/PaginationButtons';
+import { authFetcher } from '../utils/fetcher';
+
+import { ITEMS_PER_PAGE } from '../constants';
+
+import { BlogList, ProfileCard, Button, PaginationButtons } from '../components';
 
 const User = () => {
     const token = useAuth();

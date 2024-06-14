@@ -1,10 +1,11 @@
 import useSWR from 'swr';
 import { useParams } from 'react-router-dom';
-import { authFetcher } from '../utils/fetcher';
-import { INITIAL_CURRENT_PAGE } from '../constants';
-import { ITEMS_PER_PAGE } from '../constants';
-import Group from '../components/Group';
+
 import useAuth from '../hooks/useAuth';
+import { authFetcher } from '../utils/fetcher';
+
+import Group from '../components/Group';
+import { INITIAL_CURRENT_PAGE, ITEMS_PER_PAGE } from '../constants';
 
 const FullBlog = () => {
   const token = useAuth();

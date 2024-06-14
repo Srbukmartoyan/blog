@@ -4,10 +4,7 @@ import usePagination from '../hooks/usePagination';
 import useSearch from '../hooks/useSearch';
 import { useAllPosts } from '../hooks/useAllPosts';
 
-import { BlogList } from '../components';
-import PaginationButtons from '../components/PaginationButtons';
-import SearchInput from '../components/SearchInput';
-import HashtagFilter from '../components/HashtagFilter';
+import { BlogList, PaginationButtons, SearchInput, HashtagFilter} from '../components';
 
 import { ITEMS_PER_PAGE, INITIAL_CURRENT_PAGE } from '../constants';
 

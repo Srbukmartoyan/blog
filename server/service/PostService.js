@@ -3,6 +3,7 @@ const { Post, Author, Hashtag, Image } = require('../models');
 const { handleServiceError } = require('../middleware/errorHandler.js');
 
 const fetchAll = async (page, limit, searchTerm, selectedHashtags) => {
+  console.log(page, limit, searchTerm, selectedHashtags);
   try {
     let options = {
       include: [{ model: Author }]
@@ -12,7 +13,7 @@ const fetchAll = async (page, limit, searchTerm, selectedHashtags) => {
       options.include.push({
         model: Hashtag,
         where: { id: { [Op.in]: selectedHashtags } },
-        through: { attributes: [] } 
+        // through: { attributes: [] } 
       });
     }
 
@@ -31,6 +32,7 @@ const fetchAll = async (page, limit, searchTerm, selectedHashtags) => {
       options.offset = offset;
     }
     const { count, rows: posts } = await Post.findAndCountAll(options);
+    console.log(posts, count);
     return { count, posts };
   } catch (err) {
     handleServiceError(err);

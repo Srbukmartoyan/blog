@@ -10,6 +10,7 @@ const fetchAll = async (req, res, next) => {
     const selectedHashtags = hashtags.trim().length > 0 ? hashtags.split(',').map(id => parseInt(id)) : [];
 
     const { count, posts } = await fetchAllService(parsedPage, parsedlimit, searchTerm, selectedHashtags);
+    console.log('posts.length :', posts.length);
     res.status(200).json({ count, posts });
   } catch (err) {
     next(err);

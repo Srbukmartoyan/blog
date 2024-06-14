@@ -1,5 +1,5 @@
-import Blog from './Blog/Blog';
 import '../../styles/style.css'
+import Blog from './Blog/Blog';
 
 const BlogList = ({ posts, title, showActions }) => {
   return (

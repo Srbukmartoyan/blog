@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
+
 import InputField from './InputField';
 import { Button } from './Button';
 import upload_area from '../assets/upload_area.svg';

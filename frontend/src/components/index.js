@@ -6,5 +6,9 @@ import { Button } from "./Button";
 import InputField from "./InputField";
 import ProfileCard from "./ProfileCard";
 import FriendList from "./FriendList";
+import PaginationButtons from "./PaginationButtons";
+import SearchInput from "./SearchInput";
+import HashtagFilter from "./HashtagFilter";
+import UserList from "./UserList";
 
-export { Navbar, Footer, BlogList, BlogForm, Button, InputField, ProfileCard, FriendList };
+export { Navbar, Footer, BlogList, BlogForm, Button, InputField, ProfileCard, FriendList, PaginationButtons, SearchInput, HashtagFilter, UserList };

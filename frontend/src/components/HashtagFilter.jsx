@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import useSWR from 'swr';
+
 import { authFetcher } from '../utils/fetcher';
 
 const HashtagFilter = ({ selectedHashtags, handleHashtagChange }) => {

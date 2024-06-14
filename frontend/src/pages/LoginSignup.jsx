@@ -1,5 +1,6 @@
 import { useState } from "react";
-import validator from 'validator'
+import validator from 'validator';
+
 import { Button, InputField } from "../components";
 
 const LoginSignUp = () => {

@@ -1,7 +1,9 @@
 import useSWR, { mutate } from "swr";
+
 import useAuth from "../hooks/useAuth";
-import { FriendList, Button } from "../components";
 import { authFetcher } from "../utils/fetcher";
+
+import { FriendList, Button } from "../components";
 import '../styles/style.css';
 
 const handleRequest = async (url, method, body) => {

@@ -1,9 +1,10 @@
 import useSWR from "swr";
+
 import useAuth from "../hooks/useAuth";
-import { authFetcher } from "../utils/fetcher";
-import UserList from "../components/UserList";
 import useSearch from "../hooks/useSearch";
-import SearchInput from "../components/SearchInput";
+import { authFetcher } from "../utils/fetcher";
+
+import {SearchInput, UserList} from "../components"
 
 const AllUsers = () => {
     const token = useAuth();
