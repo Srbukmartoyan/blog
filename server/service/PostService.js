@@ -8,15 +8,6 @@ const fetchAll = async (page, limit, searchTerm, selectedHashtags) => {
       include: [{ model: Author }]
     };
 
-    if (searchTerm) {
-      options.where = {
-        [Op.or]: [
-          { title: { [Op.like]: `%${searchTerm}%` } },
-          { '$Author.name$': { [Op.like]: `%${searchTerm}%` } },
-        ],
-      }
-    }
-
     if (selectedHashtags && selectedHashtags.length > 0) {
       options.include.push({
         model: Hashtag,
@@ -25,6 +16,14 @@ const fetchAll = async (page, limit, searchTerm, selectedHashtags) => {
       });
     }
 
+    if (searchTerm) {
+      options.where = {
+        // [Op.or]: [
+        title: { [Op.like]: `%${searchTerm}%` },
+          // { '$Author.name$': { [Op.like]: `%${searchTerm}%` } },
+        // ],
+      }
+    }
 
     if (page && limit) {
       const offset = (page - 1) * limit;

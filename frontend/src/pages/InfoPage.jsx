@@ -5,7 +5,6 @@ import useAuth from '../hooks/useAuth';
 const InfoPage = () => {
   const token = useAuth();
   const { allPosts, isLoading, isError } = useAllPosts();
-
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div  className='mt-4 text-center text-red-700 font-bold'>{isError.message}</div>;
 
