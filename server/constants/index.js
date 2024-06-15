@@ -1,3 +1,4 @@
-const tokenExpiration = '2h';
+const accessTokenExpiration = '2h';
+const refreshTokenExpiration = '30d';
 
-module.exports = { tokenExpiration };
+module.exports = { accessTokenExpiration, refreshTokenExpiration };

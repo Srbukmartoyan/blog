@@ -1,14 +1,14 @@
 const { Author } = require('../models');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { tokenExpiration } = require('../constants');
+const { accessTokenExpiration, refreshTokenExpiration } = require('../constants');
 
 
-const generateToken = (userId) => {
+const generateToken = (userId, secretKey, expiresIn) => {
     return jwt.sign(
         { user: { id: userId } },
-        process.env.JWT_SECRET,
-        { expiresIn: tokenExpiration }
+        secretKey,
+        { expiresIn }
     );
 };
 
@@ -26,9 +26,9 @@ const signup = async ({ username, email, password }) => {
         password: hashedPassword,
     });
 
-    const token = generateToken(user.id);
-
-    return { token, user };
+    const accessToken = generateToken(user.id,  process.env.JWT_ACCESS_SECRET, accessTokenExpiration);
+    const refreshToken = generateRefreshToken(user.id, process.env.JWT_REFRESH_SECRET, refreshTokenExpiration);
+    return { accessToken, refreshToken, user };
 };
 
 const signin = async ({ email, password }) => {
@@ -41,9 +41,10 @@ const signin = async ({ email, password }) => {
         throw new Error('Incorrect password');
     }
 
-    const token = generateToken(user.id);
 
-    return { token, user };
+    const accessToken = generateToken(user.id, process.env.JWT_ACCESS_SECRET, accessTokenExpiration);
+    const refreshToken = generateRefreshToken(user.id, process.env.JWT_REFRESH_SECRET, refreshTokenExpiration);
+    return { accessToken, refreshToken, user };
 };
 
 module.exports = { signup, signin };
