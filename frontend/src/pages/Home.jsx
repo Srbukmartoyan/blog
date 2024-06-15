@@ -35,13 +35,13 @@ const Home = () => {
         <HashtagFilter selectedHashtags={selectedHashtags} handleHashtagChange={handleHashtagChange} />
       </div>
       <BlogList posts={allPosts} title="All Blog Posts" showActions={false} />
-      <PaginationButtons
+      {totalPages > 0 && <PaginationButtons
         currentPage={currentPage}
         totalPages={totalPages}
         handlePageClick={handlePageClick}
         nextPage={nextPage}
         prevPage={prevPage}
-      />
+      />}
     </div>
   );
 }
