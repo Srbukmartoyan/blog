@@ -16,7 +16,9 @@ app.use(errorHandler);
 
 app.listen(PORT, async() => {
   console.log(`server up on http://localhost:${PORT}`);
-  await sequelize.authenticate();
+  await sequelize.authenticate({
+    logging: console.log 
+  });
   console.log('Database Connected!');
 })
 

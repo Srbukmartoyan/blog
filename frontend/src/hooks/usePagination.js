@@ -1,5 +1,4 @@
 const usePagination = (totalItems, itemsPerPage, currentPage, setCurrentPage) => {
-  // console.log(totalItems);
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const nextPage = () => {

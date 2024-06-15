@@ -3,7 +3,6 @@ const { Post, Author, Hashtag, Image } = require('../models');
 const { handleServiceError } = require('../middleware/errorHandler.js');
 
 const fetchAll = async (page, limit, searchTerm, selectedHashtags) => {
-  console.log(page, limit, searchTerm, selectedHashtags);
   try {
     let options = {
       include: [{ model: Author }]
@@ -13,27 +12,31 @@ const fetchAll = async (page, limit, searchTerm, selectedHashtags) => {
       options.include.push({
         model: Hashtag,
         where: { id: { [Op.in]: selectedHashtags } },
-        // through: { attributes: [] } 
+        through: { attributes: [] }
       });
     }
 
     if (searchTerm) {
       options.where = {
-        // [Op.or]: [
         title: { [Op.like]: `%${searchTerm}%` },
-          // { '$Author.name$': { [Op.like]: `%${searchTerm}%` } },
-        // ],
       }
     }
+
+    const counAlltOptions = {
+      include: options.include,
+      where: options.where,
+      distinct: true,
+      col: 'id'  // post pk
+    };
+    const count = await Post.count(counAlltOptions);
 
     if (page && limit) {
       const offset = (page - 1) * limit;
       options.limit = limit;
       options.offset = offset;
     }
-    const { count, rows: posts } = await Post.findAndCountAll(options);
-    console.log(posts, count);
-    return { count, posts };
+    const posts = await Post.findAll(options);
+    return { count, posts }
   } catch (err) {
     handleServiceError(err);
   }
@@ -76,7 +79,7 @@ const create = async (title, content, excerpt, author, image, selectedCategories
   }
 };
 
-const  updateById = async (title, content, excerpt, id, image, selectedCategory) => {
+const updateById = async (title, content, excerpt, id, image, selectedCategory) => {
   try {
     const post = await Post.findByPk(id, { include: [Author, Image, Hashtag] });
     if (!post) {
@@ -115,4 +118,4 @@ const removeById = async (id) => {
 };
 
 
-module.exports = { fetchAll, findById, create,  updateById, removeById };
+module.exports = { fetchAll, findById, create, updateById, removeById };
