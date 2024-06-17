@@ -37,7 +37,6 @@ const signin = async (req, res) => {
 
 const refreshToken = async (req, res) => {
     const { refreshToken } = req.body;
-
     if (!refreshToken) {
         return res.status(400).json({ success: false, error: 'Refresh token is required' });
     }

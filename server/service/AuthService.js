@@ -48,13 +48,11 @@ const signin = async ({ email, password }) => {
 
 const refreshToken = async (refreshToken) => {
     try {
-        console.log(refreshToken);
         const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
         const userId = decoded.user.id;
         const newAccessToken = generateToken(userId, process.env.JWT_ACCESS_SECRET, accessTokenExpiration);
         return newAccessToken;
     } catch (error) {
-        console.error('hereeee', error)
         throw new Error('Invalid refresh token');
     }
 };

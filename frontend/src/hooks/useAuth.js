@@ -9,7 +9,7 @@ const useAuth = () => {
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refresh-token'));
 
   useEffect(() => {
-    const refreshToken = async () => {
+    const handleRefreshToken = async () => {
       try {
         const response = await fetch('/refresh-token', {
           method: 'POST',
@@ -20,7 +20,7 @@ const useAuth = () => {
         });
 
         if (response.ok) {
-          console.log('hereeeeee', data.accessToken);
+          // console.log('hereeeeee', data.accessToken);
           const data = await response.json();
           setAccessToken(data.accessToken);
           localStorage.setItem('auth-token', data.accessToken);
@@ -41,7 +41,7 @@ const useAuth = () => {
       }
     };
 
-    const interval = setInterval(refreshToken, TOKEN_REFRESH_INTERVAL);
+    const interval = setInterval(handleRefreshToken, TOKEN_REFRESH_INTERVAL);
     return () => clearInterval(interval);
   }, [refreshToken, navigate]);
 
