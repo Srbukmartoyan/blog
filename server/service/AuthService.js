@@ -27,7 +27,7 @@ const signup = async ({ username, email, password }) => {
     });
 
     const accessToken = generateToken(user.id,  process.env.JWT_ACCESS_SECRET, accessTokenExpiration);
-    const refreshToken = generateRefreshToken(user.id, process.env.JWT_REFRESH_SECRET, refreshTokenExpiration);
+    const refreshToken = generateToken(user.id, process.env.JWT_REFRESH_SECRET, refreshTokenExpiration);
     return { accessToken, refreshToken, user };
 };
 
@@ -41,11 +41,23 @@ const signin = async ({ email, password }) => {
         throw new Error('Incorrect password');
     }
 
-
     const accessToken = generateToken(user.id, process.env.JWT_ACCESS_SECRET, accessTokenExpiration);
-    const refreshToken = generateRefreshToken(user.id, process.env.JWT_REFRESH_SECRET, refreshTokenExpiration);
+    const refreshToken = generateToken(user.id, process.env.JWT_REFRESH_SECRET, refreshTokenExpiration);
     return { accessToken, refreshToken, user };
 };
 
-module.exports = { signup, signin };
+const refreshToken = async (refreshToken) => {
+    try {
+        console.log(refreshToken);
+        const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+        const userId = decoded.user.id;
+        const newAccessToken = generateToken(userId, process.env.JWT_ACCESS_SECRET, accessTokenExpiration);
+        return newAccessToken;
+    } catch (error) {
+        console.error('hereeee', error)
+        throw new Error('Invalid refresh token');
+    }
+};
+
+module.exports = { signup, signin, refreshToken };
 

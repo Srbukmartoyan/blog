@@ -43,7 +43,8 @@ const LoginSignUp = () => {
             });
             const data = await response.json();
             if (data.success) {
-                localStorage.setItem('auth-token', data.token);
+                localStorage.setItem('auth-token', data.accessToken);
+                localStorage.setItem('refresh-token', data.refreshToken);
                 localStorage.setItem('authUser', JSON.stringify(data.user));
                 window.location.replace('/user/me');
             } else {

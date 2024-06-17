@@ -30,7 +30,7 @@ const Home = () => {
 
   return (
     <div className='my-8'>
-      <div className='flex gap-4 items-center justify-around'>      
+      <div className='flex items-center justify-around flex-wrap'>      
         <SearchInput searchTerm={searchTerm} handleSearchChange={handleSearchChange} placeholder="Search Posts..." />
         <HashtagFilter selectedHashtags={selectedHashtags} handleHashtagChange={handleHashtagChange} />
       </div>
