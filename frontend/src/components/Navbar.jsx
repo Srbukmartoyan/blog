@@ -38,7 +38,7 @@ const Navbar = () => {
 
   return (
     <div className='bg-zinc-50 sticky w-full top-0 z-10 border-b border-b-gray-300'>
-      <nav className='container mx-auto flex justify-center gap-2 md:justify-between items-center py-4'>
+      <nav className='container mx-auto flex justify-center gap-2 md:justify-between items-center h-[8vh]'>
         <NavLink to='/' end>
           <div className='flex gap-2'>
             <div>
@@ -55,9 +55,9 @@ const Navbar = () => {
           </svg>
         </div>
         <div>
-          <ul className={`${isMenuOpen ? 'flex justify-around flex-wrap gap-2 absolute w-full top-12 left-0 bg-zinc-50 border-b border-b-gray-300' : 'hidden'} md:flex md:space-x-8`}>
+          <ul className={`${isMenuOpen ? 'flex-col gap-2 absolute w-full top-12 left-0 bg-zinc-50 border-b border-b-gray-300' : 'hidden'} md:flex md:space-x-8`}>
             {token ? <>
-              <NavItem to='/'>
+              <NavItem to='/' className='bg-red-50'>
                 <div>Home</div>
                 <div>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">

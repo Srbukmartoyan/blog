@@ -21,5 +21,3 @@ app.listen(PORT, async() => {
   });
   console.log('Database Connected!');
 })
-
-

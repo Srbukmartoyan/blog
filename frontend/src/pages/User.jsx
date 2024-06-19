@@ -4,7 +4,6 @@ import { Link, useParams } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth';
 import usePagination from '../hooks/usePagination';
-// import { PaginationProvider } from '../context/PaginationContext';
 import { SearchProvider } from '../context/SearchContext';
 import { authFetcher } from '../utils/fetcher';
 
@@ -56,6 +55,7 @@ const UserContent = () => {
                             </Link>
                         </div>
                     }
+                    {userId && <Link to={'/chat'}><div className='text-center'>Chat</div></Link>}
                 </div>}
             {(userId && status === 'accepted') || !userId
                 ? <>
@@ -77,9 +77,7 @@ const UserContent = () => {
 
 const User = () => (
     <SearchProvider>
-        {/* <PaginationProvider value={{ currentPage, totalPages, nextPage, prevPage, handlePageClick }}> */}
-         <UserContent />
-        {/* </PaginationProvider> */}
+        <UserContent />
     </SearchProvider>
 )
 export default User;
