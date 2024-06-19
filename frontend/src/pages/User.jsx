@@ -4,13 +4,14 @@ import { Link, useParams } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth';
 import usePagination from '../hooks/usePagination';
+import { SearchProvider } from '../context/SearchContext';
 import { authFetcher } from '../utils/fetcher';
 
 import { ITEMS_PER_PAGE } from '../constants';
 
 import { BlogList, ProfileCard, Button, PaginationButtons } from '../components';
 
-const User = () => {
+const UserContent = () => {
     const token = useAuth();
     const { userId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
@@ -37,7 +38,7 @@ const User = () => {
     if (!user || !posts) return <div className='mt-4 text-center text-red-700 font-bold'> Loading...</div>
 
     const status = user.receivedRequests[0]?.status;
-    
+
 
     return (
         <div className='my-8'>
@@ -58,18 +59,25 @@ const User = () => {
             {(userId && status === 'accepted') || !userId
                 ? <>
                     <BlogList posts={posts.posts} title={`${userId ? `${user.name}'s` : 'My'} Posts`} showActions={userId ? false : true} />
-                    <PaginationButtons 
-                         currentPage={currentPage}
-                         totalPages={totalPages}
-                         handlePageClick={handlePageClick}
-                         nextPage={nextPage}
-                         prevPage={prevPage}
-                    />
+                    {totalPages > 0 && <PaginationButtons
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        handlePageClick={handlePageClick}
+                        nextPage={nextPage}
+                        prevPage={prevPage}
+                    />}
                 </>
                 : <div className='text-center text-red-700 font-bold text-xl'>Follow to see posts</div>
             }
         </div>
     );
 };
+
+
+const User = () => (
+    <SearchProvider>
+        <UserContent />
+    </SearchProvider>
+)
 
 export default User;

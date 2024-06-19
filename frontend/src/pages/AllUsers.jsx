@@ -1,14 +1,14 @@
 import useSWR from "swr";
 
 import useAuth from "../hooks/useAuth";
-import useSearch from "../hooks/useSearch";
+import { SearchProvider, useSearchContext } from "../context/SearchContext";
 import { authFetcher } from "../utils/fetcher";
 
-import {SearchInput, UserList} from "../components"
+import {SearchInput, UserList} from "../components";
 
-const AllUsers = () => {
+const AllUsersContent = () => {
     const token = useAuth();
-    const { searchTerm, debouncedSearchTerm, handleSearchChange } = useSearch();
+    const { searchTerm, debouncedSearchTerm, handleSearchChange } = useSearchContext();
     const { data, error } = useSWR(`/users?search=${debouncedSearchTerm}`, authFetcher);
 
     const loggedInUser = JSON.parse(localStorage.getItem('authUser'));
@@ -25,4 +25,9 @@ const AllUsers = () => {
     )
 }
 
+const AllUsers = () => (
+    <SearchProvider>
+        <AllUsersContent />
+    </SearchProvider>
+)
 export default AllUsers;

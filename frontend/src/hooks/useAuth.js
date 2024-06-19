@@ -36,7 +36,7 @@ const useAuth = () => {
         }
       } catch (error) {
         console.error('Failed to refresh token:', error);
-        navigate('/login'); 
+        navigate('/auth'); 
       }
     };
 
@@ -45,7 +45,7 @@ const useAuth = () => {
   }, [refreshToken, navigate]);
 
   if (!accessToken) {
-    navigate('/login');
+    navigate('/auth');
   }
 
   return accessToken;

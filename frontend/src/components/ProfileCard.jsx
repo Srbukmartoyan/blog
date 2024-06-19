@@ -1,10 +1,12 @@
 import useSWR, { mutate } from "swr";
 import { Link } from "react-router-dom";
 
+import { useSearchContext } from "../context/SearchContext";
 import { authFetcher } from "../utils/fetcher";
 import { Button } from "./Button";
 
 const ProfileCard = ({ user, showAction }) => {
+    const { debouncedSearchTerm } = useSearchContext();
     const status = user.receivedRequests[0]?.status;
 
     const handleFriendRequest = async (requestType, method) => {
@@ -30,7 +32,7 @@ const ProfileCard = ({ user, showAction }) => {
                 console.log('Friend request deleted');
             }
 
-            mutate(`/users`);
+            mutate(`/users?search=${debouncedSearchTerm}`);
             mutate(`/users/${user.id}/profile`);
         } catch (error) {
             console.error('Error:', error.message);
