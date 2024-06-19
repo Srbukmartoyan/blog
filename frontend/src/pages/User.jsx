@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import useAuth from '../hooks/useAuth';
 import usePagination from '../hooks/usePagination';
+// import { PaginationProvider } from '../context/PaginationContext';
 import { SearchProvider } from '../context/SearchContext';
 import { authFetcher } from '../utils/fetcher';
 
@@ -58,7 +59,7 @@ const UserContent = () => {
                 </div>}
             {(userId && status === 'accepted') || !userId
                 ? <>
-                    <BlogList posts={posts.posts} title={`${userId ? `${user.name}'s` : 'My'} Posts`} showActions={userId ? false : true} />
+                    <BlogList posts={posts.posts} title={`${userId ? `${user.name}'s` : 'My'} Posts`} showActions={userId ? false : true} currentPage={currentPage} />
                     {totalPages > 0 && <PaginationButtons
                         currentPage={currentPage}
                         totalPages={totalPages}
@@ -76,8 +77,9 @@ const UserContent = () => {
 
 const User = () => (
     <SearchProvider>
-        <UserContent />
+        {/* <PaginationProvider value={{ currentPage, totalPages, nextPage, prevPage, handlePageClick }}> */}
+         <UserContent />
+        {/* </PaginationProvider> */}
     </SearchProvider>
 )
-
 export default User;

@@ -1,7 +1,7 @@
 import '../../styles/style.css'
 import Blog from './Blog/Blog';
 
-const BlogList = ({ posts, title, showActions }) => {
+const BlogList = ({ posts, title, showActions, currentPage }) => {
   return (
     <div className="container mx-auto px-8 py-1 bg-slate-200 rounded-md">
       <div className='flex'>
@@ -20,6 +20,7 @@ const BlogList = ({ posts, title, showActions }) => {
             excerpt={post.excerpt}
             postId={post.id}
             showActions={showActions}
+            currentPage={currentPage}
           />
         ))
       }
