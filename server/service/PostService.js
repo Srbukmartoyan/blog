@@ -106,9 +106,9 @@ const updateById = async (title, content, excerpt, id, image, selectedCategory) 
 
 const removeById = async (id) => {
   try {
-    const post = await Post.findByPk(id, { include: [Image, Hashtag] });
+    const post = await Post.findByPk(id);
     if (!post) {
-      throw new Error('Post not found');
+      throw new Error('Post not found123123123');
     }
     await post.destroy();
     return { message: 'post deleted!' };

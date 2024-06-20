@@ -12,8 +12,12 @@ const BlogForm = ({ blogPost }) => {
   const [prevImg, setPrevImg] = useState(false);
   const [categories, setCategories] = useState([]);
   const [empty, setEmpty] = useState(false);
+  // title: blogPost.title,
+  // content: blogPost.content,
+  // selectedCategory: defaultSelectedCategories,
+  // image: blogPost.image,
   const [formData, setFormData] = useState({
-    title: '',
+    title: blogPost.title,
     content: '',
     selectedCategory: [],
     image: '',
@@ -44,17 +48,17 @@ const BlogForm = ({ blogPost }) => {
 
   useEffect(() => {
     if (blogPost) {
-      const defaultSelectedCategories = blogPost.Hashtags.map(tag => ({ name: tag.name, id: tag.id }));
-      const firstImage = blogPost.Image;
-      if (firstImage) {
-        setPrevImg(firstImage.url);
-      }
-      setFormData({
-        title: blogPost.title,
-        content: blogPost.content,
-        selectedCategory: defaultSelectedCategories,
-        image: blogPost.image,
-      });
+      // const defaultSelectedCategories = blogPost.Hashtags.map(tag => ({ name: tag.name, id: tag.id }));
+      // const firstImage = blogPost.Image;
+      // if (firstImage) {
+      //   setPrevImg(firstImage.url);
+      // }
+      // setFormData({
+      //   title: blogPost.title,
+      //   content: blogPost.content,
+      //   selectedCategory: defaultSelectedCategories,
+      //   image: blogPost.image,
+      // });
     }
   }, [blogPost]);
 
