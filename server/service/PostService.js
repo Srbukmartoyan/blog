@@ -90,12 +90,19 @@ const updateById = async (title, content, excerpt, id, image, selectedCategory) 
     post.excerpt = excerpt;
     await post.save(); // after post is added to database, associations are seted
     if (image) {
-      const newImage = await Image.create({ url: image, postId: id });
-      await post.setImage(newImage);
+      let newImage;
+      if (post.Image) {
+        post.Image.url = image;
+        newImage = await post.Image.save();
+      } else {
+        newImage = await Image.create({ url: image, postId: id });
+        await post.setImage(newImage);
+      }
     } else {
-      await post.Image?.destroy();
+      if (post.Image) {
+        await post.Image.destroy();
+      }
     }
-
     const hashtags = await Promise.all(selectedCategory.map(category => Hashtag.findOne({ where: { name: category } })));
     await post.setHashtags(hashtags);
     return post;

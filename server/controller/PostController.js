@@ -49,6 +49,7 @@ const updateById = async (req, res, next) => {
   const { id } = req.params;
   const { title, content, excerpt, image, selectedCategory } = req.body;
 
+  console.log(req.body, 'heree');
   const requiredFields = ['title', 'content', 'excerpt', 'selectedCategory'];
   const missingFieldError = checkRequiredFields(req.body, requiredFields);
   if (missingFieldError) {

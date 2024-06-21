@@ -39,7 +39,6 @@ const UserContent = () => {
 
     const status = user.receivedRequests[0]?.status;
 
-
     return (
         <div className='my-8'>
             {user &&
