@@ -22,6 +22,18 @@ const BlogForm = ({ blogPost }) => {
 
   const { data: hashtags, error } = useSWR('/hashtags', authFetcher);
 
+  useEffect(() => {
+    console.log('mounted');
+
+    return (() => {
+      console.log('unmounted');
+    })
+  }, [])
+  
+  useEffect(() => {
+    setFormData({...formData , title : blogPost.title})
+  }, [blogPost])
+
   const imageHandler = (e) => {
     setFormData({ ...formData, image: e.target.files[0] });
     setNewImage(true);
@@ -40,7 +52,7 @@ const BlogForm = ({ blogPost }) => {
   const handlePostResponse = (data, successMessage, failureMessage) => {
     if (data.success) {
       alert(successMessage);
-      navigate('/');
+      navigate('/user/me');
     } else {
       alert(failureMessage);
     }
