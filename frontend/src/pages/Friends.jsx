@@ -16,10 +16,6 @@ const Friends = () => {
 
     const handleDelete = async (url, body) => {
         const token = localStorage.getItem('auth-token');
-        if (!token) {
-            alert('You must be logged in to make a friend request');
-            return;
-        }
         try {
             const response = await fetch(`/friendRequest/${url}`, {
                 method: 'DELETE',

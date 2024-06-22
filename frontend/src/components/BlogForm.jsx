@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import useSWR, { mutate } from 'swr';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { authFetcher } from '../utils/fetcher';
 
@@ -39,10 +41,13 @@ const BlogForm = ({ blogPost }) => {
   const handlePostResponse = (data, successMessage, failureMessage) => {
     if (data.success) {
       mutate(`/posts/${blogPost?.id}`);
-      alert(successMessage);
-      navigate('/user/me');
+      toast.success(successMessage, {
+        onClose: () => navigate('/user/me'),
+      });
     } else {
-      alert(failureMessage);
+      toast.error(failureMessage, {
+        onClose: () => navigate('/user/me'),
+      });
     }
   };
 
@@ -105,46 +110,49 @@ const BlogForm = ({ blogPost }) => {
   if (error) return <div className='mt-4 text-center text-red-700 font-bold'>{error.message}</div>;
 
   return (
-    <form onSubmit={handleSubmit} className="w-3/4 sm:w-96 border-2 border-slate-300 p-4 rounded bg-zinc-50">
-      <InputField
-        type="text"
-        name="title"
-        value={formData.title}
-        onChange={handleChange}
-        placeholder="Title"
-      />
-      <InputField
-        type="textarea"
-        name="content"
-        value={formData.content}
-        onChange={handleChange}
-        placeholder="Content"
-      />
-      <Select
-        className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none"
-        name="selectedCategory"
-        cacheOptions
-        options={hashtags}
-        isMulti
-        getOptionLabel={option => option.name}
-        getOptionValue={option => option.id}
-        onChange={(selectedOptions) => {
-          const selectedCategories = selectedOptions.map(option => option.name);
-          setFormData({ ...formData, selectedCategory: selectedCategories });
-        }}
-        defaultValue={formData.selectedCategory}
-      />
-      <label htmlFor="file-input">
-        {(formData.image && !newImage) ? (
-          <img src={formData.image.url} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
-        ) : (
-          <img src={newImage ? URL.createObjectURL(formData.image) : upload_area} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
-        )}
-      </label>
-      <Button text={'Clear Image'} onClick={deleteImage} type='button' />
-      <input onChange={imageHandler} type="file" name='image' id='file-input' hidden />
-      <Button text={blogPost ? 'Save Changes' : 'Create Blog'} type='submit' />
-    </form>
+    <>
+      <ToastContainer />
+      <form onSubmit={handleSubmit} className="w-3/4 sm:w-96 border-2 border-slate-300 p-4 rounded bg-zinc-50">
+        <InputField
+          type="text"
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
+          placeholder="Title"
+        />
+        <InputField
+          type="textarea"
+          name="content"
+          value={formData.content}
+          onChange={handleChange}
+          placeholder="Content"
+        />
+        <Select
+          className="mt-4 p-2 border border-gray-300 rounded-md w-full focus:outline-none"
+          name="selectedCategory"
+          cacheOptions
+          options={hashtags}
+          isMulti
+          getOptionLabel={option => option.name}
+          getOptionValue={option => option.id}
+          onChange={(selectedOptions) => {
+            const selectedCategories = selectedOptions.map(option => option.name);
+            setFormData({ ...formData, selectedCategory: selectedCategories });
+          }}
+          defaultValue={formData.selectedCategory}
+        />
+        <label htmlFor="file-input">
+          {(formData.image && !newImage) ? (
+            <img src={formData.image.url} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
+          ) : (
+            <img src={newImage ? URL.createObjectURL(formData.image) : upload_area} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
+          )}
+        </label>
+        <Button text={'Clear Image'} onClick={deleteImage} type='button' />
+        <input onChange={imageHandler} type="file" name='image' id='file-input' hidden />
+        <Button text={blogPost ? 'Save Changes' : 'Create Blog'} type='submit' />
+      </form>
+    </>
   );
 }
 

@@ -1,5 +1,8 @@
 import { mutate } from 'swr';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { Button } from '../../Button';
 import { ITEMS_PER_PAGE } from '../../../constants';
 
@@ -20,8 +23,10 @@ const Blog = ({ title, author, date, excerpt, postId, showActions, currentPage }
       }
       mutate(`/users/my/posts?page=${currentPage}&limit=${ITEMS_PER_PAGE}`);
       mutate('/posts');
+      toast.info('Post deleted!');
     } catch (error) {
       console.error('Error deleting post:', error);
+      toast.error('Failed to delete post');
     }
   };
 

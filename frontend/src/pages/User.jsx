@@ -1,6 +1,8 @@
 import useSWR from 'swr';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import useAuth from '../hooks/useAuth';
 import usePagination from '../hooks/usePagination';
@@ -41,6 +43,7 @@ const UserContent = () => {
 
     return (
         <div className='my-8'>
+            <ToastContainer />
             {user &&
                 <div className='mx-auto my-8 w-80 md:w-1/2 lg:w-1/4'>
                     <ProfileCard user={user} showAction={userId ? true : false} />
