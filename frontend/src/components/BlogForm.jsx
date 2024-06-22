@@ -38,7 +38,7 @@ const BlogForm = ({ blogPost }) => {
 
   const handlePostResponse = (data, successMessage, failureMessage) => {
     if (data.success) {
-      mutate(`/posts/${blogPost.id}`);
+      mutate(`/posts/${blogPost?.id}`);
       alert(successMessage);
       navigate('/user/me');
     } else {
