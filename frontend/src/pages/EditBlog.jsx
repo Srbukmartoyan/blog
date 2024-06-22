@@ -14,7 +14,6 @@ const EditBlog = () => {
   if (error) return <div className='mt-4 text-center text-red-700 font-bold'>Failed to load blog post</div>;
   if (!blogPost) return <div className='mt-4 text-center text-red-700 font-bold'>Loading...</div>;
 
-  console.log(blogPost, 'editblog');
   return (
     <div className='w-full h-[92vh] bg-slate-200 flex justify-center items-center'>
       <BlogForm blogPost={blogPost} />

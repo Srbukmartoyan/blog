@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 import { authFetcher } from '../utils/fetcher';
 
@@ -10,7 +10,6 @@ import { Button } from './Button';
 import upload_area from '../assets/upload_area.svg';
 
 const BlogForm = ({ blogPost }) => {
-  console.log(blogPost);
   const navigate = useNavigate();
   const [newImage, setNewImage] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,18 +20,6 @@ const BlogForm = ({ blogPost }) => {
   });
 
   const { data: hashtags, error } = useSWR('/hashtags', authFetcher);
-
-  useEffect(() => {
-    console.log('mounted');
-
-    return (() => {
-      console.log('unmounted');
-    })
-  }, [])
-  
-  useEffect(() => {
-    setFormData({...formData , title : blogPost.title})
-  }, [blogPost])
 
   const imageHandler = (e) => {
     setFormData({ ...formData, image: e.target.files[0] });
@@ -51,6 +38,7 @@ const BlogForm = ({ blogPost }) => {
 
   const handlePostResponse = (data, successMessage, failureMessage) => {
     if (data.success) {
+      mutate(`/posts/${blogPost.id}`);
       alert(successMessage);
       navigate('/user/me');
     } else {
