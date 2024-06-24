@@ -5,6 +5,7 @@ import useAuth from '../hooks/useAuth';
 import { authFetcher } from '../utils/fetcher';
 
 import Group from '../components/Group';
+import { LoadingIndicator, ErrorDisplay } from '../components';
 import { INITIAL_CURRENT_PAGE, ITEMS_PER_PAGE } from '../constants';
 
 const FullBlog = () => {
@@ -18,10 +19,10 @@ const FullBlog = () => {
     authFetcher
   );
 
-  if (error) return <div className='mt-4 text-center text-red-700 font-bold'>Failed to load blog post</div>;
-  if (!blogPost) return <div className='mt-4 text-center text-red-700 font-bold'>Loading...</div>;
-  if (authorPostsError) return <div className='mt-4 text-center text-red-700 font-bold'>Failed to load author's posts</div>;
-
+  if (error) return <ErrorDisplay />;
+  if (!blogPost) return <LoadingIndicator />;
+  if (authorPostsError) return <ErrorDisplay message="Failed to load author's posts"/>
+  
   return (
     <div className='mx-auto px-8 py-4 bg-slate-200 rounded-md w-full'>
         <div className='w-3/2 md:w-1/2 lg:w-1/3 bg-white shadow-md rounded-md mx-auto my-10 p-9 hover:scale-105 transition ease-linear duration-150'>

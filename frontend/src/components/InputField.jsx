@@ -8,7 +8,7 @@ const InputField = ({ name, value, onChange, placeholder, type = 'text', onKeyDo
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="block w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
+        className="block w-full px-4 py-2 border border-gray-300 rounded-md mb-4 outline-none"
         required={required}
       />
     );
@@ -21,7 +21,7 @@ const InputField = ({ name, value, onChange, placeholder, type = 'text', onKeyDo
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="block w-full px-4 py-2 border border-gray-300 rounded-md mb-4"
+      className="block w-full px-4 py-2 border border-gray-300 rounded-md mb-4 outline-none"
       required={required}
       onKeyDown={onKeyDown}
     />

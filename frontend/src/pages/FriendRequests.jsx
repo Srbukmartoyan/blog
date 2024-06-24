@@ -3,7 +3,7 @@ import useSWR, { mutate } from "swr";
 import useAuth from "../hooks/useAuth";
 import { authFetcher } from "../utils/fetcher";
 
-import { FriendList, Button } from "../components";
+import { FriendList, Button, ErrorDisplay, LoadingIndicator } from "../components";
 import '../styles/style.css';
 
 const handleRequest = async (url, method, body) => {
@@ -39,8 +39,8 @@ const FriendRequests = () => {
         }
     };
 
-    if (error) return <div className='mt-4 text-center text-red-700 font-bold'>error</div>
-    if (!requests && !error) return <div>Loading ...</div>
+    if (error) return <ErrorDisplay />
+    if (!requests) return <LoadingIndicator />
 
     const buttons = (friend) => (
         <>

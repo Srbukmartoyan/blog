@@ -11,7 +11,7 @@ import { authFetcher } from '../utils/fetcher';
 
 import { ITEMS_PER_PAGE } from '../constants';
 
-import { BlogList, ProfileCard, Button, PaginationButtons } from '../components';
+import { BlogList, ProfileCard, Button, PaginationButtons, LoadingIndicator, ErrorDisplay } from '../components';
 
 const UserContent = () => {
     const token = useAuth();
@@ -36,9 +36,9 @@ const UserContent = () => {
     const { data: posts, error: postsError } = useSWR(userId ? `/users/${userId}/posts?page=${currentPage}&limit=${ITEMS_PER_PAGE}` : `/users/my/posts?page=${currentPage}&limit=${ITEMS_PER_PAGE}`, authFetcher);
     const { totalPages, nextPage, prevPage, handlePageClick } = usePagination(posts?.count, ITEMS_PER_PAGE, currentPage, setCurrentPage);
 
-    if (userError || postsError) return <div className='mt-4 text-center text-red-700 font-bold'> Error: {userError ? userError.message : postsError.message} </div>
-    if (!user || !posts) return <div className='mt-4 text-center text-red-700 font-bold'> Loading...</div>
-
+    if (userError || postsError) return <ErrorDisplay />
+    if (!user || !posts) return <LoadingIndicator />
+    
     const status = user.receivedRequests[0]?.status;
 
     return (

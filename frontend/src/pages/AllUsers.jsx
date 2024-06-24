@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 import { SearchProvider, useSearchContext } from "../context/SearchContext";
 import { authFetcher } from "../utils/fetcher";
 
-import {SearchInput, UserList} from "../components";
+import {SearchInput, UserList, ErrorDisplay, LoadingIndicator} from "../components";
 
 const AllUsersContent = () => {
     const token = useAuth();
@@ -13,8 +13,8 @@ const AllUsersContent = () => {
 
     const loggedInUser = JSON.parse(localStorage.getItem('authUser'));
 
-    if (error) return <div className="mt-4 text-center text-red-700 font-bold">Error fetching users</div>
-    if (!data && !error) return <div className="mt-4 text-center text-red-700 font-bold">Loading...</div>
+    if (error) return <ErrorDisplay  message="Error fetching users"/>
+    if (!data && !error) return <LoadingIndicator />
 
     const filteredUsers = data.filter(user => user.id !== loggedInUser.id);
     return (

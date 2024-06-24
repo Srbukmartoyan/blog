@@ -2,12 +2,13 @@ import { useAllPosts } from '../hooks/useAllPosts';
 import useAuth from '../hooks/useAuth';
 
 import Group from '../components/Group';
+import { ErrorDisplay, LoadingIndicator } from '../components';
 
 const InfoPage = () => {
   const token = useAuth();
   const { allPosts, isLoading, isError } = useAllPosts();
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div  className='mt-4 text-center text-red-700 font-bold'>{isError.message}</div>;
+  if (isLoading) return <LoadingIndicator />;
+  if (isError) return <ErrorDisplay />;
 
   const groupedPosts = allPosts.reduce((acc, post) => {
     const authorId = post.Author.id;

@@ -3,6 +3,8 @@ import Select from 'react-select';
 import useSWR from 'swr';
 
 import { authFetcher } from '../utils/fetcher';
+import LoadingIndicator from './LoadingIndicator';
+import ErrorDisplay from './ErrorDisplay';
 
 const HashtagFilter = ({ selectedHashtags, handleHashtagChange }) => {
     const { data: hashtags, error } = useSWR('/hashtags', authFetcher);
@@ -12,8 +14,8 @@ const HashtagFilter = ({ selectedHashtags, handleHashtagChange }) => {
         handleHashtagChange(selectedIds);
     };
 
-    if (!error && !hashtags) return <div className='mt-4 text-center'>Loading hashtags...</div>;
-    if (error) return <div className='mt-4 text-center text-red-700 font-bold'>Error fetching data</div>;
+    if (!error && !hashtags) return <LoadingIndicator />;
+    if (error) return <ErrorDisplay message="Failed to load hashtags"/>
 
     return (
         <div className='flex justify-center mb-8'>

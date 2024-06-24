@@ -4,7 +4,7 @@ import usePagination from '../hooks/usePagination';
 import useSearch from '../hooks/useSearch';
 import { useAllPosts } from '../hooks/useAllPosts';
 
-import { BlogList, PaginationButtons, SearchInput, HashtagFilter } from '../components';
+import { BlogList, PaginationButtons, SearchInput, HashtagFilter, ErrorDisplay, LoadingIndicator } from '../components';
 
 import { ITEMS_PER_PAGE, INITIAL_CURRENT_PAGE } from '../constants';
 
@@ -25,8 +25,8 @@ const Home = () => {
   const { allPosts, totalPosts, isLoading, isError } = useAllPosts(currentPage, ITEMS_PER_PAGE, debouncedSearchTerm, selectedHashtags);
   const { totalPages, nextPage, prevPage, handlePageClick } = usePagination(totalPosts, ITEMS_PER_PAGE, currentPage, setCurrentPage);
 
-  if (isLoading) return <div className='mt-4 text-center text-red-700 font-bold'>Loading...</div>;
-  if (isError) return <div className='mt-4 text-center text-red-700 font-bold'>{isError.message}</div>;
+  if (isLoading) return <LoadingIndicator />;
+  if (isError) return <ErrorDisplay />;
 
   return (
     <div className='my-8'>

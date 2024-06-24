@@ -10,6 +10,8 @@ import { authFetcher } from '../utils/fetcher';
 import InputField from './InputField';
 import { Button } from './Button';
 import upload_area from '../assets/upload_area.svg';
+import LoadingIndicator from './LoadingIndicator';
+import ErrorDisplay from './ErrorDisplay';
 
 const BlogForm = ({ blogPost }) => {
   const navigate = useNavigate();
@@ -106,8 +108,8 @@ const BlogForm = ({ blogPost }) => {
     savePost(form, token);
   };
 
-  if (!error && !hashtags) return <div className='mt-4 text-center'>Loading hashtags...</div>;
-  if (error) return <div className='mt-4 text-center text-red-700 font-bold'>Error fetching data</div>;
+  if (!error && !hashtags) return <div className='mt-4 text-center'><LoadingIndicator /></div>;
+  if (error) return <div className='mt-4 text-center text-red-700 font-bold'><ErrorDisplay /></div>;
 
   return (
     <>
