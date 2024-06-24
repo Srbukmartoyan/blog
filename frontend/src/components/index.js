@@ -11,5 +11,6 @@ import SearchInput from "./SearchInput";
 import HashtagFilter from "./HashtagFilter";
 import UserList from "./UserList";
 import Message from "./Message";
+import ErrorBoundary from "./ErrorBoundary";
 
-export { Navbar, Footer, BlogList, BlogForm, Button, InputField, ProfileCard, FriendList, PaginationButtons, SearchInput, HashtagFilter, UserList, Message };
+export { Navbar, Footer, BlogList, BlogForm, Button, InputField, ProfileCard, FriendList, PaginationButtons, SearchInput, HashtagFilter, UserList, Message, ErrorBoundary };

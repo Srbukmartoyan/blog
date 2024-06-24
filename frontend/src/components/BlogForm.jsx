@@ -107,7 +107,7 @@ const BlogForm = ({ blogPost }) => {
   };
 
   if (!error && !hashtags) return <div className='mt-4 text-center'>Loading hashtags...</div>;
-  if (error) return <div className='mt-4 text-center text-red-700 font-bold'>{error.message}</div>;
+  if (error) return <div className='mt-4 text-center text-red-700 font-bold'>Error fetching data</div>;
 
   return (
     <>

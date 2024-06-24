@@ -4,7 +4,7 @@ import usePagination from '../hooks/usePagination';
 import useSearch from '../hooks/useSearch';
 import { useAllPosts } from '../hooks/useAllPosts';
 
-import { BlogList, PaginationButtons, SearchInput, HashtagFilter} from '../components';
+import { BlogList, PaginationButtons, SearchInput, HashtagFilter } from '../components';
 
 import { ITEMS_PER_PAGE, INITIAL_CURRENT_PAGE } from '../constants';
 
@@ -30,7 +30,7 @@ const Home = () => {
 
   return (
     <div className='my-8'>
-      <div className='flex items-center justify-around flex-wrap'>      
+      <div className='flex items-center justify-around flex-wrap'>
         <SearchInput searchTerm={searchTerm} handleSearchChange={handleSearchChange} placeholder="Search Posts..." />
         <HashtagFilter selectedHashtags={selectedHashtags} handleHashtagChange={handleHashtagChange} />
       </div>
