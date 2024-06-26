@@ -6,12 +6,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { authFetcher } from '../utils/fetcher';
+import { getAuthToken } from '../utils/auth';
 
 import InputField from './InputField';
 import { Button } from './Button';
-import upload_area from '../assets/upload_area.svg';
 import LoadingIndicator from './LoadingIndicator';
 import ErrorDisplay from './ErrorDisplay';
+import upload_area from '../assets/upload_area.svg';
+
 
 const BlogForm = ({ blogPost }) => {
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const BlogForm = ({ blogPost }) => {
     image: blogPost ? blogPost.Image : '',
   });
 
+  console.log('rendered', formData.image, newImage);
   const { data: hashtags, error } = useSWR('/hashtags', authFetcher);
 
   const imageHandler = (e) => {
@@ -54,7 +57,7 @@ const BlogForm = ({ blogPost }) => {
   };
 
   const uploadImage = async (image) => {
-    const token = localStorage.getItem('auth-token');
+    const token = getAuthToken();
     let responseData = { success: true };
     if (image && newImage) {
       let imgFormData = new FormData();
@@ -89,7 +92,7 @@ const BlogForm = ({ blogPost }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('auth-token');
+    const token = getAuthToken();
     let form = formData;
     form.excerpt = form.content.substring(0, 100);
 
@@ -147,7 +150,7 @@ const BlogForm = ({ blogPost }) => {
           {(formData.image && !newImage) ? (
             <img src={formData.image.url} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
           ) : (
-            <img src={newImage ? URL.createObjectURL(formData.image) : upload_area} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
+            <img src={(newImage && formData.image instanceof File) ? URL.createObjectURL(formData.image) : upload_area} alt="" className='mt-2.5 w-32 h-32 rounded-lg object-contain' />
           )}
         </label>
         <Button text={'Clear Image'} onClick={deleteImage} type='button' />

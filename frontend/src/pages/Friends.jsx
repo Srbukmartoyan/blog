@@ -1,6 +1,7 @@
 import useSWR, { mutate } from "swr";
 
 import useAuth from "../hooks/useAuth";
+import { getAuthToken } from "../utils/auth";
 import { authFetcher } from "../utils/fetcher";
 
 import { FriendList, Button, LoadingIndicator, ErrorDisplay} from "../components";
@@ -15,7 +16,7 @@ const Friends = () => {
     if (!followers || !followings) return <LoadingIndicator />;
 
     const handleDelete = async (url, body) => {
-        const token = localStorage.getItem('auth-token');
+        const token = getAuthToken();
         try {
             const response = await fetch(`/friendRequest/${url}`, {
                 method: 'DELETE',

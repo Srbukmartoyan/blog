@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useSearchContext } from "../context/SearchContext";
 import { authFetcher } from "../utils/fetcher";
 import { Button } from "./Button";
+import { getAuthToken } from "../utils/auth";
 
 const ProfileCard = ({ user, showAction }) => {
     const { debouncedSearchTerm } = useSearchContext();
@@ -11,7 +12,7 @@ const ProfileCard = ({ user, showAction }) => {
 
     const handleFriendRequest = async (requestType, method) => {
         try {
-            const token = localStorage.getItem('auth-token');
+            const token = getAuthToken();
             const response = await fetch(`/friendRequest/${requestType}`, {
                 method,
                 headers: {

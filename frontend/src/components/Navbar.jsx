@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { NavLink } from "react-router-dom";
 
+import { getAuthToken } from '../utils/auth';
+
 const NavItem = ({ to, children }) => (
   <div className='w-52 mx-auto md:w-auto text-lg md:text-base'>
     <li className='my-12'>
@@ -19,7 +21,7 @@ const NavItem = ({ to, children }) => (
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const token = localStorage.getItem('auth-token');
+  const token = getAuthToken();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -99,7 +101,7 @@ const Navbar = () => {
               </NavItem>
             </> : <></>}
             <li className='flex justify-center'>
-              {localStorage.getItem('auth-token')
+              {token
                 ? <button onClick={() => {
                   localStorage.removeItem('auth-token');
                   localStorage.removeItem('refresh-token');

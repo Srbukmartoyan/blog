@@ -1,13 +1,15 @@
 import useSWR, { mutate } from "swr";
 
 import useAuth from "../hooks/useAuth";
+import { getAuthToken } from "../utils/auth";
 import { authFetcher } from "../utils/fetcher";
 
 import { FriendList, Button, ErrorDisplay, LoadingIndicator } from "../components";
+
 import '../styles/style.css';
 
 const handleRequest = async (url, method, body) => {
-    const token = localStorage.getItem('auth-token');
+    const token = getAuthToken();
     const response = await fetch(url, {
         method,
         headers: {

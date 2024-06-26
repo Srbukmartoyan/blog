@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
+import { getAuthToken } from '../utils/auth';
+
 import { TOKEN_REFRESH_INTERVAL } from '../constants';
 
 const useAuth = () => {
   const navigate = useNavigate();
-  const [accessToken, setAccessToken] = useState(localStorage.getItem('auth-token'));
+  const [accessToken, setAccessToken] = useState(getAuthToken());
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refresh-token'));
 
   useEffect(() => {
