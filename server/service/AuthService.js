@@ -28,7 +28,13 @@ const signup = async ({ username, email, password }) => {
 
     const accessToken = generateToken(user.id,  process.env.JWT_ACCESS_SECRET, accessTokenExpiration);
     const refreshToken = generateToken(user.id, process.env.JWT_REFRESH_SECRET, refreshTokenExpiration);
-    return { accessToken, refreshToken, user };
+
+    const userData = {
+        id: user.id,
+        name: user.name,
+        email: user.email
+    };
+    return { accessToken, refreshToken, user: userData };
 };
 
 const signin = async ({ email, password }) => {
@@ -43,7 +49,12 @@ const signin = async ({ email, password }) => {
 
     const accessToken = generateToken(user.id, process.env.JWT_ACCESS_SECRET, accessTokenExpiration);
     const refreshToken = generateToken(user.id, process.env.JWT_REFRESH_SECRET, refreshTokenExpiration);
-    return { accessToken, refreshToken, user };
+    const userData = {
+        id: user.id,
+        name: user.name,
+        email: user.email
+    };
+    return { accessToken, refreshToken, user: userData };
 };
 
 const refreshToken = async (refreshToken) => {
