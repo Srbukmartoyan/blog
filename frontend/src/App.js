@@ -22,7 +22,7 @@ function App() {
             <Route path="/users" element={<AllUsers />} />
             <Route path="/requests" element={<FriendRequests />} />
             <Route path="/friends" element={<Friends />} />
-            {/* <Route path="/chat" element={<Chat />}/> */}
+            <Route path="/chat" element={<Chat />}/>
             <Route path="*" element={<NotFound />} />
           </Routes>
           {/* <Footer /> */}

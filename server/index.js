@@ -3,18 +3,23 @@ const { sequelize } = require('./models');
 const router = require('./routes');
 const { errorHandler } = require('./middleware/errorHandler.js');
 const http = require('http');
-const { Server } = require('socket.io');
+const socketIo = require('socket.io');
 const cors = require('cors');
 
-const PORT = process.env.PORT || 5000;
+const PORT = 3001;
 
 const app = express();
-const server = http.createServer(app);
-const io = new Server(server);
 
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: '*'
 }));
+
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: '*',
+  }
+});
 
 app.use('/images', express.static('upload/images'));
 
