@@ -25,7 +25,7 @@ const handleRequest = async (url, method, body) => {
 };
 
 const FriendRequests = () => {
-    const token = useAuth();
+    const { isAuthChecking } = useAuth();
     const { data: requests, error } = useSWR('/friendRequest/friends?type=pending', authFetcher);
 
     const handleAction = async (requestId, status, isDelete = false) => {
@@ -42,7 +42,7 @@ const FriendRequests = () => {
     };
 
     if (error) return <ErrorDisplay />
-    if (!requests) return <LoadingIndicator />
+    if (!requests || isAuthChecking) return <LoadingIndicator />
 
     const buttons = (friend) => (
         <>

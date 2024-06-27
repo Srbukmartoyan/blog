@@ -9,7 +9,7 @@ import { LoadingIndicator, ErrorDisplay } from '../components';
 import { INITIAL_CURRENT_PAGE, ITEMS_PER_PAGE } from '../constants';
 
 const FullBlog = () => {
-  const token = useAuth();
+  const { isAuthChecking } = useAuth();
   const { blogId } = useParams();
   const { data: blogPost, error } = useSWR(`/posts/${blogId}`, authFetcher);
   const authorId = blogPost?.Author?.id;
@@ -20,7 +20,7 @@ const FullBlog = () => {
   );
 
   if (error) return <ErrorDisplay />;
-  if (!blogPost) return <LoadingIndicator />;
+  if (!blogPost || isAuthChecking) return <LoadingIndicator />;
   if (authorPostsError) return <ErrorDisplay message="Failed to load author's posts"/>
   
   return (

@@ -7,14 +7,14 @@ import { authFetcher } from "../utils/fetcher";
 import {SearchInput, UserList, ErrorDisplay, LoadingIndicator} from "../components";
 
 const AllUsersContent = () => {
-    const token = useAuth();
+    const { isAuthChecking } = useAuth();
     const { searchTerm, debouncedSearchTerm, handleSearchChange } = useSearchContext();
     const { data, error } = useSWR(`/users?search=${debouncedSearchTerm}`, authFetcher);
 
     const loggedInUser = JSON.parse(localStorage.getItem('authUser'));
 
     if (error) return <ErrorDisplay  message="Error fetching users"/>
-    if (!data && !error) return <LoadingIndicator />
+    if ((!data && !error) || isAuthChecking) return <LoadingIndicator />
 
     const filteredUsers = data.filter(user => user.id !== loggedInUser.id);
     return (

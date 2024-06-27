@@ -5,9 +5,10 @@ import Group from '../components/Group';
 import { ErrorDisplay, LoadingIndicator } from '../components';
 
 const InfoPage = () => {
-  const token = useAuth();
+  const { isAuthChecking } = useAuth();
   const { allPosts, isLoading, isError } = useAllPosts();
-  if (isLoading) return <LoadingIndicator />;
+  
+  if (isLoading || isAuthChecking) return <LoadingIndicator />;
   if (isError) return <ErrorDisplay />;
 
   const groupedPosts = allPosts.reduce((acc, post) => {

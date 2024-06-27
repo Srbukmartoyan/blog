@@ -9,7 +9,7 @@ import { BlogList, PaginationButtons, SearchInput, HashtagFilter, ErrorDisplay, 
 import { ITEMS_PER_PAGE, INITIAL_CURRENT_PAGE } from '../constants';
 
 const Home = () => {
-  const token = useAuth();
+  const { isAuthChecking } = useAuth();
   const [currentPage, setCurrentPage] = useState(INITIAL_CURRENT_PAGE);
   const [selectedHashtags, setSelectedHashtags] = useState([]);
   const handleSearchTermChange = () => {
@@ -25,7 +25,7 @@ const Home = () => {
   const { allPosts, totalPosts, isLoading, isError } = useAllPosts(currentPage, ITEMS_PER_PAGE, debouncedSearchTerm, selectedHashtags);
   const { totalPages, nextPage, prevPage, handlePageClick } = usePagination(totalPosts, ITEMS_PER_PAGE, currentPage, setCurrentPage);
 
-  if (isLoading) return <LoadingIndicator />;
+  if (isLoading || isAuthChecking) return <LoadingIndicator />;
   if (isError) return <ErrorDisplay />;
 
   return (

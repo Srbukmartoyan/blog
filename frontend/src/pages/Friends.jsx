@@ -8,12 +8,12 @@ import { FriendList, Button, LoadingIndicator, ErrorDisplay} from "../components
 import '../styles/style.css';
 
 const Friends = () => {
-    const token = useAuth();
+    const { isAuthChecking } = useAuth();
     const { data: followers, error: followersError } = useSWR('/friendRequest/friends?type=followers', authFetcher);
     const { data: followings, error: followingsError } = useSWR('/friendRequest/friends?type=followings', authFetcher);
 
     if (followersError || followingsError) return <ErrorDisplay />;
-    if (!followers || !followings) return <LoadingIndicator />;
+    if (!followers || !followings || isAuthChecking) return <LoadingIndicator />;
 
     const handleDelete = async (url, body) => {
         const token = getAuthToken();

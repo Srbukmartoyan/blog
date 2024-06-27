@@ -25,7 +25,6 @@ const BlogForm = ({ blogPost }) => {
     image: blogPost ? blogPost.Image : '',
   });
 
-  console.log('rendered', formData.image, newImage);
   const { data: hashtags, error } = useSWR('/hashtags', authFetcher);
 
   const imageHandler = (e) => {

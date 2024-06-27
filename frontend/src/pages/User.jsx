@@ -14,7 +14,7 @@ import { ITEMS_PER_PAGE } from '../constants';
 import { BlogList, ProfileCard, Button, PaginationButtons, LoadingIndicator, ErrorDisplay } from '../components';
 
 const UserContent = () => {
-    const token = useAuth();
+    const { isAuthChecking } = useAuth();
     const { userId } = useParams();
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -37,7 +37,7 @@ const UserContent = () => {
     const { totalPages, nextPage, prevPage, handlePageClick } = usePagination(posts?.count, ITEMS_PER_PAGE, currentPage, setCurrentPage);
 
     if (userError || postsError) return <ErrorDisplay />
-    if (!user || !posts) return <LoadingIndicator />
+    if (!user || !posts || isAuthChecking) return <LoadingIndicator />
     
     const status = user.receivedRequests[0]?.status;
 
