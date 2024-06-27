@@ -25,8 +25,8 @@ const FullBlog = () => {
   
   return (
     <div className='mx-auto px-8 py-4 bg-slate-200 rounded-md w-full'>
-        <div className='w-3/2 md:w-1/2 lg:w-1/3 bg-white shadow-md rounded-md mx-auto my-10 p-9 hover:scale-105 transition ease-linear duration-150'>
-          <h2 className='text-xl font-semibold mb-4 text-center'>{blogPost.title}</h2>
+        <div className='w-3/2 md:w-1/2 lg:w-1/3 bg-white shadow-md rounded-md mx-auto mt-10 sm:mb-52 mb-24 p-9 hover:scale-105 transition ease-linear duration-150'>
+          <h2 className='text-xl font-semibold mb-10 text-center'>{blogPost.title}</h2>
           <p className='text-gray-600 mb-2'>Author: {blogPost.Author?.name}</p>
           <p className='text-gray-600 mb-2'>Publication Date: {blogPost.createdAt}</p>
           <p className='text-gray-800'>{blogPost.content}</p>

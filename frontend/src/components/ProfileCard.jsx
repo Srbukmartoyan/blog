@@ -53,7 +53,7 @@ const ProfileCard = ({ user, showAction }) => {
 
     return (
         <div className="shadow-md rounded-md p-6 my-4 bg-slate-100 hover:shadow-lg transition ease-linear delay-150 mx-auto">
-            <Link to={`/users/${user.id}`}>
+            <Link to={showAction ? `/users/${user.id}` : null}>
                 <div className="flex items-center">
                     <div className="w-16 h-16 rounded-full bg-gray-400 flex-shrink-0">
                     </div>
